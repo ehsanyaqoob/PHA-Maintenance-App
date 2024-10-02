@@ -1,0 +1,226 @@
+
+import 'package:pharesidence/exports/exports.dart';
+
+class PHAText extends Text {
+  PHAText({
+    super.key,
+    required String text,
+    TextAlign textAlign = TextAlign.left,
+    Color color = Colors.black,
+    double fontSize = 9,
+    FontWeight fontWeight = FontWeight.normal,
+    double? letterSpacing,
+    TextDecoration? textDecoration,
+    TextDecorationStyle? textDecorationStyle,
+    Color? decorationColor,
+    String font = 'BalsamiqSans',
+  }) : super(
+          text,
+          textAlign: textAlign,
+          overflow: TextOverflow.clip,
+          style: TextStyle(
+            color: color,
+            fontFamily: font,
+            fontSize: fontSize,
+            fontWeight: fontWeight,
+            letterSpacing: letterSpacing,
+            decoration: textDecoration,
+            decorationStyle: textDecorationStyle,
+            decorationColor: decorationColor,
+          ),
+        );
+}
+
+class PHATextFormField extends StatelessWidget {
+  final TextEditingController? controller;
+  final String hint;
+  final String title;
+  final TextInputType? inputType;
+  final List<TextInputFormatter>? inputFormatters;
+  final Widget? prefix;
+  final ValueChanged<String>? onChanged;
+  final bool? isObscure;
+  final VoidCallback? onTap;
+  final String? errorText;
+  final bool? readOnly;
+  final bool? autoFocus;
+  final Widget? suffix;
+  final double? topPadding;
+  final TextAlign textAlign;
+  final TextCapitalization textCapitalization;
+  final TextInputAction textInputAction;
+  final ValueChanged<String>? onSubmitted;
+  final String? Function(String?)? validator; // Adding validator parameter
+
+  PHATextFormField({
+    super.key,
+    this.title = '',
+    required this.hint,
+    this.controller,
+    this.inputType = TextInputType.text,
+    this.inputFormatters,
+    this.prefix,
+    this.onChanged,
+    this.isObscure,
+    this.onTap,
+    this.errorText,
+    this.readOnly,
+    this.autoFocus,
+    this.suffix,
+    this.topPadding,
+    this.textAlign = TextAlign.left,
+    this.textCapitalization = TextCapitalization.sentences,
+    this.textInputAction = TextInputAction.next,
+    this.onSubmitted,
+    this.validator, // Making it optional
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.only(top: topPadding ?? 0.5),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Visibility(
+            visible: title.isNotEmpty,
+            child: PHAText(
+              text: title,
+              fontSize: 18.sp,
+              fontWeight: FontWeight.w400,
+              color: AppColors.appBlack,
+            ),
+          ),
+          SizedBox(height: title.isNotEmpty ? 4 : 4),
+          TextFormField(
+            textInputAction: textInputAction,
+            textCapitalization: textCapitalization,
+            controller: controller,
+            keyboardType: inputType,
+            inputFormatters: inputFormatters,
+            cursorColor: AppColors.AppPrimary,
+            autofocus: autoFocus ?? false,
+            textAlign: textAlign,
+            onTapOutside: (event) {
+              FocusManager.instance.primaryFocus?.unfocus();
+            },
+            onFieldSubmitted: onSubmitted,
+            decoration: InputDecoration(
+              hintText: hint,
+              prefixIcon: prefix,
+              suffixIcon: suffix,
+              fillColor: AppColors.AppSecondary,
+              filled: true,
+              errorText: errorText,
+              hintStyle: TextStyle(
+                color: Colors.grey,
+                fontSize: 18,
+                fontFamily: AppFonts.balsamiqSans,
+                fontWeight: FontWeight.w400,
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10),
+                borderSide: BorderSide(
+                  width: 1.5,
+                  color: AppColors.greycolor,
+                ),
+              ),
+              errorBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10),
+                borderSide: BorderSide(width: 1.5, color: Colors.red),
+              ),
+              focusedErrorBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10),
+                borderSide: BorderSide(width: 1.5, color: Colors.red),
+              ),
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10),
+                borderSide: BorderSide(
+                  width: 1.5,
+                  color: AppColors.greycolor,
+                ),
+              ),
+              isDense: true,
+            ),
+            readOnly: readOnly ?? false,
+            style: TextStyle(
+              color: AppColors.appBlack,
+              fontSize: 18,
+              fontFamily: AppFonts.balsamiqSans,
+              fontWeight: FontWeight.w400,
+            ),
+            onChanged: onChanged,
+            onTap: onTap,
+            obscureText: isObscure ?? false,
+            validator: validator, // Applying the validator here
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class TextField extends TextFormField {
+  TextField({
+    super.key,
+    TextEditingController? controller,
+    required String hint,
+    TextInputType? inputType,
+    List<TextInputFormatter>? inputFormatters,
+    Widget? prefix,
+    super.onChanged,
+    bool? isObscure,
+    super.onTap,
+    String? errorText,
+    bool? readOnly,
+    bool? autoFocus,
+    Widget? suffix,
+  })  : assert(controller != null, "Controller is required"),
+        super(
+          controller: controller!,
+          keyboardType: inputType,
+          inputFormatters: inputFormatters,
+          cursorColor: AppColors.appBlack,
+          autofocus: autoFocus ?? false,
+          decoration: InputDecoration(
+            hintText: hint,
+            prefixIcon: prefix,
+            suffixIcon: suffix,
+            fillColor: Colors.grey[200],
+            filled: true,
+            errorText: errorText,
+            hintStyle: TextStyle(
+              color: Colors.grey[600],
+              fontSize: 18,
+              fontFamily: AppFonts.balsamiqSans,
+              fontWeight: FontWeight.w400,
+            ),
+            border: InputBorder.none,
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(3),
+              borderSide: BorderSide(color: Colors.blue),
+            ),
+            errorBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(3),
+              borderSide: BorderSide(color: Colors.red),
+            ),
+            focusedErrorBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(3),
+              borderSide: BorderSide(color: Colors.red),
+            ),
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(3),
+              borderSide: BorderSide(color: Colors.transparent),
+            ),
+            isDense: true,
+          ),
+          readOnly: readOnly ?? false,
+          style: TextStyle(
+            color: AppColors.appBlack,
+            fontSize: 18,
+            fontFamily: AppFonts.balsamiqSans,
+            fontWeight: FontWeight.w600,
+          ),
+          obscureText: isObscure ?? false,
+        );
+}
