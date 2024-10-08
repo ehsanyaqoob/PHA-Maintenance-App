@@ -83,7 +83,7 @@ class PHATextFormField extends StatelessWidget {
               hintStyle: TextStyle(
                 color: AppColors.fieldFontColor,
                 fontSize: 18,
-                fontFamily: AppFonts.balsamiqSans,
+                fontFamily: AppFonts.poppins,
                 fontWeight: FontWeight.w400,
               ),
               focusedBorder: OutlineInputBorder(
@@ -108,7 +108,7 @@ class PHATextFormField extends StatelessWidget {
             style: TextStyle(
               color: AppColors.appBlack,
               fontSize: 18,
-              fontFamily: AppFonts.balsamiqSans,
+              fontFamily: AppFonts.poppins,
               fontWeight: FontWeight.w400,
             ),
             onChanged: onChanged,
@@ -154,7 +154,7 @@ class PHAField extends TextFormField {
             hintStyle: TextStyle(
               color: AppColors.fieldFontColor,
               fontSize: 18,
-              fontFamily: AppFonts.balsamiqSans,
+              fontFamily: AppFonts.poppins,
               fontWeight: FontWeight.w400,
             ),
             border: InputBorder.none,
@@ -180,7 +180,7 @@ class PHAField extends TextFormField {
           style: TextStyle(
             color: AppColors.appBlack,
             fontSize: 18,
-            fontFamily: AppFonts.balsamiqSans,
+            fontFamily: AppFonts.poppins,
             fontWeight: FontWeight.w600,
           ),
           obscureText: isObscure ?? false,
@@ -208,7 +208,7 @@ class PHAText extends Text {
           overflow: TextOverflow.clip,
           style: TextStyle(
             color: color ?? AppColors.appBlack,
-            fontFamily: AppFonts.balsamiqSans,
+            fontFamily: AppFonts.poppins,
             fontSize: fontSize ?? 9,
             fontWeight: fontWeight ?? FontWeight.normal,
             letterSpacing: letterSpacing,

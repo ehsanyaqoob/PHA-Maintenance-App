@@ -113,7 +113,7 @@ class _SignInViewState extends State<SignInView> {
                           const Spacer(),
                           GestureDetector(
                             onTap: () {
-                              Get.to(OtpView());
+                             // Get.to(OtpView());
                             },
                             child: PHAText(
                               text: 'Forgot Password?',

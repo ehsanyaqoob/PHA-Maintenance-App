@@ -18,7 +18,6 @@ bool isNewPasswordVisible = false;
 bool isConfirmPasswordVisible = false;
 
 final TextEditingController searchController = TextEditingController();
-
 final TextEditingController emailController = TextEditingController();
 final TextEditingController passwordController = TextEditingController();
 final TextEditingController CnicController = TextEditingController();
@@ -26,14 +25,16 @@ final TextEditingController resetEmailController = TextEditingController();
 final TextEditingController resetPasswordController = TextEditingController();
 final TextEditingController newPasswordController = TextEditingController();
 final TextEditingController confirmNewPasswordController = TextEditingController();
-final TextEditingController nameController = TextEditingController();
 final ProfileController controller = Get.put(ProfileController());
 
+  // TextEditing Controllers for Sign in  //
+  final TextEditingController nameController = TextEditingController();
+  final TextEditingController phoneController = TextEditingController();
 class AuthController extends GetxController {
   // final FirebaseAuth _auth = FirebaseAuth.instance;
   // final FirebaseFirestore _db = FirebaseFirestore.instance;
-  // var isSignedIn = false.obs; // Observable for sign-in status
-  var isLoading = false.obs; // Observable for loading state
+  // var isSignedIn = false.obs; 
+  var isLoading = false.obs; 
   // Controllers
 
   // State variables
@@ -104,46 +105,45 @@ class AuthController extends GetxController {
 
   // Sign-out method
   //
-  // Sign-out method
-  Future<void> signOut() async {
-    try {
-      isLoading.value = true; // Start loading
+  // // Sign-out method
+  // Future<void> signOut() async {
+  //   try {
+  //     isLoading.value = true; // Start loading
 
-      // Sign out the user from Firebase
-      //await _auth.signOut();
+  //     // Sign out the user from Firebase
+  //     //await _auth.signOut();
 
-      // Clear sign-in status locally
-      isSignedIn.value = false;
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      await prefs.setBool('isLoggedIn', false); // Set isLoggedIn to false
+  //     // Clear sign-in status locally
+  //     isSignedIn.value = false;
+  //     SharedPreferences prefs = await SharedPreferences.getInstance();
+  //     await prefs.setBool('isLoggedIn', false); // Set isLoggedIn to false
 
-      // Show sign out success message
-      Get.snackbar(
-        "Sign Out Success",
-        "You have successfully signed out.",
-        snackPosition: SnackPosition.TOP,
-        backgroundColor: AppColors.AppPrimary,
-        colorText: Colors.white,
-      );
+  //     // Show sign out success message
+  //     Get.snackbar(
+  //       "Sign Out Success",
+  //       "You have successfully signed out.",
+  //       snackPosition: SnackPosition.TOP,
+  //       backgroundColor: AppColors.AppPrimary,
+  //       colorText: Colors.white,
+  //     );
 
-      // Navigate to the SignInView (or Get Started View)
-     // Get.offAll(() => SignInView());
-    } catch (e) {
-      // Handle any errors that occur during sign-out
-      Get.snackbar(
-        "Sign Out Failed",
-        "An error occurred while signing out.",
-        snackPosition: SnackPosition.TOP,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
-    } finally {
-      isLoading.value = false; // End loading
-    }
-  }
+  //     // Navigate to the SignInView (or Get Started View)
+  //    // Get.offAll(() => SignInView());
+  //   } catch (e) {
+  //     // Handle any errors that occur during sign-out
+  //     Get.snackbar(
+  //       "Sign Out Failed",
+  //       "An error occurred while signing out.",
+  //       snackPosition: SnackPosition.TOP,
+  //       backgroundColor: Colors.red,
+  //       colorText: Colors.white,
+  //     );
+  //   } finally {
+  //     isLoading.value = false; // End loading
+  //   }
+  // }
 
-  //
-  //
+ 
   //// Helper methods
   Future<void> _updateSignInStatus(bool status) async {
     isSignedIn.value = status;
@@ -277,7 +277,6 @@ class OtpTimerController extends GetxController {
 }
 
 
-
 class PakistaniPhoneNumberFormatter extends TextInputFormatter {
   @override
   TextEditingValue formatEditUpdate(
@@ -285,8 +284,13 @@ class PakistaniPhoneNumberFormatter extends TextInputFormatter {
     // Remove any non-numeric characters
     String newText = newValue.text.replaceAll(RegExp(r'\D'), '');
 
-    // Format the phone number: ####-#######
-    if (newText.length > 4) {
+    // Ensure the number does not exceed 11 digits
+    if (newText.length > 11) {
+      newText = newText.substring(0, 11);
+    }
+
+    // Format the phone number: 03##-#######
+    if (newText.length >= 4) {
       newText = newText.substring(0, 4) + '-' + newText.substring(4);
     }
 
@@ -296,6 +300,7 @@ class PakistaniPhoneNumberFormatter extends TextInputFormatter {
     );
   }
 }
+
 
 class CNICInputFormatter extends TextInputFormatter {
   @override

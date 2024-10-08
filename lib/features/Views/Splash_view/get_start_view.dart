@@ -1,7 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pharesidence/Generic_Widgets/Widgets/pha_text.dart';
-import 'package:pharesidence/Generic_Widgets/Widgets/pha_button.dart'; // Import your custom button
 import 'package:pharesidence/exports/exports.dart';
 import 'package:pharesidence/features/Views/signin_view.dart/signin_view.dart';
 import 'package:pharesidence/features/Views/signup_view.dart/signup_view.dart';
@@ -19,11 +17,10 @@ class _GetStartViewState extends State<GetStartView> {
     return Scaffold(
       body: Stack(
         children: [
-          // Gradient background for a modern feel
           Container(
-            decoration: const BoxDecoration(
+            decoration: BoxDecoration(
               gradient: LinearGradient(
-                colors: [Color(0xFF0D47A1), Color(0xFF42A5F5)], // Blue gradient
+            colors: [AppColors.AppPrimary, const Color(0xFF16213E)], // Dark primary and secondary colors
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
               ),
@@ -35,86 +32,59 @@ class _GetStartViewState extends State<GetStartView> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 const Spacer(),
-                
-                // Welcome Text with enhanced style
                 PHAText(
-                  text: 'Welcome To Digital\nPHA Residencia\nMaintenance Service',
-                  fontSize: 30.sp, // Larger font size
+                  text: 'PHA Residencia\nMaintenance Service',
+                  fontSize: 32.sp,
                   fontWeight: FontWeight.bold,
-                  color: Colors.white, // White color for better contrast
+                  color: Colors.white,
                   textAlign: TextAlign.center,
-                  letterSpacing: 1.2, // Slight letter spacing for a polished look
+                  letterSpacing: 1.5,
                 ),
-                
                 const Spacer(),
-
-                // Sign In button with custom PHAButton
                 PHAButton(
                   title: 'Sign In',
                   onTap: () {
-                    // Handle Sign In logic
-                                        Get.to(SignInView());
-
+                    Get.to(SignInView());
                   },
-                 
-                ),
                 
+                ),
                 const SizedBox(height: 16),
-
-                // Sign Up button with custom PHAButton
                 PHAButton(
                   title: 'Sign Up',
                   onTap: () {
-                    // Handle Sign Up navigation
                     Get.to(SignUpView());
                   },
-                
+                  
+               
                 ),
-                
-                const SizedBox(height: 12),
-                
-                // "Don't have membership?" text with subtle animation
+                const SizedBox(height: 16),
                 GestureDetector(
-                  onTap: () {
-                    // Handle Sign Up navigation
-                  },
+                  onTap: () {},
                   child: PHAText(
                     text: "Don't have membership?",
                     fontSize: 16.sp,
-                    color: Colors.white70, // Slight transparency for subtlety
+                    color: Colors.white70,
                     textAlign: TextAlign.center,
                   ),
                 ),
-
                 const Spacer(),
-                
-                // Bottom row of buttons/icons with enhanced look
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    // Icon 1 (e.g., News/Events) with a gradient effect
                     _buildBottomIcon(
                       icon: Icons.event,
                       label: 'News/Events',
-                      onTap: () {
-                        // Handle News/Events tap
-                      },
+                      onTap: () {},
                     ),
-                    // Icon 2 (e.g., Projects)
                     _buildBottomIcon(
                       icon: Icons.business,
                       label: 'Projects',
-                      onTap: () {
-                        // Handle Projects tap
-                      },
+                      onTap: () {},
                     ),
-                    // Icon 3 (e.g., Contact)
                     _buildBottomIcon(
                       icon: Icons.phone,
                       label: 'Contact',
-                      onTap: () {
-                        // Handle Contact tap
-                      },
+                      onTap: () {},
                     ),
                   ],
                 ),
@@ -127,7 +97,6 @@ class _GetStartViewState extends State<GetStartView> {
     );
   }
 
-  // Helper method to build bottom row icons
   Widget _buildBottomIcon({required IconData icon, required String label, required VoidCallback onTap}) {
     return GestureDetector(
       onTap: onTap,
@@ -137,7 +106,7 @@ class _GetStartViewState extends State<GetStartView> {
             decoration: BoxDecoration(
               shape: BoxShape.circle,
               gradient: const LinearGradient(
-                colors: [Color(0xFF42A5F5), Color(0xFF0D47A1)], // Gradient for icons
+                colors: [Color(0xFF42A5F5), Color(0xFF0D47A1)],
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
               ),
@@ -159,7 +128,7 @@ class _GetStartViewState extends State<GetStartView> {
           PHAText(
             text: label,
             fontSize: 14.sp,
-            color: Colors.white70, // Semi-transparent white for text
+            color: Colors.white70,
             textAlign: TextAlign.center,
           ),
         ],

@@ -13,7 +13,7 @@ class PHAText extends Text {
     TextDecoration? textDecoration,
     TextDecorationStyle? textDecorationStyle,
     Color? decorationColor,
-    String font = 'BalsamiqSans',
+    String font = 'Poppins',
   }) : super(
           text,
           textAlign: textAlign,
@@ -146,7 +146,7 @@ class PHATextFormField extends StatelessWidget {
             style: TextStyle(
               color: AppColors.appBlack,
               fontSize: 18,
-              fontFamily: AppFonts.balsamiqSans,
+              fontFamily: AppFonts.poppins,
               fontWeight: FontWeight.w400,
             ),
             onChanged: onChanged,
@@ -192,7 +192,7 @@ class TextField extends TextFormField {
             hintStyle: TextStyle(
               color: Colors.grey[600],
               fontSize: 18,
-              fontFamily: AppFonts.balsamiqSans,
+              fontFamily: AppFonts.poppins,
               fontWeight: FontWeight.w400,
             ),
             border: InputBorder.none,
@@ -218,7 +218,7 @@ class TextField extends TextFormField {
           style: TextStyle(
             color: AppColors.appBlack,
             fontSize: 18,
-            fontFamily: AppFonts.balsamiqSans,
+            fontFamily: AppFonts.poppins,
             fontWeight: FontWeight.w600,
           ),
           obscureText: isObscure ?? false,
