@@ -1,8 +1,8 @@
 
 // Base URL
-const String baseUrl = 'http://192.168.18.18:8000/api/auth/';
+const String baseUrl = 'http://20.233.249.185/main/api/auth';
 
-// Authentication URLs
+// Authentication URLs 
 const String loginUrl = '$baseUrl/login';
 const String registerUrl = '$baseUrl/register';
 const String verifyOtpUrl = '$baseUrl/verify-otp';

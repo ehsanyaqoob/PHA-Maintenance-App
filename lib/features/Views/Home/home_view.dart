@@ -9,10 +9,10 @@ import 'package:pharesidence/features/Views/Home/GridViews/sosviews.dart';
 
 class HomeView extends StatelessWidget {
   final String cnic;
-  final String phone;
+  final String cell;
 
 
-  HomeView({required this.cnic, required this.phone});
+  HomeView({required this.cnic, required this.cell});
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +34,7 @@ class HomeView extends StatelessWidget {
               ),
               SizedBox(height: 8),
               PHAText(
-                text: 'Phone: $phone',
+                text: 'Phone: $cell',
                 fontSize: 12.sp,
                 color: AppColors.AppPrimary,
                 fontWeight: FontWeight.bold,

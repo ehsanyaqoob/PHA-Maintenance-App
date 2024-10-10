@@ -14,7 +14,7 @@ class SignInView extends StatefulWidget {
 
 class _SignInViewState extends State<SignInView> {
   /// Singin Controller ///
-  final SinginController controller = Get.put(SinginController());
+  final SigninController controller = Get.put(SigninController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -59,7 +59,7 @@ class _SignInViewState extends State<SignInView> {
                       hint: 'xxxx-xxxxxxx',
                       title: 'Enter Your Mobile',
                       inputType: TextInputType.phone,
-                      onChanged: controller.onPhoneChange,
+                      onChanged: controller.onCellChange,
                       inputFormatters: [
                         FilteringTextInputFormatter.digitsOnly,
                         PakistaniPhoneNumberFormatter(),
