@@ -1,11 +1,10 @@
 import 'package:get/get.dart';
 import 'package:pharesidence/Generic_Widgets/Widgets/pha_text.dart';
 import 'package:pharesidence/exports/exports.dart';
-import 'package:pharesidence/features/Payemnts/payment_tab.dart';
 import 'package:shimmer/shimmer.dart';
 import 'preview_dialog.dart';
 
-// Project model
+
 class Project {
   final String name;
   final List<String> properties; // List of properties for the project
@@ -48,8 +47,7 @@ class _ProjectsViewsState extends State<ProjectsViews> {
   @override
   void initState() {
     super.initState();
-    // Simulate a network call delay
-    Future.delayed(const Duration(seconds: 2), () {
+    Future.delayed(const Duration(seconds: 1), () {
       setState(() {
         _isLoading = false;
       });
@@ -186,7 +184,13 @@ class ProjectDetailView extends StatefulWidget {
 
 class _ProjectDetailViewState extends State<ProjectDetailView> {
   String? _selectedProperty; // Track the selected property for payment
-  bool _isExpanded = false;
+
+  // Simulate generated PSID list (2-3 randoms)
+  final List<String> psidList = [
+    'PSID 123456789',
+    'PSID 987654321',
+    'PSID 456789123',
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -266,7 +270,7 @@ class _ProjectDetailViewState extends State<ProjectDetailView> {
                               return PaymentPreviewDialog(
                                 personName: 'MRS. AMIR JAN',
                                 propertyName: _selectedProperty!,
-                                billNumber: '12345',
+                                PSID: '1017867543234556',
                                 billDate: '2024-09-30',
                                 dueDate: '2024-10-30',
                                 amountDue: 150.75,
@@ -293,8 +297,7 @@ class _ProjectDetailViewState extends State<ProjectDetailView> {
                                             onPressed: () {
                                               // Handle Pay action
                                               Navigator.of(context).pop(); // Close the dialog
-                                              // Add the logic to proceed with the payment
-                                              // For example, navigate to a payment screen
+                                              Get.to(() => PaymentView()); // Navigate to payment page
                                             },
                                             child: Text('Pay'),
                                           ),
@@ -302,9 +305,9 @@ class _ProjectDetailViewState extends State<ProjectDetailView> {
                                             onPressed: () {
                                               // Handle Download action
                                               Navigator.of(context).pop(); // Close the dialog
-                                              // Add the logic to download the bill/receipt
+                                              // Implement download logic here
                                             },
-                                            child: Text('Download'),
+                                            child: Text('Download Bill'),
                                           ),
                                         ],
                                       );
@@ -315,7 +318,7 @@ class _ProjectDetailViewState extends State<ProjectDetailView> {
                             },
                           );
                         } else {
-                          Get.snackbar('Error', 'Please select a property to generate a bill');
+                          Get.snackbar('Error', 'Please select a property for bill generation');
                         }
                       },
                     ),
@@ -325,6 +328,22 @@ class _ProjectDetailViewState extends State<ProjectDetailView> {
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class PaymentView extends StatelessWidget {
+  const PaymentView({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Payment Options'),
+      ),
+      body: Center(
+        child: Text('Payment options will be displayed here.'),
       ),
     );
   }

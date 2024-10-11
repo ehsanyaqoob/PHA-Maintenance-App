@@ -31,7 +31,7 @@ class _PaymentViewState extends State<PaymentView> {
         return PaymentPreviewDialog(
           personName: 'MRS. AMIR JAN',
           propertyName: 'Apartment 23B',
-          billNumber: '12345',
+          PSID: '12345',
           billDate: '2024-09-30',
           dueDate: '2024-10-30',
           amountDue: 150.75,

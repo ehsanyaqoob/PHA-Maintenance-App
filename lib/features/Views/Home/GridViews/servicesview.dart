@@ -9,6 +9,14 @@ class ServicesViews extends StatefulWidget {
 }
 
 class _ServicesViewsState extends State<ServicesViews> {
+  final List<Map<String, dynamic>> services = [
+    {'title': 'Book a Plumber', 'icon': Icons.plumbing},
+    {'title': 'Book an Electrician', 'icon': Icons.electric_bolt},
+    {'title': 'Book a Cleaner', 'icon': Icons.cleaning_services},
+    {'title': 'Book a Painter', 'icon': Icons.format_paint},
+    {'title': 'Book a Carpenter', 'icon': Icons.build},
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -17,69 +25,91 @@ class _ServicesViewsState extends State<ServicesViews> {
         centerTitle: false,
       ),
       backgroundColor: AppColors.AppSecondary,
-      body: SingleChildScrollView(
+      body:Stack(
+        children: [
+          Positioned.fill(
+            child: Container(
+              child: Image.asset(
+                'assets/png/back.png',
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+           Padding(
         padding: const EdgeInsets.symmetric(horizontal: 26.0, vertical: 20.0),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             PHAText(
+              textAlign: TextAlign.center,
               text: 'Book a Service',
               fontSize: 24.sp,
               fontWeight: FontWeight.bold,
-              color: AppColors.AppPrimary,
+              
             ),
             SizedBox(height: 20.h),
-
-            // List of Services
-            _buildServiceCard('Book a Plumber', Icons.plumbing, () {
-              // Add booking logic here
-            }),
-            SizedBox(height: 15.h),
-            _buildServiceCard('Book an Electrician', Icons.electric_bolt, () {
-              // Add booking logic here
-            }),
-            SizedBox(height: 15.h),
-            _buildServiceCard('Book a Cleaner', Icons.cleaning_services, () {
-              // Add booking logic here
-            }),
-            SizedBox(height: 15.h),
-            _buildServiceCard('Book a Painter', Icons.format_paint, () {
-              // Add booking logic here
-            }),
-            SizedBox(height: 15.h),
-            _buildServiceCard('Book a Carpenter', Icons.build, () {
-              // Add booking logic here
-            }),
+            Expanded(
+              child: GridView.builder(
+                itemCount: services.length,
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2, // Number of items per row
+                  crossAxisSpacing: 15.0, // Spacing between columns
+                  mainAxisSpacing: 15.0, // Spacing between rows
+                  childAspectRatio: 1, // Adjust item height/width ratio
+                ),
+                itemBuilder: (context, index) {
+                  return _buildServiceCard(
+                    services[index]['title'],
+                    services[index]['icon'],
+                    () {
+                      // Add booking logic here
+                    },
+                  );
+                },
+              ),
+            ),
           ],
         ),
       ),
-    );
+    
+        ],
+      ));
   }
 
   Widget _buildServiceCard(String title, IconData icon, VoidCallback onTap) {
-    return Container(
-      decoration: BoxDecoration(
-        color: AppColors.AppSecondary,
-        borderRadius: BorderRadius.circular(15),
-        boxShadow: [
-          BoxShadow(
-            color: AppColors.AppPrimary.withOpacity(0.3),
-            offset: Offset(0, 4),
-            blurRadius: 8,
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        padding: EdgeInsets.all(15),
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: [AppColors.servicecards, AppColors.CardColor],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
           ),
-        ],
-      ),
-      child: ListTile(
-        onTap: onTap,
-        contentPadding: EdgeInsets.all(15.0),
-        leading: Icon(icon, size: 40, color: AppColors.AppPrimary),
-        title: PHAText(
-          text: title,
-          fontSize: 18.sp,
-          fontWeight: FontWeight.w600,
-          color: AppColors.AppPrimary,
+          borderRadius: BorderRadius.circular(15),
+          boxShadow: [
+            BoxShadow(
+              color: AppColors.AppPrimary.withOpacity(0.3),
+              offset: Offset(0, 4),
+              blurRadius: 8,
+            ),
+          ],
         ),
-        trailing: Icon(Icons.arrow_forward_ios, color: AppColors.AppPrimary),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(icon, size: 40, color: AppColors.appWhite),
+            SizedBox(height: 10),
+            PHAText(
+              text: title,
+              fontSize: 16.sp,
+              fontWeight: FontWeight.w600,
+              color: AppColors.appWhite,
+              textAlign: TextAlign.center,
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -18,6 +18,7 @@ class _SignInViewState extends State<SignInView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+            resizeToAvoidBottomInset: true, 
       backgroundColor: AppColors.AppSecondary,
       body: Stack(
         children: [
@@ -28,13 +29,19 @@ class _SignInViewState extends State<SignInView> {
               children: [
                 const Spacer(),
                 PHAText(
-                  text: 'Welcome To Digital\nPHA Residencia',
+                  text: 'PHAF Digital',
                   fontSize: 26.sp,
                   textAlign: TextAlign.center,
                   fontWeight: FontWeight.bold,
                   color: AppColors.AppPrimary,
                 ),
-                const Spacer(),
+                Image.asset(
+                  'assets/png/logo.png',
+                  width: 140.w,
+                  height: 140.h,
+                  color: AppColors.AppPrimary,
+                ),
+                
                 Column(
                   children: [
                     PHATextFormField(

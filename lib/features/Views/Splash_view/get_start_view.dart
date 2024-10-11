@@ -15,28 +15,51 @@ class _GetStartViewState extends State<GetStartView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.AppSecondary,
       body: Stack(
         children: [
-          Container(
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-            colors: [AppColors.AppPrimary, const Color(0xFF16213E)], // Dark primary and secondary colors
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
+           // Background Logo
+          Positioned.fill(
+            child: Container(
+              child: Image.asset(
+                'assets/png/back.png',
+                fit: BoxFit.cover,
               ),
             ),
           ),
+         
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 30),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 const Spacer(),
+                 Container(
+                          height: 140.h,
+                          width: 140.w,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            shape: BoxShape.circle,
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black.withOpacity(0.1),
+                                spreadRadius: 5,
+                                blurRadius: 10,
+                                offset: const Offset(0, 5),
+                              ),
+                            ],
+                          ),
+                          child: Image.asset(
+                            'assets/png/logo.png',
+                            width: 140.w,
+                            height: 140.h,
+                            color: AppColors.AppPrimary,
+                          ),
+                        ),
                 PHAText(
-                  text: 'PHA Residencia\nMaintenance Service',
-                  fontSize: 32.sp,
+                  text: 'PHAF Maintenance Service',
+                  fontSize: 18.sp,
                   fontWeight: FontWeight.bold,
-                  color: Colors.white,
                   textAlign: TextAlign.center,
                   letterSpacing: 1.5,
                 ),
@@ -54,8 +77,6 @@ class _GetStartViewState extends State<GetStartView> {
                   onTap: () {
                     Get.to(SignUpView());
                   },
-                  
-               
                 ),
                 const SizedBox(height: 16),
                 GestureDetector(
@@ -103,10 +124,12 @@ class _GetStartViewState extends State<GetStartView> {
       child: Column(
         children: [
           Container(
+            height: 70.h,
+            width: 70.w,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              gradient: const LinearGradient(
-                colors: [Color(0xFF42A5F5), Color(0xFF0D47A1)],
+              gradient: LinearGradient(
+                colors: [AppColors.AppPrimary, AppColors.AppPrimary,],
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
               ),
@@ -121,14 +144,14 @@ class _GetStartViewState extends State<GetStartView> {
             child: CircleAvatar(
               radius: 30,
               backgroundColor: Colors.transparent,
-              child: Icon(icon, color: Colors.white, size: 28),
+              child: Icon(icon, color: Colors.white, size: 30),
             ),
           ),
           const SizedBox(height: 8),
           PHAText(
             text: label,
             fontSize: 14.sp,
-            color: Colors.white70,
+        
             textAlign: TextAlign.center,
           ),
         ],

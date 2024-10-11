@@ -17,7 +17,7 @@ class SigninController extends GetxController {
   void onCellChange(String value) { // Change method name to onCellChange
     cell.value = value;
   }
-Future<void> signInUser() async {
+ Future<void> signInUser() async {
     if (cnic.value.isEmpty || cell.value.isEmpty) { // Check cell instead of phone
       Get.snackbar('Error', 'CNIC and cell number cannot be empty');
       return;
@@ -28,8 +28,8 @@ Future<void> signInUser() async {
     try {
       // Updated request body
       final Map<String, dynamic> requestBody = {
-        "cnic": cnic.value.trim().replaceAll('-', ''),
-        "cell": cell.value.trim().replaceAll('-', ''), // Change phone to cell
+        "cnic": cnic.value.trim(),
+        "cell": cell.value.trim().replaceAll('-', ''), 
       };
 
       debugPrint("Request Body: $requestBody"); // Log request body
@@ -46,8 +46,10 @@ Future<void> signInUser() async {
         // Check for token in the response
         if (responseData['status'] == true) {
           debugPrint("Token: ${responseData['data']['token']}");
-          debugPrint("Navigating to HomeView with CNIC: ${cnic.value} and Cell: ${cell.value}");
-          Get.to(() => HomeView(cnic: cnic.value, cell: cell.value)); 
+
+          // Navigating to HomeView and passing the entire data dynamically
+          Get.to(() => HomeView(apiData: responseData['data']));
+
           debugPrint("Navigation call executed.");
         } else {
           Get.snackbar('Error', responseData['message'] ?? 'Invalid credentials');
@@ -63,5 +65,4 @@ Future<void> signInUser() async {
     } finally {
       isLoading.value = false;
     }
-    }
-    }
+  }    }

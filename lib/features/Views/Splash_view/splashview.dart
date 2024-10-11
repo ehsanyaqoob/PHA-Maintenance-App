@@ -13,14 +13,12 @@ class SplashView extends StatelessWidget {
       backgroundColor: AppColors.AppPrimary,
       body: Stack(
         children: [
-          // Background Logo
+        // Background Logo
           Positioned.fill(
-            top: 00,
             child: Container(
               child: Image.asset(
-                'assets/png/logo.png',
+                'assets/png/back.png',
                 fit: BoxFit.cover,
-                color: AppColors.appWhite.withOpacity(0.1),
               ),
             ),
           ),
@@ -72,8 +70,8 @@ class SplashView extends StatelessWidget {
                         duration: const Duration(milliseconds: 700),
                         child: PHAText(
                           textAlign: TextAlign.center,
-                          text: 'PHA Officers\'s Residencia \nMaintenance Services',
-                          fontSize: 18.sp,
+                          text: 'PHAF Maintenance Services',
+                          fontSize: 22.sp,
                           fontWeight: FontWeight.bold,
                           color: const Color(0xFFEAEAEA),
                         ),

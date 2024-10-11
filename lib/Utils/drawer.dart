@@ -12,7 +12,7 @@ class CustomDrawer extends StatelessWidget {
               padding: const EdgeInsets.all(16.0),
               decoration: BoxDecoration(
                 gradient: LinearGradient(
-                  colors: [Colors.blue.shade400, Colors.blue.shade700],
+                  colors: [AppColors.CardColor, AppColors.CardColor,],
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
                 ),
@@ -20,11 +20,11 @@ class CustomDrawer extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  // Logo and App Title
+                 
                   Row(
                     children: [
                       CircleAvatar(
-                        backgroundImage: AssetImage('assets/logo.png'), // Logo
+                        backgroundImage: AssetImage('assets/logo.png'), 
                         radius: 30,
                       ),
                       SizedBox(width: 12),

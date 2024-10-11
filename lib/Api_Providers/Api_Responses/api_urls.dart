@@ -2,6 +2,10 @@
 // Base URL
 const String baseUrl = 'http://20.233.249.185/main/api/auth';
 
+
+// GetCNIC by Membership
+const String GetCNICByMembership = '$baseUrl/getProjectsByCnic';
+
 // Authentication URLs 
 const String loginUrl = '$baseUrl/login';
 const String registerUrl = '$baseUrl/register';

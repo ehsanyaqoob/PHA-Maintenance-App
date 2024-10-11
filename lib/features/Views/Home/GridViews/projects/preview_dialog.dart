@@ -4,7 +4,7 @@ import 'package:pharesidence/Colors/colors.dart';
 class PaymentPreviewDialog extends StatelessWidget {
   final String personName;
   final String propertyName;
-  final String billNumber;
+  final String PSID;
   final String billDate;
   final String dueDate;
   final double amountDue;
@@ -21,7 +21,7 @@ class PaymentPreviewDialog extends StatelessWidget {
     Key? key,
     required this.personName,
     required this.propertyName,
-    required this.billNumber,
+    required this.PSID,
     required this.billDate,
     required this.dueDate,
     required this.amountDue,
@@ -106,7 +106,7 @@ BoxShadow(
               'Bill Details',
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
             ),
-            _buildDetailRow('Bill Number:', billNumber),
+            _buildDetailRow('PSID:', PSID),
             _buildDetailRow('Period:', billingPeriod),
             _buildDetailRow('Issue Date:', billDate),
             _buildDetailRow('Due Date:', dueDate),
