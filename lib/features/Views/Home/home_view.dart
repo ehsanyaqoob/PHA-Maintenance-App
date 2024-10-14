@@ -52,7 +52,6 @@ class HomeView extends StatelessWidget {
                   SizedBox(height: 10.h),
                   // Properties Summary
                   _buildPropertiesSummary(),
-                  
                   // Horizontal ListView instead of GridView
                   SizedBox(
                     height: 150.h, 
@@ -60,13 +59,9 @@ class HomeView extends StatelessWidget {
                       scrollDirection: Axis.horizontal,
                       children: [
                         GestureDetector(
-                              onTap: (){
-                                // here need to send cnic back to 
-                              }, 
-
+                            
                           child: _buildCard('Property & Payments', Icons.business, () {
-                            Get.to(ProjectsViews());
-                          }),
+ Get.to(() => ProjectsViews(cnic: apiData['cnic']));                          }),
                         ),
                         _buildCard('Services', Icons.settings, () {
                           Get.to(ServicesViews());

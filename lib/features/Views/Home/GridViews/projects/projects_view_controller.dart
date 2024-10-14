@@ -1,24 +1,20 @@
-// import 'package:get/get.dart';
+class Project {
+  final String name; // Project name
+  final String fullName; // Full name of the person
+  final String status; // Status of the project
 
-// class ProjectsController extends GetxController {
-//   var isLoading = true.obs;
-//   var projectsList = <Project>[].obs;
+  Project({
+    required this.name,
+    required this.fullName,
+    required this.status,
+  });
 
-//   final ProjectService _projectService = ProjectService();
-
-//   @override
-//   void onInit() {
-//     super.onInit();
-//     fetchProjects();
-//   }
-
-//   void fetchProjects() async {
-//     try {
-//       isLoading(true);
-//       var projects = await _projectService.fetchProjects();
-//       projectsList.assignAll(projects);
-//     } finally {
-//       isLoading(false);
-//     }
-//   }
-// }
+  // Create a factory constructor to initialize the object from JSON
+  factory Project.fromJson(Map<String, dynamic> json) {
+    return Project(
+      name: json['projectName'],
+      fullName: json['full_name'],
+      status: json['status'],
+    );
+  }
+}
