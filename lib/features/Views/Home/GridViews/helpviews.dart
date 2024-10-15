@@ -18,7 +18,7 @@ class _HelpViewsState extends State<HelpViews> {
       ),
       backgroundColor: AppColors.AppSecondary,
       body: Stack(
-        children:[
+        children: [
           Positioned.fill(
             child: Container(
               child: Image.asset(
@@ -26,7 +26,8 @@ class _HelpViewsState extends State<HelpViews> {
                 fit: BoxFit.cover,
               ),
             ),
-          ), Padding(
+          ),
+          Padding(
             padding: const EdgeInsets.symmetric(horizontal: 26.0, vertical: 26.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -35,42 +36,41 @@ class _HelpViewsState extends State<HelpViews> {
                   text: 'How can we assist you?',
                   fontSize: 24.sp,
                   fontWeight: FontWeight.bold,
-                 
                 ),
-                
-               
-                    SizedBox(height: 20.h,),
+                SizedBox(height: 20.h),
                 // List of Help Topics
-                _buildHelpCard('Frequently Asked Questions', Icons.question_answer, () {
+                _buildHelpCard('Frequently Asked Questions', 'assets/png/faq.png', () {
                   // Navigate to FAQ page
                 }),
                 SizedBox(height: 15.h),
-                _buildHelpCard('Contact Support', Icons.support_agent, () {
+                _buildHelpCard('Contact Support', 'assets/png/contact.png', () {
                   // Navigate to Contact Support page
                 }),
                 SizedBox(height: 15.h),
-                _buildHelpCard('Report an Issue', Icons.report_problem, () {
+                _buildHelpCard('Report an Issue', 'assets/png/issues.png', () {
                   // Navigate to Report Issue page
                 }),
                 SizedBox(height: 15.h),
-                _buildHelpCard('Feedback', Icons.feedback, () {
+                _buildHelpCard('Feedback', 'assets/png/feedback.png', () {
                   // Navigate to Feedback page
                 }),
               ],
             ),
           ),
-      ]),
+        ],
+      ),
     );
   }
 
-  Widget _buildHelpCard(String title, IconData icon, VoidCallback onTap) {
+  Widget _buildHelpCard(String title, String iconPath, VoidCallback onTap) {
     return Container(
       decoration: BoxDecoration(
-gradient: LinearGradient(
-            colors: [AppColors.servicecards, AppColors.CardColor],
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-          ),        borderRadius: BorderRadius.circular(15),
+        gradient: LinearGradient(
+          colors: [AppColors.servicecards, AppColors.CardColor],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+        ),
+        borderRadius: BorderRadius.circular(15),
         boxShadow: [
           BoxShadow(
             color: AppColors.AppPrimary.withOpacity(0.3),
@@ -82,7 +82,11 @@ gradient: LinearGradient(
       child: ListTile(
         onTap: onTap,
         contentPadding: EdgeInsets.all(15.0),
-        leading: Icon(icon, size: 60, color: AppColors.appWhite),
+        leading: Image.asset(
+          iconPath,
+          width: 60, // Set the width for the icon
+          height: 60, // Set the height for the icon
+        ),
         title: PHAText(
           text: title,
           fontSize: 18.sp,

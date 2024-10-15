@@ -67,7 +67,7 @@ class HomeView extends StatelessWidget {
                           Get.to(ServicesViews());
                         }),
                         _buildCard('Help', Icons.help, () {
-                          Get.to(HelpViews());
+                           Get.to(HelpViews());
                         }),
                         _buildCard('SOS', Icons.warning_amber_rounded, () {
                           Get.to(SoSViews());

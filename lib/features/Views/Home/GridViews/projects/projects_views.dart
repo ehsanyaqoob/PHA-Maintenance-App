@@ -1,84 +1,54 @@
-
 import 'package:get/get.dart';
-import 'package:pharesidence/Generic_Widgets/Widgets/pha_text.dart';
 import 'package:pharesidence/exports/exports.dart';
-import 'package:shimmer/shimmer.dart';
-import '../../../../../Api_Providers/api_services_contollers.dart';
-import 'projects_view_controller.dart';
-import 'property_details.dart';
-class ProjectsViews extends StatefulWidget {
-  final String cnic; // Assuming you're passing CNIC from a previous screen
+import '../../../../../Shared/Controllers.dart/project_controller.dart';
+import '../../../../../models/projects_models.dart';
 
-  const ProjectsViews({super.key, required this.cnic}); // Added constructor for cnic
+class ProjectsViews extends StatefulWidget {
+  final String cnic;
+
+  const ProjectsViews({super.key, required this.cnic});
 
   @override
   State<ProjectsViews> createState() => _ProjectsViewsState();
 }
 
 class _ProjectsViewsState extends State<ProjectsViews> {
-  bool _isLoading = true;
-  List<Project> projects = [];
+  final ProjectsViewController _controller = Get.put(ProjectsViewController());
 
   @override
   void initState() {
     super.initState();
-   // _fetchProjects();
-    
+    _controller.fetchProjects(widget.cnic); 
   }
-
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.AppSecondary,
       appBar: CustomAppBar(
         title: 'Property Dashboard',
         centerTitle: false,
       ),
-      backgroundColor: AppColors.AppSecondary,
-      body: SingleChildScrollView(
-        scrollDirection: Axis.vertical,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 26.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(height: 20.h),
-              _buildProjectList(projects),
-              SizedBox(height: 20.h),
-            ],
-          ),
-        ),
-      ),
+      body: Obx(() {
+        if (_controller.isLoading.value) {
+          return Center(child: CircularProgressIndicator()); 
+        }
+
+        return _buildProjectList(_controller.projects); 
+      }),
     );
   }
 
-  Widget _buildProjectList(List<Project> projectList) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        PHAText(
-          text: 'Your Properties',
-          fontSize: 20.sp,
-          fontWeight: FontWeight.bold,
-          color: AppColors.AppPrimary,
-        ),
-        SizedBox(height: 10.h),
-        Container(
-          height: 300,
-          child: _isLoading
-              ? _buildShimmerEffect() // Show shimmer effect while loading
-              : ListView.builder(
-                  itemCount: projectList.length,
-                  itemBuilder: (context, index) {
-                    return _buildPropertiesRow(projectList[index]);
-                  },
-                ),
-        ),
-      ],
+  Widget _buildProjectList(List<Data> projectList) {
+    return ListView.builder(
+      itemCount: projectList.length,
+      itemBuilder: (context, index) {
+        return _buildPropertiesRow(projectList[index]);
+      },
     );
   }
 
-  Widget _buildPropertiesRow(Project project) {
+  Widget _buildPropertiesRow(Data project) {
     return GestureDetector(
       onTap: () {
         _showProjectDetails(project);
@@ -89,16 +59,12 @@ class _ProjectsViewsState extends State<ProjectsViews> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              PHAText(
-                text: project.name,
-                fontSize: 18.sp,
-                fontWeight: FontWeight.bold,
+              Text(
+                project.fullName ?? '',
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
-              SizedBox(height: 5.h),
-              PHAText(
-                text: 'Status: ${project.status}',
-                fontSize: 14.sp,
-              ),
+              SizedBox(height: 5),
+              Text('Status: ${project.status}'),
             ],
           ),
         ),
@@ -106,42 +72,46 @@ class _ProjectsViewsState extends State<ProjectsViews> {
     );
   }
 
-  void _showProjectDetails(Project project) {
-    Get.to(() => ProjectDetailsView(project: project));
+  void _showProjectDetails(Data project) {
+    Get.to(() => ProjectDetailsView(project: project)); // Navigate to ProjectDetailsView
   }
+}
 
-  Widget _buildShimmerEffect() {
-    return ListView.builder(
-      itemCount: 3, // Show 3 shimmer placeholders
-      itemBuilder: (context, index) {
-        return Shimmer.fromColors(
-          baseColor: Colors.grey.shade300,
-          highlightColor: Colors.grey.shade100,
-          child: Container(
-            margin: EdgeInsets.symmetric(vertical: 10.h),
-            padding: EdgeInsets.all(15.h),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(10),
+// Widget to display project details
+class ProjectDetailsView extends StatelessWidget {
+  final Data project; // Change this to Data
+
+  const ProjectDetailsView({Key? key, required this.project}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(project.fullName ?? 'Project Details'), // Display the project name
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Project Name: ${project.fullName ?? 'N/A'}',
+              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Container(
-                  width: 150.w,
-                  height: 20.h,
-                  color: Colors.grey.shade300,
-                ),
-                Container(
-                  width: 20.w,
-                  height: 20.h,
-                  color: Colors.grey.shade300,
-                ),
-              ],
+            SizedBox(height: 10),
+            Text(
+              'Status: ${project.status ?? 'Unknown'}',
+              style: TextStyle(fontSize: 18),
             ),
-          ),
-        );
-      },
+            SizedBox(height: 20),
+            // Add more details as needed
+            // Text(
+            //   'Details: ${project.details ?? 'No details available.'}', // Assuming 'details' is a field in Data
+            //   style: TextStyle(fontSize: 16),
+            // ),
+          ],
+        ),
+      ),
     );
   }
 }

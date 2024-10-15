@@ -129,7 +129,7 @@ class _SignInViewState extends State<SignInView> {
                   ),
                 ],
               ),
-              const Spacer(),
+             const Spacer(),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
