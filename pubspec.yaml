@@ -9,8 +9,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  
-  
+
   cupertino_icons: ^1.0.6
   sizer: ^2.0.15
   mask_text_input_formatter: ^2.9.0

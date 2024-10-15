@@ -1,7 +1,9 @@
 
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:pharesidence/Generic_Widgets/Widgets/pha_text.dart';
 import 'package:pharesidence/exports/exports.dart';
+import 'package:pharesidence/features/Views/Splash_view/get_start_view.dart';
 import 'package:pharesidence/features/Views/signup_view.dart/signup_view.dart';
 import 'package:pharesidence/features/Views/signin_view.dart/signin_controller.dart';
 
@@ -22,26 +24,35 @@ class _SignInViewState extends State<SignInView> {
       backgroundColor: AppColors.AppSecondary,
       body: Stack(
         children: [
+
+          // Background Logo
+          Positioned.fill(
+            child: Container(
+              child: Image.asset(
+                'assets/png/back.png',
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 30),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 const Spacer(),
-                PHAText(
-                  text: 'PHAF Digital',
-                  fontSize: 26.sp,
-                  textAlign: TextAlign.center,
-                  fontWeight: FontWeight.bold,
-                  color: AppColors.AppPrimary,
-                ),
-                Image.asset(
-                  'assets/png/logo.png',
+                SvgPicture.asset(
+                  'assets/png/icon_app_logo.svg',
                   width: 140.w,
                   height: 140.h,
-                  color: AppColors.AppPrimary,
                 ),
-                
+                PHAText(
+                  text: 'PHAF Maintenance Service',
+                  fontSize: 16.sp,
+                  fontWeight: FontWeight.w700,
+                  textAlign: TextAlign.center,
+                ),
+                const Spacer(),
                 Column(
                   children: [
                     PHATextFormField(
@@ -54,10 +65,15 @@ class _SignInViewState extends State<SignInView> {
                         CNICInputFormatter(),
                       ],
                       onChanged: controller.onCNICChange,
-                      prefix: const Icon(
-                        Icons.contact_phone,
-                        color: AppColors.greycolor,
-                        size: 25,
+                      prefix: Container(
+                        width: 15,
+                        height: 15,
+                        padding: EdgeInsets.all(12),
+                        child: SvgPicture.asset(
+                            'assets/png/icon_cnic_card.svg',
+                            colorFilter:
+                            ColorFilter.mode(Color(0xffB3B3B3), BlendMode.srcIn)
+                        ),
                       ),
                     ),
                     const SizedBox(height: 16),
@@ -71,28 +87,17 @@ class _SignInViewState extends State<SignInView> {
                         FilteringTextInputFormatter.digitsOnly,
                         PakistaniPhoneNumberFormatter(),
                       ],
-                      prefix: const Icon(
-                        Icons.phone,
-                        color: AppColors.greycolor,
-                        size: 25,
+                      prefix: Container(
+                        width: 15,
+                        height: 15,
+                        padding: EdgeInsets.all(12),
+                        child: SvgPicture.asset(
+                          'assets/png/icon_phone_bold.svg',
+                            colorFilter:
+                            ColorFilter.mode(Color(0xffB3B3B3), BlendMode.srcIn)
+                        ),
                       ),
                     ),
-                    const SizedBox(height: 12),
-                    // Row(
-                    //   children: [
-                    //     const Spacer(),
-                    //     GestureDetector(
-                    //       onTap: () {
-                    //         Get.to(() => OtpView(cnic: '',));
-                    //       },
-                    //       child: PHAText(
-                    //         text: 'Forgot Password?',
-                    //         fontSize: 16,
-                    //         color: AppColors.AppPrimary,
-                    //       ),
-                    //     ),
-                    //   ],
-                    // ),
                     const SizedBox(height: 12),
                     Obx(() => PHAButton(
                           title: 'Sign In',
@@ -105,27 +110,18 @@ class _SignInViewState extends State<SignInView> {
                           fillColor: true,
                         )),
                     const SizedBox(height: 12),
-                    GestureDetector(
-                      onTap: () {
-                        Get.to(() => SignUpView());
-                      },
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          PHAText(
-                            text: 'Don\'t have membership?',
-                            fontSize: 13.sp,
-                            fontWeight: FontWeight.w500,
-                            color: Colors.black,
-                          ),
-                          const SizedBox(width: 10),
-                          PHAText(
-                            text: 'Sign Up',
-                            color: AppColors.AppPrimary,
-                            fontSize: 16,
-                          ),
-                        ],
-                      ),
+                    PHAText(
+                      text: 'Don\'t have membership?',
+                      fontSize: 13.sp,
+                      fontWeight: FontWeight.w500,
+                      color: Colors.black,
+                    ),
+                    const SizedBox(width: 10),
+                    PHAText(
+                      text: 'Sign Up',
+                      color: Color(0xff2E81A4),
+                      fontSize: 14.sp,
+                      fontWeight: FontWeight.w700,
                     ),
                   ],
                 ),
@@ -133,73 +129,20 @@ class _SignInViewState extends State<SignInView> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    GestureDetector(
+                    BottomTab(
+                      image: 'assets/png/icon_calendar.svg',
+                      label: 'News/Events',
                       onTap: () {},
-                      child: Column(
-                        children: [
-                          CircleAvatar(
-                            child: const Icon(Icons.event, color: Colors.white),
-                            backgroundColor: AppColors.AppPrimary,
-                            radius: 30,
-                          ),
-                          const SizedBox(height: 8),
-                          PHAText(
-                            text: 'News/Events',
-                            fontSize: 12.sp,
-                          ),
-                        ],
-                      ),
                     ),
-                    GestureDetector(
+                    BottomTab(
+                      image: 'assets/png/icon_building.svg',
+                      label: 'Projects',
                       onTap: () {},
-                      child: Column(
-                        children: [
-                          CircleAvatar(
-                            child: const Icon(Icons.business, color: Colors.white),
-                            backgroundColor: AppColors.AppPrimary,
-                            radius: 30,
-                          ),
-                          const SizedBox(height: 8),
-                          PHAText(
-                            text: 'Projects',
-                            fontSize: 12.sp,
-                          ),
-                        ],
-                      ),
                     ),
-                    GestureDetector(
+                    BottomTab(
+                      image: 'assets/png/icon_phone.svg',
+                      label: 'Contact',
                       onTap: () {},
-                      child: Column(
-                        children: [
-                          CircleAvatar(
-                            child: const Icon(Icons.business, color: Colors.white),
-                            backgroundColor: AppColors.AppPrimary,
-                            radius: 30,
-                          ),
-                          const SizedBox(height: 8),
-                          PHAText(
-                            text: 'On Going',
-                            fontSize: 12.sp,
-                          ),
-                        ],
-                      ),
-                    ),
-                    GestureDetector(
-                      onTap: () {},
-                      child: Column(
-                        children: [
-                          CircleAvatar(
-                            child: const Icon(Icons.phone, color: Colors.white),
-                            backgroundColor: AppColors.AppPrimary,
-                            radius: 30,
-                          ),
-                          const SizedBox(height: 8),
-                          PHAText(
-                            text: 'Contact',
-                            fontSize: 12.sp,
-                          ),
-                        ],
-                      ),
                     ),
                   ],
                 ),
