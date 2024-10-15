@@ -65,7 +65,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
           ? Text(
               title!,
               style: titleStyle ??
-                  GoogleFonts.balsamiqSans(
+                  GoogleFonts.poppins(
                     color: titleColor ?? AppColors.appBlack,
                     fontWeight: FontWeight.bold,
                     fontSize: 18.sp,

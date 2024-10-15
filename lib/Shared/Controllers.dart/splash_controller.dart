@@ -1,6 +1,8 @@
 import 'package:get/get.dart';
 import 'package:pharesidence/features/Views/Splash_view/get_start_view.dart';
 
+import '../../features/Views/Bills_Preview_Views/bills_preview.dart';
+
 class SplashController extends GetxController {
   var showPhaText = false.obs;
   var showPHAText = false.obs;
@@ -34,6 +36,6 @@ class SplashController extends GetxController {
 
   void navigateToNextScreen() {
     // Navigate to your next screen after splash animation ends
-    Get.to(GetStartView());
+    Get.to(());
   }
 }
