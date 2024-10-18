@@ -1,3 +1,4 @@
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:pharesidence/Generic_Widgets/Widgets/pha_text.dart';
 import 'package:pharesidence/exports/exports.dart';
@@ -18,7 +19,7 @@ class _GetStartViewState extends State<GetStartView> {
       backgroundColor: AppColors.AppSecondary,
       body: Stack(
         children: [
-           // Background Logo
+          // Background Logo
           Positioned.fill(
             child: Container(
               child: Image.asset(
@@ -27,41 +28,24 @@ class _GetStartViewState extends State<GetStartView> {
               ),
             ),
           ),
-         
+
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 30),
+            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 24),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 const Spacer(),
-                 Container(
-                          height: 140.h,
-                          width: 140.w,
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            shape: BoxShape.circle,
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.black.withOpacity(0.1),
-                                spreadRadius: 5,
-                                blurRadius: 10,
-                                offset: const Offset(0, 5),
-                              ),
-                            ],
-                          ),
-                          child: Image.asset(
-                            'assets/png/logo.png',
-                            width: 140.w,
-                            height: 140.h,
-                            color: AppColors.AppPrimary,
-                          ),
-                        ),
+                const Spacer(),
+                SvgPicture.asset(
+                  'assets/png/icon_app_logo.svg',
+                  width: 140.w,
+                  height: 140.h,
+                ),
                 PHAText(
                   text: 'PHAF Maintenance Service',
-                  fontSize: 18.sp,
-                  fontWeight: FontWeight.bold,
+                  fontSize: 16.sp,
+                  fontWeight: FontWeight.w700,
                   textAlign: TextAlign.center,
-                  letterSpacing: 1.5,
                 ),
                 const Spacer(),
                 PHAButton(
@@ -69,47 +53,45 @@ class _GetStartViewState extends State<GetStartView> {
                   onTap: () {
                     Get.to(SignInView());
                   },
-                
                 ),
-                const SizedBox(height: 16),
-                PHAButton(
-                  title: 'Sign Up',
-                  onTap: () {
-                    Get.to(SignUpView());
-                  },
-                ),
-                const SizedBox(height: 16),
+                SizedBox(height: 16.h),
                 GestureDetector(
                   onTap: () {},
                   child: PHAText(
                     text: "Don't have membership?",
-                    fontSize: 16.sp,
-                    color: Colors.white70,
+                    fontSize: 13.sp,
                     textAlign: TextAlign.center,
                   ),
+                ),
+                SizedBox(height: 4.h),
+                PHAButton(
+                  title: 'Sign Up',
+                  filledColor: Color(0xff2E81A4),
+                  onTap: () {
+                    Get.to(SignUpView());
+                  },
                 ),
                 const Spacer(),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    _buildBottomIcon(
-                      icon: Icons.event,
+                    BottomTab(
+                      image: 'assets/png/icon_calendar.svg',
                       label: 'News/Events',
                       onTap: () {},
                     ),
-                    _buildBottomIcon(
-                      icon: Icons.business,
+                    BottomTab(
+                      image: 'assets/png/icon_building.svg',
                       label: 'Projects',
                       onTap: () {},
                     ),
-                    _buildBottomIcon(
-                      icon: Icons.phone,
+                    BottomTab(
+                      image: 'assets/png/icon_phone.svg',
                       label: 'Contact',
                       onTap: () {},
                     ),
                   ],
                 ),
-                const SizedBox(height: 20),
               ],
             ),
           ),
@@ -117,41 +99,33 @@ class _GetStartViewState extends State<GetStartView> {
       ),
     );
   }
+}
 
-  Widget _buildBottomIcon({required IconData icon, required String label, required VoidCallback onTap}) {
+class BottomTab extends StatelessWidget {
+  String image;
+  String label;
+  VoidCallback onTap;
+  BottomTab({super.key, required this.image, required this.label, required this.onTap});
+
+  @override
+  Widget build(BuildContext context) {
     return GestureDetector(
       onTap: onTap,
       child: Column(
         children: [
           Container(
-            height: 70.h,
-            width: 70.w,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              gradient: LinearGradient(
-                colors: [AppColors.AppPrimary, AppColors.AppPrimary,],
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-              ),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black26,
-                  blurRadius: 6,
-                  offset: Offset(2, 4),
-                ),
-              ],
-            ),
-            child: CircleAvatar(
-              radius: 30,
-              backgroundColor: Colors.transparent,
-              child: Icon(icon, color: Colors.white, size: 30),
-            ),
+            height: 50.h,
+            width: 50.h,
+            padding: EdgeInsets.all(16),
+            decoration:
+            BoxDecoration(shape: BoxShape.circle, color: Color(0xff2E2D74)),
+            child: SvgPicture.asset(image),
           ),
           const SizedBox(height: 8),
           PHAText(
             text: label,
-            fontSize: 14.sp,
-        
+            fontSize: 12.sp,
+            color: Color(0xff676767),
             textAlign: TextAlign.center,
           ),
         ],
@@ -159,3 +133,4 @@ class _GetStartViewState extends State<GetStartView> {
     );
   }
 }
+

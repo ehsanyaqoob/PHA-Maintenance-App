@@ -8,6 +8,7 @@ class PHAButton extends StatelessWidget {
     this.onTap,
     this.topMargin = 0.0,
     this.fillColor = true,
+    this.filledColor = const Color(0xff2E2D74),
     this.borderColor,
     this.shadow = false,
   });
@@ -17,6 +18,7 @@ class PHAButton extends StatelessWidget {
   final double topMargin;
   final bool fillColor;
   final Color? borderColor;
+  final Color? filledColor;
   final bool shadow;
 
   @override
@@ -28,14 +30,14 @@ class PHAButton extends StatelessWidget {
         child: Container(
           height: 40.h,
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(20),
+            borderRadius: BorderRadius.circular(40.h/2),
             border: Border.all(
               color: borderColor ?? AppColors.AppPrimary,
             ),
             color: fillColor
                 ? onTap == null
-                    ? AppColors.AppPrimary.withOpacity(0.85) // Disabled state
-                    : AppColors.AppPrimary
+                    ? filledColor?.withOpacity(0.85) // Disabled state
+                    : filledColor
                 : Colors.transparent,
             // Conditional shadow
             boxShadow: shadow
@@ -55,7 +57,7 @@ class PHAButton extends StatelessWidget {
               textAlign: TextAlign.center,
               color: fillColor ? AppColors.appWhite : AppColors.AppPrimary,
               fontWeight: FontWeight.w600,
-              fontSize: 20,
+              fontSize: 16.sp,
             ),
           ),
         ),
