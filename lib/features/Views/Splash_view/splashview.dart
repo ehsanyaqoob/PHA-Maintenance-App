@@ -1,4 +1,3 @@
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pharesidence/Generic_Widgets/Widgets/pha_text.dart';
 import 'package:pharesidence/exports/exports.dart';
@@ -12,13 +11,12 @@ class SplashView extends StatelessWidget {
     return Scaffold(
       body: Stack(
         children: [
-
           Container(
             decoration: BoxDecoration(
               gradient: LinearGradient(
-                begin: Alignment.topCenter,   // Starting point (top)
-                end: Alignment.bottomCenter,  // Ending point (bottom)
-                colors:  [
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [
                   const Color(0xff2E2D74),
                   const Color(0xff2E2D74),
                   const Color(0xff2E2D74),
@@ -28,7 +26,7 @@ class SplashView extends StatelessWidget {
             ),
           ),
 
-        // Background Logo
+          // Background Logo
           Positioned.fill(
             child: Container(
               child: Image.asset(
@@ -38,14 +36,11 @@ class SplashView extends StatelessWidget {
             ),
           ),
 
-
-
           // Content Overlay
           Column(
             mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-
               Spacer(),
               // Middle Logo with animation
               Obx(() => AnimatedOpacity(
@@ -96,7 +91,6 @@ class SplashView extends StatelessWidget {
                       ),
                     ),
                   )),
-
               // Loading Spinner and text
               // SizedBox(height: 50.h),
               // const SpinKitFadingCircle(
@@ -119,7 +113,8 @@ class SplashView extends StatelessWidget {
                   children: [
                     const CircularProgressIndicator(
                       backgroundColor: Colors.white,
-                      valueColor: AlwaysStoppedAnimation<Color>(Color(0xff2E81A4)),
+                      valueColor:
+                          AlwaysStoppedAnimation<Color>(Color(0xff2E81A4)),
                     ),
                     SizedBox(height: 8.h),
                     Text('Please wait, loading...',
@@ -128,9 +123,7 @@ class SplashView extends StatelessWidget {
                             fontSize: 9.sp,
                             fontFamily: AppFonts.poppins,
                             fontWeight: FontWeight.w400,
-                            color: Colors.white
-                        )
-                    )
+                            color: Colors.white))
                   ],
                 ),
               ),

@@ -10,11 +10,11 @@ class ServicesViews extends StatefulWidget {
 
 class _ServicesViewsState extends State<ServicesViews> {
   final List<Map<String, dynamic>> services = [
-    {'title': 'Book a Plumber', 'icon': Icons.plumbing},
-    {'title': 'Book an Electrician', 'icon': Icons.electric_bolt},
-    {'title': 'Book a Cleaner', 'icon': Icons.cleaning_services},
-    {'title': 'Book a Painter', 'icon': Icons.format_paint},
-    {'title': 'Book a Carpenter', 'icon': Icons.build},
+    {'title': 'Book a Plumber', 'icon': 'assets/png/plumber.png'},
+    {'title': 'Book an Electrician', 'icon': 'assets/png/electrician.png'},
+    {'title': 'Book a Cleaner', 'icon': 'assets/png/cleaner.png'},
+    {'title': 'Book a Painter', 'icon': 'assets/png/painter.png'},
+    {'title': 'Book a Carpenter', 'icon': 'assets/png/carpainter.png'},
   ];
 
   @override
@@ -25,7 +25,7 @@ class _ServicesViewsState extends State<ServicesViews> {
         centerTitle: false,
       ),
       backgroundColor: AppColors.AppSecondary,
-      body:Stack(
+      body: Stack(
         children: [
           Positioned.fill(
             child: Container(
@@ -35,48 +35,47 @@ class _ServicesViewsState extends State<ServicesViews> {
               ),
             ),
           ),
-           Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 26.0, vertical: 20.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            PHAText(
-              textAlign: TextAlign.center,
-              text: 'Book a Service',
-              fontSize: 24.sp,
-              fontWeight: FontWeight.bold,
-              
-            ),
-            SizedBox(height: 20.h),
-            Expanded(
-              child: GridView.builder(
-                itemCount: services.length,
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2, // Number of items per row
-                  crossAxisSpacing: 15.0, // Spacing between columns
-                  mainAxisSpacing: 15.0, // Spacing between rows
-                  childAspectRatio: 1, // Adjust item height/width ratio
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 26.0, vertical: 20.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                PHAText(
+                  textAlign: TextAlign.center,
+                  text: 'Book a Service',
+                  fontSize: 24.sp,
+                  fontWeight: FontWeight.bold,
                 ),
-                itemBuilder: (context, index) {
-                  return _buildServiceCard(
-                    services[index]['title'],
-                    services[index]['icon'],
-                    () {
-                      // Add booking logic here
+                SizedBox(height: 20.h),
+                Expanded(
+                  child: GridView.builder(
+                    itemCount: services.length,
+                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2, // Number of items per row
+                      crossAxisSpacing: 15.0, // Spacing between columns
+                      mainAxisSpacing: 15.0, // Spacing between rows
+                      childAspectRatio: 1, // Adjust item height/width ratio
+                    ),
+                    itemBuilder: (context, index) {
+                      return _buildServiceCard(
+                        services[index]['title'],
+                        services[index]['icon'],
+                        () {
+                          // Add booking logic here
+                        },
+                      );
                     },
-                  );
-                },
-              ),
+                  ),
+                ),
+              ],
             ),
-          ],
-        ),
-      ),
-    
+          ),
         ],
-      ));
+      ),
+    );
   }
 
-  Widget _buildServiceCard(String title, IconData icon, VoidCallback onTap) {
+  Widget _buildServiceCard(String title, String iconPath, VoidCallback onTap) {
     return GestureDetector(
       onTap: onTap,
       child: Container(
@@ -99,7 +98,11 @@ class _ServicesViewsState extends State<ServicesViews> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(icon, size: 40, color: AppColors.appWhite),
+            Image.asset(
+              iconPath,
+              width: 80, 
+              height: 80, 
+            ),
             SizedBox(height: 10),
             PHAText(
               text: title,

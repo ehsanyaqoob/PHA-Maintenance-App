@@ -6,7 +6,7 @@ export 'package:pharesidence/Colors/colors.dart';
 /////
 export 'package:get/get_core/src/get_main.dart';
 export 'package:get/get_instance/get_instance.dart';
-export  'package:pharesidence/features/Views/Splash_view/splash_controller.dart';
+export  'package:pharesidence/Shared/Controllers.dart/splash_controller.dart';
 export 'package:pharesidence/features/Views/Splash_view/splashview.dart';
 
 export 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';

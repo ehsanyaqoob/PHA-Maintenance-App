@@ -43,10 +43,10 @@ class PHAButton extends StatelessWidget {
             boxShadow: shadow
                 ? [
                     BoxShadow(
-                      color: AppColors.AppPrimary.withOpacity(0.85),
-                      spreadRadius: 2,
-                      blurRadius: 5,
-                      offset: Offset(0, 3),
+                      color: AppColors.AppSecondary.withOpacity(0.85),
+                      spreadRadius: 10,
+                      blurRadius: 10,
+                      offset: Offset(4, 4),
                     ),
                   ]
                 : [],

@@ -38,6 +38,7 @@ class CustomButtonWithIcon extends StatelessWidget {
         decoration: BoxDecoration(
           color: backgroundColor,
           borderRadius: BorderRadius.circular(borderRadius),
+          
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,

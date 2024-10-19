@@ -1,11 +1,11 @@
-
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:pharesidence/Generic_Widgets/Widgets/pha_text.dart';
 import 'package:pharesidence/exports/exports.dart';
 import 'package:pharesidence/features/Views/Splash_view/get_start_view.dart';
 import 'package:pharesidence/features/Views/signup_view.dart/signup_view.dart';
-import 'package:pharesidence/features/Views/signin_view.dart/signin_controller.dart';
+import '../../../Shared/Controllers.dart/signin_controller.dart';
+import '../Home/home_view.dart';
 
 class SignInView extends StatefulWidget {
   const SignInView({super.key});
@@ -17,30 +17,21 @@ class SignInView extends StatefulWidget {
 class _SignInViewState extends State<SignInView> {
   /// Singin Controller ///
   final SigninController controller = Get.put(SigninController());
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-            resizeToAvoidBottomInset: true, 
+      resizeToAvoidBottomInset: true, // Prevents overflow
       backgroundColor: AppColors.AppSecondary,
-      body: Stack(
-        children: [
-
-          // Background Logo
-          Positioned.fill(
-            child: Container(
-              child: Image.asset(
-                'assets/png/back.png',
-                fit: BoxFit.cover,
-              ),
-            ),
-          ),
-
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 30),
+      body: SafeArea(
+        child: SingleChildScrollView(
+          physics: ClampingScrollPhysics(),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 60.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                const Spacer(),
+                const SizedBox(height: 20), // Extra spacing if needed
                 SvgPicture.asset(
                   'assets/png/icon_app_logo.svg',
                   width: 140.w,
@@ -52,80 +43,97 @@ class _SignInViewState extends State<SignInView> {
                   fontWeight: FontWeight.w700,
                   textAlign: TextAlign.center,
                 ),
-                const Spacer(),
-                Column(
-                  children: [
-                    PHATextFormField(
-                      controller: TextEditingController(),
-                      hint: 'Type your CNIC',
-                      title: 'Enter Your CNIC',
-                      inputType: TextInputType.number,
-                      inputFormatters: [
-                        FilteringTextInputFormatter.digitsOnly,
-                        CNICInputFormatter(),
-                      ],
-                      onChanged: controller.onCNICChange,
-                      prefix: Container(
-                        width: 15,
-                        height: 15,
-                        padding: EdgeInsets.all(12),
-                        child: SvgPicture.asset(
-                            'assets/png/icon_cnic_card.svg',
-                            colorFilter:
-                            ColorFilter.mode(Color(0xffB3B3B3), BlendMode.srcIn)
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 16),
-                    PHATextFormField(
-                      controller: TextEditingController(), 
-                      hint: 'xxxx-xxxxxxx',
-                      title: 'Enter Your Mobile',
-                      inputType: TextInputType.phone,
-                      onChanged: controller.onCellChange,
-                      inputFormatters: [
-                        FilteringTextInputFormatter.digitsOnly,
-                        PakistaniPhoneNumberFormatter(),
-                      ],
-                      prefix: Container(
-                        width: 15,
-                        height: 15,
-                        padding: EdgeInsets.all(12),
-                        child: SvgPicture.asset(
-                          'assets/png/icon_phone_bold.svg',
-                            colorFilter:
-                            ColorFilter.mode(Color(0xffB3B3B3), BlendMode.srcIn)
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 12),
-                    Obx(() => PHAButton(
-                          title: 'Sign In',
-                          onTap: controller.isLoading.value
-                              ? null
-                              : () async {
-                                  await controller.signInUser();
-                                },
-                          topMargin: 12.sp,
-                          fillColor: true,
-                        )),
-                    const SizedBox(height: 12),
-                    PHAText(
-                      text: 'Don\'t have membership?',
-                      fontSize: 13.sp,
-                      fontWeight: FontWeight.w500,
-                      color: Colors.black,
-                    ),
-                    const SizedBox(width: 10),
-                    PHAText(
-                      text: 'Sign Up',
-                      color: Color(0xff2E81A4),
-                      fontSize: 14.sp,
-                      fontWeight: FontWeight.w700,
-                    ),
+                const SizedBox(height: 20), // Add some vertical space
+                PHATextFormField(
+                  controller: TextEditingController(),
+                  hint: 'Type your CNIC',
+                  title: 'Enter Your CNIC',
+                  inputType: TextInputType.number,
+                  inputFormatters: [
+                    FilteringTextInputFormatter.digitsOnly,
+                    CNICInputFormatter(),
                   ],
+                  onChanged: controller.onCNICChange,
+                  prefix: Container(
+                    width: 15,
+                    height: 15,
+                    padding: EdgeInsets.all(12),
+                    child: SvgPicture.asset(
+                      'assets/png/icon_cnic_card.svg',
+                      colorFilter: ColorFilter.mode(
+                          Color(0xffB3B3B3), BlendMode.srcIn),
+                    ),
+                  ),
                 ),
-                const Spacer(),
+                const SizedBox(height: 16),
+                PHATextFormField(
+                  controller: TextEditingController(),
+                  hint: 'xxxx-xxxxxxx',
+                  title: 'Enter Your Mobile',
+                  inputType: TextInputType.phone,
+                  onChanged: controller.onCellChange,
+                  inputFormatters: [
+                    FilteringTextInputFormatter.digitsOnly,
+                    PakistaniPhoneNumberFormatter(),
+                  ],
+                  prefix: Container(
+                    width: 15,
+                    height: 15,
+                    padding: EdgeInsets.all(12),
+                    child: SvgPicture.asset(
+                      'assets/png/icon_phone_bold.svg',
+                      colorFilter: ColorFilter.mode(
+                          Color(0xffB3B3B3), BlendMode.srcIn),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 12),
+                PHAButton(
+                      title: 'Sign In',
+                      onTap: (){
+                        Get.to(HomeView(apiData: {},));
+                      },
+                      // onTap: controller.isLoading.value
+                      //     ? null
+                      //     : () async {
+                      //         await controller.signInUser();
+                      //       },
+                      topMargin: 12.sp,
+                      fillColor: true,
+                    ),
+                // Obx(() => PHAButton(
+                //       title: 'Sign In',
+                //       onTap: (){
+                //         Get.to(HomeView(apiData: {},));
+                //       },
+                //       // onTap: controller.isLoading.value
+                //       //     ? null
+                //       //     : () async {
+                //       //         await controller.signInUser();
+                //       //       },
+                //       topMargin: 12.sp,
+                //       fillColor: true,
+                //     )),
+                const SizedBox(height: 12),
+                PHAText(
+                  text: 'Don\'t have membership?',
+                  fontSize: 13.sp,
+                  fontWeight: FontWeight.w500,
+                  color: Colors.black,
+                ),
+                const SizedBox(width: 10),
+                GestureDetector(
+                  onTap: () {
+                    Get.to(SignUpView());
+                  },
+                  child: PHAText(
+                    text: 'Sign Up',
+                    color: Color(0xff2E81A4),
+                    fontSize: 14.sp,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+                const SizedBox(height: 20),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
@@ -146,26 +154,28 @@ class _SignInViewState extends State<SignInView> {
                     ),
                   ],
                 ),
+                const SizedBox(height: 20),
               ],
             ),
           ),
-          Obx(() {
-            if (controller.isLoading.value) {
-              return Container(
-                color: AppColors.AppPrimary.withOpacity(0.45),
-                child: Center(
-                  child: CircularProgressIndicator(
-                    valueColor: AlwaysStoppedAnimation<Color>(
-                        AppColors.AppPrimary),
-                  ),
-                ),
-              );
-            } else {
-              return const SizedBox();
-            }
-          }),
-        ],
+        ),
       ),
+      // Loading overlay when controller is loading
+      floatingActionButton: Obx(() {
+        if (controller.isLoading.value) {
+          return Container(
+            color: AppColors.AppPrimary.withOpacity(0.45),
+            child: Center(
+              child: CircularProgressIndicator(
+                valueColor:
+                    AlwaysStoppedAnimation<Color>(AppColors.AppPrimary),
+              ),
+            ),
+          );
+        } else {
+          return const SizedBox();
+        }
+      }),
     );
   }
 }

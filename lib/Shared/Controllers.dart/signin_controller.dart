@@ -14,11 +14,12 @@ class SigninController extends GetxController {
     cnic.value = value;
   }
 
-  void onCellChange(String value) { // Change method name to onCellChange
+  void onCellChange(String value) {
     cell.value = value;
   }
- Future<void> signInUser() async {
-    if (cnic.value.isEmpty || cell.value.isEmpty) { // Check cell instead of phone
+
+  Future<void> signInUser() async {
+    if (cnic.value.isEmpty || cell.value.isEmpty) {
       Get.snackbar('Error', 'CNIC and cell number cannot be empty');
       return;
     }
@@ -29,10 +30,10 @@ class SigninController extends GetxController {
       // Updated request body
       final Map<String, dynamic> requestBody = {
         "cnic": cnic.value.trim(),
-        "cell": cell.value.trim().replaceAll('-', ''), 
+        "cell": cell.value.trim().replaceAll('-', ''),
       };
 
-      debugPrint("Request Body: $requestBody"); // Log request body
+      debugPrint("Request Body: $requestBody");
 
       final response = await http.post(
         Uri.parse(loginUrl),
@@ -42,8 +43,7 @@ class SigninController extends GetxController {
 
       if (response.statusCode == 200) {
         final Map<String, dynamic> responseData = jsonDecode(response.body);
-        
-        // Check for token in the response
+
         if (responseData['status'] == true) {
           debugPrint("Token: ${responseData['data']['token']}");
 
@@ -52,7 +52,8 @@ class SigninController extends GetxController {
 
           debugPrint("Navigation call executed.");
         } else {
-          Get.snackbar('Error', responseData['message'] ?? 'Invalid credentials');
+          Get.snackbar(
+              'Error', responseData['message'] ?? 'Invalid credentials');
         }
       } else {
         // Log full response for debugging
@@ -65,4 +66,5 @@ class SigninController extends GetxController {
     } finally {
       isLoading.value = false;
     }
-  }    }
+  }
+}

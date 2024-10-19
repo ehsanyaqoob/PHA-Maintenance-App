@@ -1,28 +1,34 @@
-import 'dart:ffi';
 import 'dart:io';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:pharesidence/Generic_Widgets/Widgets/pha_text.dart';
 import 'package:pharesidence/exports/exports.dart';
-import 'package:pharesidence/features/Views/Splash_view/get_start_view.dart';
+import 'package:pharesidence/features/Views/Bills_Preview_Views/bills_preview.dart';
+import 'package:pharesidence/features/Views/Profile_view/profile_view.dart';
+import '../Drawer/custom_drawer.dart';
 import 'GridViews/helpviews.dart';
 import 'GridViews/projects/projects_views.dart';
 import 'GridViews/servicesview.dart';
 import 'GridViews/sosviews.dart';
 
-class HomeView extends StatelessWidget {
+class HomeView extends StatefulWidget {
   final Map<String, dynamic> apiData;
   HomeView({required this.apiData});
 
   @override
+  State<HomeView> createState() => _HomeViewState();
+}
+
+class _HomeViewState extends State<HomeView> {
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // drawer: CustomDrawer(),
-      resizeToAvoidBottomInset: true, // Ensure the view resizes
+       drawer: CustomDrawer(),
+      resizeToAvoidBottomInset: true, 
       backgroundColor: AppColors.AppSecondary,
       appBar: _buildAppBar(
         context,
-        apiData['name'] ?? 'User',
+        widget.apiData['name'] ?? 'User',
       ),
       body: Stack(
         children: [
@@ -39,21 +45,25 @@ class HomeView extends StatelessWidget {
           Positioned.fill(
             child: SingleChildScrollView(
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 26.0),
+                padding: const EdgeInsets.symmetric(horizontal: 26.0, ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     // Displaying all available data dynamically
-                    if (apiData['cnic'] != null)
+                    if (widget.apiData['cnic'] != null)
                       _buildInfoCard(
                           'CNIC',
-                          apiData['cnic'],
+                          widget.apiData['cnic'],
                           'assets/png/icon_cnic_card.svg',
                           AppColors.appWhite,
                           AppColors.CardColor),
-                    if (apiData['mobile_no'] != null)
-                      _buildInfoCard('Mobile No', apiData['mobile_no'],
-                          'assets/png/icon_phone_bold.svg', AppColors.appWhite, AppColors.CardColor),
+                    if (widget.apiData['mobile_no'] != null)
+                      _buildInfoCard(
+                          'Mobile No',
+                          widget.apiData['mobile_no'],
+                          'assets/png/icon_phone_bold.svg',
+                          AppColors.appWhite,
+                          AppColors.CardColor),
 
                     SizedBox(height: 10.h),
                     // Search bar
@@ -78,17 +88,17 @@ class HomeView extends StatelessWidget {
                               // here need to send cnic back to
                             },
                             child: _buildCard(
-                                'Property & Payments', Icons.business, () {
-                              Get.to(ProjectsViews());
+                                'Property & Payments','assets/svg/home.svg', () {
+                              Get.to(MaintenanceDetailsView());
                             }),
                           ),
-                          _buildCard('Services', Icons.settings, () {
+                          _buildCard('Services','assets/svg/services.svg', () {
                             Get.to(ServicesViews());
                           }),
-                          _buildCard('Help', Icons.help, () {
+                          _buildCard('Help', 'assets/svg/help.svg',() {
                             Get.to(HelpViews());
                           }),
-                          _buildCard('SOS', Icons.warning_amber_rounded, () {
+                          _buildCard('SOS', 'assets/svg/sos.svg', () {
                             Get.to(SoSViews());
                           }),
                         ],
@@ -113,16 +123,36 @@ Widget _buildPropertiesSummary() {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         PHAText(
-            text: 'Properties Summary',
+            text: 'Your Properties',
             fontSize: 18.sp,
             fontWeight: FontWeight.w800),
         SizedBox(height: 6.h),
         Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween, 
           children: [
-            SummaryItem(image: 'assets/png/icon_gray_structure.svg', count: '2', type: 'Grey Structure(s)'),
-            SummaryItem(image: 'assets/png/icon_apartments.svg', count: '0', type: 'Apartment(s)'),
-            SummaryItem(image: 'assets/png/icon_commercial.svg', count: '0', type: 'Commercial(s)'),
+            Expanded(
+              child: SummaryItem(
+                image: 'assets/png/icon_gray_structure.svg',
+                count: '2',
+                type: 'Grey Structure(s)',
+              ),
+            ),
+            SizedBox(width: 8),
+            Expanded(
+              child: SummaryItem(
+                image: 'assets/png/icon_apartments.svg',
+                count: '0',
+                type: 'Apartment(s)',
+              ),
+            ),
+            SizedBox(width: 8), 
+            Expanded(
+              child: SummaryItem(
+                image: 'assets/png/icon_commercial.svg',
+                count: '0',
+                type: 'Commercial(s)',
+              ),
+            ),
           ],
         )
       ],
@@ -130,8 +160,10 @@ Widget _buildPropertiesSummary() {
   );
 }
 
-Widget _buildInfoCard(String label, String value, String image,
-    Color cardColor, Color iconColor) {
+
+
+Widget _buildInfoCard(String label, String value, String image, Color cardColor,
+    Color iconColor) {
   return Container(
     height: 60.h,
     width: double.infinity,
@@ -140,7 +172,7 @@ Widget _buildInfoCard(String label, String value, String image,
       gradient: LinearGradient(
         colors: [
           Colors.white,
-          Color(0xffB8D3E1),
+          Color.fromARGB(255, 68, 173, 225),
         ],
         begin: Alignment.topLeft,
         end: Alignment.bottomRight,
@@ -156,7 +188,7 @@ Widget _buildInfoCard(String label, String value, String image,
       ],
     ),
     child: Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 24),
+      padding: const EdgeInsets.symmetric(horizontal: 26.0),
       child: Row(
         children: [
           Container(
@@ -166,7 +198,7 @@ Widget _buildInfoCard(String label, String value, String image,
             decoration:
                 BoxDecoration(shape: BoxShape.circle, color: Color(0xff2E81A4)),
             child: SvgPicture.asset(
-                image,
+              image,
               colorFilter: ColorFilter.mode(Colors.white, BlendMode.srcIn),
             ),
           ),
@@ -199,6 +231,7 @@ Widget _buildInfoCard(String label, String value, String image,
   );
 }
 
+
 AppBar _buildAppBar(BuildContext context, String name) {
   return AppBar(
     toolbarHeight: 70.h,
@@ -209,6 +242,7 @@ AppBar _buildAppBar(BuildContext context, String name) {
       child: GestureDetector(
         onTap: () {
           // Navigate to Profile view
+          Get.to(ProfileView());
         },
         child: Obx(
           () => CircleAvatar(
@@ -227,35 +261,39 @@ AppBar _buildAppBar(BuildContext context, String name) {
       color: AppColors.AppPrimary,
     ),
     actions: [
-      Container(
-        margin: EdgeInsets.all(10),
-        decoration: BoxDecoration(
-          color: AppColors.bg_grey,
-          shape: BoxShape.circle,
-        ),
-        child: IconButton(
-          highlightColor: AppColors.appBlack,
-          icon: Icon(
-            Icons.menu,
-            color: AppColors.appWhite,
-            size: 36,
-          ),
-          onPressed: () {
-            // Get.to(CustomDrawer());
-            Scaffold.of(context).openDrawer();
-          },
-        ),
+      Builder(
+        builder: (context) {
+          return Container(
+            margin: EdgeInsets.all(10),
+            decoration: BoxDecoration(
+              color: AppColors.bg_grey,
+              shape: BoxShape.circle,
+            ),
+            child: IconButton(
+              highlightColor: AppColors.appBlack,
+              icon: Icon(
+                Icons.menu,
+                color: AppColors.appWhite,
+                size: 36,
+              ),
+              onPressed: () {
+                Scaffold.of(context).openDrawer();
+              },
+            ),
+          );
+        },
       ),
     ],
   );
 }
 
-Widget _buildCard(String title, IconData icon, VoidCallback onTap) {
+
+Widget _buildCard(String title, String svgAssetPath, VoidCallback onTap) {
   return Padding(
     padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 10),
     child: Container(
-      height: 90.h,
-      width: 150, // Set a width for horizontal cards
+      height: 90.0, // You can adjust this based on your layout
+      width: 150, 
       margin: const EdgeInsets.all(6),
       decoration: BoxDecoration(
         gradient: LinearGradient(
@@ -278,13 +316,19 @@ Widget _buildCard(String title, IconData icon, VoidCallback onTap) {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(icon, size: 60, color: AppColors.AppPrimary),
-            SizedBox(height: 10.h),
+            // Use SvgPicture instead of Icon
+            SvgPicture.asset(
+              svgAssetPath,
+              width: 60, // Adjust size as needed
+              height: 60, // Adjust size as needed
+              color: AppColors.AppPrimary, // Optional: You can change the color
+            ),
+            SizedBox(height: 10),
             PHAText(
               textAlign: TextAlign.center,
               text: title,
-              fontSize: 18.sp,
-              fontWeight: FontWeight.w600,
+              fontSize: 16,
+              fontWeight: FontWeight.w800,
               color: AppColors.AppPrimary,
             ),
           ],
@@ -303,14 +347,47 @@ class SummaryItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
+    return Column(
       children: [
-        ClipRRect(child:
-          SvgPicture.asset(image),
-          borderRadius: BorderRadius.circular(10.0)
+        Stack(
+          alignment: Alignment.center,
+          children: [
+            ClipRRect(
+              borderRadius: BorderRadius.circular(20.0),
+              child: SvgPicture.asset(
+                image,
+                width: 100,
+                height: 100,
+                fit: BoxFit.cover,
+              ),
+            ),
+            Positioned(
+              child: CircleAvatar(
+                backgroundColor: Colors.white,
+                radius: 20,
+                child: Text(
+                  count,
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
+                  ),
+                ),
+              ),
+            ),
+          ],
         ),
-        // Container(width: 88.h, height: 75.h,)
+        SizedBox(height: 8),
+        Text(
+          type,
+          style: TextStyle(
+            fontSize: 14,
+            fontWeight: FontWeight.w600,
+            color: Colors.black,
+          ),
+        ),
       ],
     );
   }
 }
+

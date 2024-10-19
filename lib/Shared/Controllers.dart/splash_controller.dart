@@ -1,4 +1,6 @@
 import 'package:get/get.dart';
+import 'package:pharesidence/features/Views/Bills_Preview_Views/bills_preview.dart';
+import 'package:pharesidence/features/Views/Home/home_view.dart';
 import 'package:pharesidence/features/Views/Splash_view/get_start_view.dart';
 
 class SplashController extends GetxController {
