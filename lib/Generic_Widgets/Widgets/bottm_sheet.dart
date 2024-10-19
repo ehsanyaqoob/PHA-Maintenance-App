@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:pharesidence/Generic_Widgets/Widgets/pha_text_formfield.dart';
 import 'package:pharesidence/exports/exports.dart';
-import 'package:pharesidence/features/Views/Profile_view/profile_avatar.dart';
+import 'package:pharesidence/Shared/Controllers.dart/profile_avatar.dart';
 
 
 
@@ -29,18 +29,18 @@ void showWhatsAppLikeBottomSheet({
           ),
         ),
         ListTile(
-          leading: Icon(Icons.camera_alt, color: AppColors.AppPrimary),
+          leading: Icon(Icons.camera_alt, color: AppColors.AppPrimary, size: 22,),
           title:
-              PHAText(text: 'Camera', fontSize: 18, color: AppColors.appWhite),
+              PHAText(text: 'Camera', fontSize: 18, ),
           onTap: () {
             onCameraTap();
             Get.back();
           },
         ),
         ListTile(
-          leading: Icon(Icons.photo_library, color: AppColors.AppPrimary),
+          leading: Icon(Icons.photo_library, color: AppColors.AppPrimary, size: 22,),
           title:
-              PHAText(text: 'Gallery', fontSize: 18, color: AppColors.appWhite),
+              PHAText(text: 'Gallery', fontSize: 18, ),
           onTap: () {
             onGalleryTap();
             Get.back();

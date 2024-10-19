@@ -1,8 +1,6 @@
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pharesidence/Generic_Widgets/Widgets/pha_text.dart';
 import 'package:pharesidence/exports/exports.dart';
-import 'package:pharesidence/features/Views/Bills_Preview_Views/bills_preview.dart';
 import 'package:pharesidence/features/Views/GenerateBill/generate_bill_preview.dart';
 
 class PaymentViews extends StatefulWidget {

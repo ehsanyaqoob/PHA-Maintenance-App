@@ -87,7 +87,7 @@ class ProjectDetailsView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(project.fullName ?? 'Project Details'), // Display the project name
+        title: Text(project.fullName ?? 'Project Details'), 
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),

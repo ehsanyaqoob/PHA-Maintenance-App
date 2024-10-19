@@ -9,7 +9,7 @@ class AppColors {
   static const Color whiteColor = Colors.white;
   static const Color blackColor = Colors.black;
   static const Color greycolor = Colors.grey;
-  static const Color CardColor = Color.fromARGB(255, 157, 212, 236);
+  static const Color CardColor = Color.fromARGB(255, 61, 178, 229);
   static const Color secColor = Color.fromARGB(255, 65, 184, 235);
 
 static const Color servicecards = Color(0xFF2E2D75);

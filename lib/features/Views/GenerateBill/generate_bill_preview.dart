@@ -8,9 +8,13 @@ class BillPreviewView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.AppSecondary,
+      appBar: CustomAppBar(
+        title: 'Bill Preview',
+        centerTitle: false,
+      ),
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 26.0, vertical: 40.0),
+          padding: const EdgeInsets.symmetric(horizontal: 26.0, ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
@@ -77,7 +81,7 @@ class BillPreviewView extends StatelessWidget {
                       color: AppColors.socialGrey.withOpacity(0.85),
                       spreadRadius: 2,
                       blurRadius: 10,
-                      offset: Offset(0, 0), // Shadow on all sides
+                      offset: Offset(0, 0),
                     ),
                   ],
                 ),

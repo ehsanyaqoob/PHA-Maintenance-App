@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 import'package:pharesidence/exports/exports.dart';
-import 'package:pharesidence/features/Views/Profile_view/profile_avatar.dart';
+import 'package:pharesidence/Shared/Controllers.dart/profile_avatar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 /// Checkbox state variables
