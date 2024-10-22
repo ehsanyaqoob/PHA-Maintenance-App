@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:pharesidence/Generic_Widgets/Widgets/pha_text.dart';
+import 'package:pharesidence/Shared/Controllers.dart/project_controller.dart';
 import 'package:pharesidence/exports/exports.dart';
 import 'package:pharesidence/features/Views/Home/GridViews/projects/projects_views.dart';
 import 'package:pharesidence/features/Views/Profile_view/profile_view.dart';
@@ -20,8 +21,20 @@ class HomeView extends StatefulWidget {
 }
 
 class _HomeViewState extends State<HomeView> {
+
   final controller = Get.put(ProjectsViewController());
 
+
+  final ProjectsViewController controller = Get.put(ProjectsViewController());
+  
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    // controller.fetchProjects('3520169791715');
+    controller.fetchAdditionalInfo('3520169791715');
+  }
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(

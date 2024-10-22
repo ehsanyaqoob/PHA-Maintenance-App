@@ -4,12 +4,16 @@ const String baseUrl = 'http://20.46.49.230/api';
 // Projects URL
 const String getProjectsByCnicUrl = '$baseUrl/getProjectsByCnic';
 
-// Authentication URLs
+// GetCNIC by Membership
+const String GetCNICByMembership = '$baseUrl/getProjectsByCnic';
+const String getAdditionalInfoByCNIC = '$baseUrl/getAddtionalInfoByCnic';
+
+// Authentication URLs 
 const String loginUrl = '$baseUrl/auth/login';
-const String registerUrl = '$baseUrl/register';
-const String verifyOtpUrl = '$baseUrl/verify-otp';
-const String forgotPasswordUrl = '$baseUrl/forgot-password';
-const String resetPasswordUrl = '$baseUrl/reset-password';
+const String registerUrl = '$baseUrl/auth/register';
+const String verifyOtpUrl = '$baseUrl/auth/verify-otp';
+const String forgotPasswordUrl = '$baseUrl/auth/forgot-password';
+const String resetPasswordUrl = '$baseUrl/auth/reset-password';
 
 // User URLs
 const String userProfileUrl = '$baseUrl/user/profile';
