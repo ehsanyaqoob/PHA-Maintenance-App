@@ -1,8 +1,8 @@
 import 'package:get/get.dart';
-import 'package:pharesidence/exports/exports.dart';
-import '../../../../../Generic_Widgets/Widgets/custom_loarder.dart';
+import 'package:flutter/material.dart';
 import '../../../../../Shared/Controllers.dart/project_controller.dart';
 import '../../../../../models/projects_models.dart';
+
 class ProjectsViews extends StatefulWidget {
   final String cnic;
 
@@ -18,24 +18,27 @@ class _ProjectsViewsState extends State<ProjectsViews> {
   @override
   void initState() {
     super.initState();
-    _controller.fetchProjects(widget.cnic);
+    _controller.fetchProjects(widget.cnic); // Fetch projects using CNIC
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.AppSecondary,
-      appBar: CustomAppBar(
-        title: 'Property Dashboard',
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+        title: Text('Property Dashboard'),
         centerTitle: false,
       ),
       body: Obx(() {
         if (_controller.isLoading.value) {
-          return Center(child: PHALoader());
+          return Center(child: CircularProgressIndicator()); // Show loader while fetching
         }
+
         if (_controller.projects.isEmpty) {
-          return Center(child: Text('No projects found.'));
+          return Center(child: Text("No projects available")); // Show if no projects are found
         }
+
+        // Build the project list when data is available
         return _buildProjectList(_controller.projects);
       }),
     );
@@ -44,34 +47,59 @@ class _ProjectsViewsState extends State<ProjectsViews> {
   Widget _buildProjectList(List<MembershipData> projectList) {
     return ListView.builder(
       itemCount: projectList.length,
+      padding: EdgeInsets.all(10),
       itemBuilder: (context, index) {
-        return _buildPropertiesRow(projectList[index]);
+        return _buildProjectCard(projectList[index]);
       },
     );
   }
 
-  Widget _buildPropertiesRow(MembershipData project) {
+  Widget _buildProjectCard(MembershipData project) {
     return GestureDetector(
       onTap: () {
-        _showProjectDetails(project);
+        _showProjectDetails(project); // Navigate to project details when tapped
       },
       child: Card(
+        elevation: 5,
+        margin: EdgeInsets.symmetric(vertical: 10),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(15),
+        ),
         child: Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.all(16.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                project.fullName ?? 'Unnamed Project',
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                project.fullName ?? 'N/A', // Display project full name
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
+              SizedBox(height: 8),
               Text(
-                'Project Name: ${project.projectName ?? 'N/A'}',
-                style: TextStyle(fontSize: 14),
+                'Status: ${project.status ?? 'Unknown'}', // Display project status
+                style: TextStyle(
+                  fontSize: 16,
+                  color: Colors.grey[700],
+                ),
               ),
+              SizedBox(height: 8),
+              // Text(
+              //   'Membership ID: ${project.membershipId ?? 'N/A'}', // Display membership ID
+              //   style: TextStyle(
+              //     fontSize: 16,
+              //     color: Colors.grey[700],
+              //   ),
+              // ),
+              SizedBox(height: 8),
               Text(
-                'Status: ${project.status ?? 'Unknown'}',
-                style: TextStyle(fontSize: 14),
+                'CNIC: ${project.cnic ?? 'N/A'}', // Display CNIC
+                style: TextStyle(
+                  fontSize: 16,
+                  color: Colors.grey[700],
+                ),
               ),
             ],
           ),
@@ -80,14 +108,15 @@ class _ProjectsViewsState extends State<ProjectsViews> {
     );
   }
 
-}
-  void _showProjectDetails(Data project) {
-    Get.to(() => ProjectDetailsView(project: project));
   void _showProjectDetails(MembershipData project) {
+    // Navigate to detailed view of the project
+    Get.to(() => ProjectDetailsView(project: project));
+  }
+}
+
 
 class ProjectDetailsView extends StatelessWidget {
-  final Data project;
-  final MembershipData project; // Change this to Data
+  final MembershipData project;
 
   const ProjectDetailsView({Key? key, required this.project}) : super(key: key);
 
@@ -103,29 +132,40 @@ class ProjectDetailsView extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Project Name: ${project.projectName ?? 'N/A'}',
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+              'Project Name: ${project.fullName ?? 'N/A'}',
+              style: TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+              ),
             ),
-            SizedBox(height: 10),
-            Text(
-              'Full Name: ${project.fullName ?? 'N/A'}',
-              style: TextStyle(fontSize: 18),
-            ),
-            SizedBox(height: 10),
+            SizedBox(height: 20),
             Text(
               'Status: ${project.status ?? 'Unknown'}',
-              style: TextStyle(fontSize: 18),
+              style: TextStyle(
+                fontSize: 18,
+              ),
             ),
-            SizedBox(height: 10),
+            SizedBox(height: 20),
+            // Text(
+            //   'Membership ID: ${project.membershipId ?? 'N/A'}',
+            //   style: TextStyle(
+            //     fontSize: 18,
+            //   ),
+            // ),
+            SizedBox(height: 20),
             Text(
-              'Present Address: ${project.presentAddress ?? 'N/A'}',
-              style: TextStyle(fontSize: 18),
+              'CNIC: ${project.cnic ?? 'N/A'}',
+              style: TextStyle(
+                fontSize: 18,
+              ),
             ),
+            SizedBox(height: 20),
+            // You can add more details here depending on what the `MembershipData` model contains
+            // For example:
+            // Text('Some other field: ${project.someField ?? 'N/A'}')
           ],
         ),
       ),
     );
   }
 }
-
-  }}

@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:pharesidence/Generic_Widgets/Widgets/custom_loarder.dart';
 import 'package:pharesidence/Generic_Widgets/Widgets/pha_text.dart';
 import 'package:pharesidence/Shared/Controllers.dart/project_controller.dart';
 import 'package:pharesidence/exports/exports.dart';
@@ -21,12 +22,10 @@ class HomeView extends StatefulWidget {
 }
 
 class _HomeViewState extends State<HomeView> {
-
-  final controller = Get.put(ProjectsViewController());
-
+  //final ProjectsViews = Get.put(ProjectsViewController());
 
   final ProjectsViewController controller = Get.put(ProjectsViewController());
-  
+
   @override
   void initState() {
     // TODO: implement initState
@@ -34,7 +33,7 @@ class _HomeViewState extends State<HomeView> {
     // controller.fetchProjects('3520169791715');
     controller.fetchAdditionalInfo('3520169791715');
   }
-  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -102,13 +101,22 @@ class _HomeViewState extends State<HomeView> {
                         children: [
                           _buildCard(
                               'Property & Payments', 'assets/svg/home.svg', () {
-                            // Fetch projects when navigating
+                            // Show PhaLoader when the fetch operation starts
+                            PHALoader.show();
                             controller
                                 .fetchProjects(widget.apiData['cnic'])
                                 .then((_) {
+                              // Hide PhaLoader once the fetching is done
+                              PHALoader.hide();
+
                               // Navigate to ProjectsViews after fetching
                               Get.to(
                                   ProjectsViews(cnic: widget.apiData['cnic']));
+                            }).catchError((error) {
+                              // Hide PhaLoader if an error occurs
+                              PHALoader.hide();
+                              Get.snackbar(
+                                  'Error', 'Failed to fetch projects: $error');
                             });
                           }),
                           _buildCard('Services', 'assets/svg/services.svg', () {

@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 
 class PHALoader extends StatelessWidget {
-
   const PHALoader({super.key});
 
   @override
@@ -19,8 +18,8 @@ class PHALoader extends StatelessWidget {
               width: 60,
               height: 60,
               decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadiusDirectional.circular(10)
+                color: Colors.white,
+                borderRadius: BorderRadiusDirectional.circular(10),
               ),
               child: const Padding(
                 padding: EdgeInsets.all(16.0),
@@ -29,10 +28,24 @@ class PHALoader extends StatelessWidget {
                 ),
               ),
             ),
-          )
-
+          ),
         ],
       ),
     );
+  }
+
+  // Static method to show the loader
+  static void show() {
+    Get.dialog(
+      const PHALoader(),
+      barrierDismissible: false, // Prevent dismissing the loader by tapping outside
+    );
+  }
+
+  // Static method to hide the loader
+  static void hide() {
+    if (Get.isDialogOpen == true) {
+      Get.back(); // Close the loader dialog
+    }
   }
 }

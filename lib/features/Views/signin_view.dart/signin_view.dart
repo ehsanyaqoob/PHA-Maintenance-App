@@ -6,7 +6,6 @@ import 'package:pharesidence/Generic_Widgets/Widgets/pha_text.dart';
 import 'package:pharesidence/Shared/Controllers.dart/signin_controller.dart';
 import 'package:pharesidence/exports/exports.dart';
 import 'package:pharesidence/features/Views/Splash_view/get_start_view.dart';
-import 'package:pharesidence/features/Views/WebBrowser.dart';
 import 'package:pharesidence/features/Views/signup_view.dart/signup_view.dart';
 
 
@@ -92,11 +91,6 @@ class _SignInViewState extends State<SignInView> {
                     const SizedBox(height: 12),
                     PHAButton(
                       title: 'Sign In',
-
-                      // onTap: (){
-                      //   Get.to(HomeView(apiData: {},));
-                      // },
-
                       onTap: controller.isLoading.value
                           ? null
                           : () async {
@@ -105,56 +99,12 @@ class _SignInViewState extends State<SignInView> {
                       topMargin: 12.sp,
                       fillColor: true,
                     ),
-
                     const SizedBox(height: 12),
                     PHAText(
                       text: 'Don\'t have membership?',
                       fontSize: 13.sp,
                       fontWeight: FontWeight.w500,
                       color: Colors.black,
-                // Obx(() => PHAButton(
-                //       title: 'Sign In',
-                //       onTap: (){
-                //         Get.to(HomeView(apiData: {},));
-                //       },
-                //       // onTap: controller.isLoading.value
-                //       //     ? null
-                //       //     : () async {
-                //       //         await controller.signInUser();
-                //       //       },
-                //       topMargin: 12.sp,
-                //       fillColor: true,
-                //     )),
-                const SizedBox(height: 12),
-                PHAText(
-                  text: 'Don\'t have membership?',
-                  fontSize: 13.sp,
-                  fontWeight: FontWeight.w500,
-                  color: Colors.black,
-                ),
-                const SizedBox(width: 10),
-                GestureDetector(
-                  onTap: () {
-                    Get.to(SignUpView());
-                  },
-                  child: PHAText(
-                    text: 'Sign Up',
-                    color: Color(0xff2E81A4),
-                    fontSize: 14.sp,
-                    fontWeight: FontWeight.w700,
-                  ),
-                ),
-                const SizedBox(height: 20),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    BottomTab(
-                      image: 'assets/png/icon_calendar.svg',
-                      label: 'News/Events',
-                      onTap: () {
-                        // Get.to(WebViewBrowser());
-                      },
-
                     ),
                     const SizedBox(width: 10),
                     GestureDetector(
@@ -196,6 +146,7 @@ class _SignInViewState extends State<SignInView> {
             ),
             // Loader UI
             Obx(() {
+              
               return controller.isLoading.value ? const PHALoader() : Container();
             }),
           ],
