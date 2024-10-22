@@ -39,7 +39,7 @@ class _ProjectsViewsState extends State<ProjectsViews> {
     );
   }
 
-  Widget _buildProjectList(List<Data> projectList) {
+  Widget _buildProjectList(List<MembershipData> projectList) {
     return ListView.builder(
       itemCount: projectList.length,
       itemBuilder: (context, index) {
@@ -48,7 +48,7 @@ class _ProjectsViewsState extends State<ProjectsViews> {
     );
   }
 
-  Widget _buildPropertiesRow(Data project) {
+  Widget _buildPropertiesRow(MembershipData project) {
     return GestureDetector(
       onTap: () {
         _showProjectDetails(project);
@@ -72,14 +72,14 @@ class _ProjectsViewsState extends State<ProjectsViews> {
     );
   }
 
-  void _showProjectDetails(Data project) {
+  void _showProjectDetails(MembershipData project) {
     Get.to(() => ProjectDetailsView(project: project)); // Navigate to ProjectDetailsView
   }
 }
 
 // Widget to display project details
 class ProjectDetailsView extends StatelessWidget {
-  final Data project; // Change this to Data
+  final MembershipData project; // Change this to Data
 
   const ProjectDetailsView({Key? key, required this.project}) : super(key: key);
 

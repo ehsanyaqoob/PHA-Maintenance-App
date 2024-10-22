@@ -29,7 +29,7 @@ class SigninController extends GetxController {
     try {
       // Updated request body
       final Map<String, dynamic> requestBody = {
-        "cnic": cnic.value.trim(),
+        "cnic": cnic.value.trim().replaceAll('-', ''),
         "cell": cell.value.trim().replaceAll('-', ''),
       };
 

@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:pharesidence/Generic_Widgets/Widgets/pha_text.dart';
 import 'package:pharesidence/exports/exports.dart';
 import 'package:pharesidence/features/Views/Splash_view/get_start_view.dart';
+import 'package:pharesidence/features/Views/WebBrowser.dart';
 import 'package:pharesidence/features/Views/signup_view.dart/signup_view.dart';
 import '../../../Shared/Controllers.dart/signin_controller.dart';
 import '../Home/home_view.dart';
@@ -90,14 +91,14 @@ class _SignInViewState extends State<SignInView> {
                 const SizedBox(height: 12),
                 PHAButton(
                       title: 'Sign In',
-                      onTap: (){
-                        Get.to(HomeView(apiData: {},));
-                      },
-                      // onTap: controller.isLoading.value
-                      //     ? null
-                      //     : () async {
-                      //         await controller.signInUser();
-                      //       },
+                      // onTap: (){
+                      //   Get.to(HomeView(apiData: {},));
+                      // },
+                      onTap: controller.isLoading.value
+                          ? null
+                          : () async {
+                              await controller.signInUser();
+                            },
                       topMargin: 12.sp,
                       fillColor: true,
                     ),
@@ -140,7 +141,9 @@ class _SignInViewState extends State<SignInView> {
                     BottomTab(
                       image: 'assets/png/icon_calendar.svg',
                       label: 'News/Events',
-                      onTap: () {},
+                      onTap: () {
+                        // Get.to(WebViewBrowser());
+                      },
                     ),
                     BottomTab(
                       image: 'assets/png/icon_building.svg',

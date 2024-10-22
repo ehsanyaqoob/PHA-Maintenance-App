@@ -1,17 +1,17 @@
-class MembershipModel {
+class AdditionalInfoModel {
   bool? status;
   String? message;
-  List<MembershipData>? data;
+  List<AdditionalInfoData>? data;
 
-  MembershipModel({this.status, this.message, this.data});
+  AdditionalInfoModel({this.status, this.message, this.data});
 
-  MembershipModel.fromJson(Map<String, dynamic> json) {
+  AdditionalInfoModel.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     message = json['message'];
     if (json['data'] != null) {
-      data = <MembershipData>[];
+      data = <AdditionalInfoData>[];
       json['data'].forEach((v) {
-        data!.add(new MembershipData.fromJson(v));
+        data!.add(new AdditionalInfoData.fromJson(v));
       });
     }
   }
@@ -27,7 +27,7 @@ class MembershipModel {
   }
 }
 
-class MembershipData {
+class AdditionalInfoData {
   int? id;
   String? registrationNo;
   int? projectId;
@@ -43,25 +43,35 @@ class MembershipData {
   Null? updatedAt;
   Null? deletedAt;
   String? projectName;
+  String? issueDate;
+  String? dueDate;
+  String? amount;
+  int? lateFee;
+  int? totalAmountDue;
 
-  MembershipData(
+  AdditionalInfoData(
       {this.id,
-      this.registrationNo,
-      this.projectId,
-      this.fullName,
-      this.cnic,
-      this.laneNo,
-      this.houseNo,
-      this.category,
-      this.presentAddress,
-      this.cell,
-      this.status,
-      this.createdAt,
-      this.updatedAt,
-      this.deletedAt,
-      this.projectName});
+        this.registrationNo,
+        this.projectId,
+        this.fullName,
+        this.cnic,
+        this.laneNo,
+        this.houseNo,
+        this.category,
+        this.presentAddress,
+        this.cell,
+        this.status,
+        this.createdAt,
+        this.updatedAt,
+        this.deletedAt,
+        this.projectName,
+        this.issueDate,
+        this.dueDate,
+        this.amount,
+        this.lateFee,
+        this.totalAmountDue});
 
-  MembershipData.fromJson(Map<String, dynamic> json) {
+  AdditionalInfoData.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     registrationNo = json['registration_no'];
     projectId = json['project_id'];
@@ -77,6 +87,11 @@ class MembershipData {
     updatedAt = json['updated_at'];
     deletedAt = json['deleted_at'];
     projectName = json['projectName'];
+    issueDate = json['issue_date'];
+    dueDate = json['due_date'];
+    amount = json['amount'];
+    lateFee = json['late_fee'];
+    totalAmountDue = json['total_amount_due'];
   }
 
   Map<String, dynamic> toJson() {
@@ -96,6 +111,11 @@ class MembershipData {
     data['updated_at'] = this.updatedAt;
     data['deleted_at'] = this.deletedAt;
     data['projectName'] = this.projectName;
+    data['issue_date'] = this.issueDate;
+    data['due_date'] = this.dueDate;
+    data['amount'] = this.amount;
+    data['late_fee'] = this.lateFee;
+    data['total_amount_due'] = this.totalAmountDue;
     return data;
   }
 }
