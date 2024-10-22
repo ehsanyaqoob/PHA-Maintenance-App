@@ -138,11 +138,13 @@ class BillPreviewView extends StatelessWidget {
                     ],
                   ),
                 ),
-              ),SizedBox(height: 20.h,),
+              ),
+              SizedBox(height: 20.h,),
               PHAButton(
                 title: 'Proceed to Pay',
                 fillColor: true,
-              )
+              ),
+              SizedBox(height: 20.h,),
             ],
           ),
         ),

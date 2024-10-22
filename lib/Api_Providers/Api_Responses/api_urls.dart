@@ -1,13 +1,11 @@
-
 // Base URL
-const String baseUrl = 'http://20.233.249.185/main/api/auth';
+const String baseUrl = 'http://20.46.49.230/api';
 
+// Projects URL
+const String getProjectsByCnicUrl = '$baseUrl/getProjectsByCnic';
 
-// GetCNIC by Membership
-const String GetCNICByMembership = '$baseUrl/getProjectsByCnic';
-
-// Authentication URLs 
-const String loginUrl = '$baseUrl/login';
+// Authentication URLs
+const String loginUrl = '$baseUrl/auth/login';
 const String registerUrl = '$baseUrl/register';
 const String verifyOtpUrl = '$baseUrl/verify-otp';
 const String forgotPasswordUrl = '$baseUrl/forgot-password';

@@ -3,11 +3,11 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:pharesidence/Generic_Widgets/Widgets/pha_text.dart';
 import 'package:pharesidence/exports/exports.dart';
-import 'package:pharesidence/features/Views/Bills_Preview_Views/bills_preview.dart';
+import 'package:pharesidence/features/Views/Home/GridViews/projects/projects_views.dart';
 import 'package:pharesidence/features/Views/Profile_view/profile_view.dart';
+import '../../../Shared/Controllers.dart/project_controller.dart';
 import '../Drawer/custom_drawer.dart';
 import 'GridViews/helpviews.dart';
-import 'GridViews/projects/projects_views.dart';
 import 'GridViews/servicesview.dart';
 import 'GridViews/sosviews.dart';
 
@@ -20,11 +20,13 @@ class HomeView extends StatefulWidget {
 }
 
 class _HomeViewState extends State<HomeView> {
+  final controller = Get.put(ProjectsViewController());
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-       drawer: CustomDrawer(),
-      resizeToAvoidBottomInset: true, 
+      drawer: CustomDrawer(),
+      resizeToAvoidBottomInset: true,
       backgroundColor: AppColors.AppSecondary,
       appBar: _buildAppBar(
         context,
@@ -45,7 +47,9 @@ class _HomeViewState extends State<HomeView> {
           Positioned.fill(
             child: SingleChildScrollView(
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 26.0, ),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 26.0,
+                ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -79,23 +83,25 @@ class _HomeViewState extends State<HomeView> {
 
                     // Horizontal ListView instead of GridView
                     SizedBox(
-                      height: 150.h,
+                      height: 160.h,
                       child: ListView(
                         scrollDirection: Axis.horizontal,
                         children: [
-                          GestureDetector(
-                            onTap: () {
-                              // here need to send cnic back to
-                            },
-                            child: _buildCard(
-                                'Property & Payments','assets/svg/home.svg', () {
-                              Get.to(MaintenanceDetailsView());
-                            }),
-                          ),
-                          _buildCard('Services','assets/svg/services.svg', () {
+                          _buildCard(
+                              'Property & Payments', 'assets/svg/home.svg', () {
+                            // Fetch projects when navigating
+                            controller
+                                .fetchProjects(widget.apiData['cnic'])
+                                .then((_) {
+                              // Navigate to ProjectsViews after fetching
+                              Get.to(
+                                  ProjectsViews(cnic: widget.apiData['cnic']));
+                            });
+                          }),
+                          _buildCard('Services', 'assets/svg/services.svg', () {
                             Get.to(ServicesViews());
                           }),
-                          _buildCard('Help', 'assets/svg/help.svg',() {
+                          _buildCard('Help', 'assets/svg/help.svg', () {
                             Get.to(HelpViews());
                           }),
                           _buildCard('SOS', 'assets/svg/sos.svg', () {
@@ -128,7 +134,7 @@ Widget _buildPropertiesSummary() {
             fontWeight: FontWeight.w800),
         SizedBox(height: 6.h),
         Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween, 
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Expanded(
               child: SummaryItem(
@@ -145,7 +151,7 @@ Widget _buildPropertiesSummary() {
                 type: 'Apartment(s)',
               ),
             ),
-            SizedBox(width: 8), 
+            SizedBox(width: 8),
             Expanded(
               child: SummaryItem(
                 image: 'assets/png/icon_commercial.svg',
@@ -159,8 +165,6 @@ Widget _buildPropertiesSummary() {
     ),
   );
 }
-
-
 
 Widget _buildInfoCard(String label, String value, String image, Color cardColor,
     Color iconColor) {
@@ -231,7 +235,6 @@ Widget _buildInfoCard(String label, String value, String image, Color cardColor,
   );
 }
 
-
 AppBar _buildAppBar(BuildContext context, String name) {
   return AppBar(
     toolbarHeight: 70.h,
@@ -287,13 +290,12 @@ AppBar _buildAppBar(BuildContext context, String name) {
   );
 }
 
-
 Widget _buildCard(String title, String svgAssetPath, VoidCallback onTap) {
   return Padding(
     padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 10),
     child: Container(
-      height: 90.0, // You can adjust this based on your layout
-      width: 150, 
+      height: 100.0,
+      width: 170.w,
       margin: const EdgeInsets.all(6),
       decoration: BoxDecoration(
         gradient: LinearGradient(
@@ -304,10 +306,10 @@ Widget _buildCard(String title, String svgAssetPath, VoidCallback onTap) {
         borderRadius: BorderRadius.circular(10),
         boxShadow: [
           BoxShadow(
-            color: Colors.black26,
-            blurRadius: 5,
+            color: AppColors.AppPrimary.withOpacity(0.85),
+            blurRadius: 2,
             spreadRadius: 1,
-            offset: Offset(0, 3),
+            offset: Offset(0, 0),
           ),
         ],
       ),
@@ -390,4 +392,3 @@ class SummaryItem extends StatelessWidget {
     );
   }
 }
-

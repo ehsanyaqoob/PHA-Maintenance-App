@@ -98,7 +98,7 @@ class MaintenanceDetailsView extends StatelessWidget {
                                                 fontSize: 16.sp)),
                                             DataCell(PHAText(
                                                 text:
-                                                    'H.No 16-C, St.No.2, NPF E-11',
+                                                    'H.No 16-C, St.No.2, Kurri road',
                                                 fontSize: 16.sp)),
                                           ]),
                                           DataRow(cells: [
@@ -106,7 +106,7 @@ class MaintenanceDetailsView extends StatelessWidget {
                                                 text: 'Owner Name',
                                                 fontSize: 16.sp)),
                                             DataCell(PHAText(
-                                                text: 'Mrs. Yaseem Ahmed',
+                                                text: 'MR. NAFASAT RAZA',
                                                 fontSize: 16.sp)),
                                           ]),
                                           DataRow(cells: [
@@ -178,7 +178,7 @@ class MaintenanceDetailsView extends StatelessWidget {
                   },
                 ),
                 PHAButton(
-                  title: 'Generate Bill',
+                  title: 'Generate Bill', 
                   fillColor: true,
                   topMargin: 20.0,
                   onTap: () {

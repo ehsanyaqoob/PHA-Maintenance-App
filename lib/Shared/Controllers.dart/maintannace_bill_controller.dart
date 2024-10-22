@@ -3,8 +3,8 @@ import 'package:get/get.dart';
 import 'package:pharesidence/exports/exports.dart';
 class MaintenanceDetailsController extends GetxController {
   // Sample data for the table
-  var apartmentName = "H.No 16-C, St.No.2, NPF E-11".obs;
-  var ownerName = "Mrs.Yaseem Ahmed".obs;
+  var apartmentName = "H.No 16-C, St.No.2,Kurii Road".obs;
+  var ownerName = "MR. NAFASAT RAZA".obs;
   var category = "Residential".obs;
   var consumerId = "123456789".obs;
   var billNumber = "987654321".obs;

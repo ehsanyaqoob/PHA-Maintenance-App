@@ -1,8 +1,8 @@
 import 'package:get/get.dart';
 import 'package:pharesidence/exports/exports.dart';
+import '../../../../../Generic_Widgets/Widgets/custom_loarder.dart';
 import '../../../../../Shared/Controllers.dart/project_controller.dart';
 import '../../../../../models/projects_models.dart';
-
 class ProjectsViews extends StatefulWidget {
   final String cnic;
 
@@ -18,7 +18,7 @@ class _ProjectsViewsState extends State<ProjectsViews> {
   @override
   void initState() {
     super.initState();
-    _controller.fetchProjects(widget.cnic); 
+    _controller.fetchProjects(widget.cnic);
   }
 
   @override
@@ -31,10 +31,12 @@ class _ProjectsViewsState extends State<ProjectsViews> {
       ),
       body: Obx(() {
         if (_controller.isLoading.value) {
-          return Center(child: CircularProgressIndicator()); 
+          return Center(child: PHALoader());
         }
-
-        return _buildProjectList(_controller.projects); 
+        if (_controller.projects.isEmpty) {
+          return Center(child: Text('No projects found.'));
+        }
+        return _buildProjectList(_controller.projects);
       }),
     );
   }
@@ -48,6 +50,7 @@ class _ProjectsViewsState extends State<ProjectsViews> {
     );
   }
 
+
   Widget _buildPropertiesRow(Data project) {
     return GestureDetector(
       onTap: () {
@@ -60,11 +63,17 @@ class _ProjectsViewsState extends State<ProjectsViews> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                project.fullName ?? '',
+                project.fullName ?? 'Unnamed Project',
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
-              SizedBox(height: 5),
-              Text('Status: ${project.status}'),
+              Text(
+                'Project Name: ${project.projectName ?? 'N/A'}',
+                style: TextStyle(fontSize: 14),
+              ),
+              Text(
+                'Status: ${project.status ?? 'Unknown'}',
+                style: TextStyle(fontSize: 14),
+              ),
             ],
           ),
         ),
@@ -73,13 +82,12 @@ class _ProjectsViewsState extends State<ProjectsViews> {
   }
 
   void _showProjectDetails(Data project) {
-    Get.to(() => ProjectDetailsView(project: project)); // Navigate to ProjectDetailsView
+    Get.to(() => ProjectDetailsView(project: project));
   }
 }
 
-// Widget to display project details
 class ProjectDetailsView extends StatelessWidget {
-  final Data project; // Change this to Data
+  final Data project;
 
   const ProjectDetailsView({Key? key, required this.project}) : super(key: key);
 
@@ -87,7 +95,7 @@ class ProjectDetailsView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(project.fullName ?? 'Project Details'), 
+        title: Text(project.fullName ?? 'Project Details'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -95,20 +103,24 @@ class ProjectDetailsView extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Project Name: ${project.fullName ?? 'N/A'}',
+              'Project Name: ${project.projectName ?? 'N/A'}',
               style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+            ),
+            SizedBox(height: 10),
+            Text(
+              'Full Name: ${project.fullName ?? 'N/A'}',
+              style: TextStyle(fontSize: 18),
             ),
             SizedBox(height: 10),
             Text(
               'Status: ${project.status ?? 'Unknown'}',
               style: TextStyle(fontSize: 18),
             ),
-            SizedBox(height: 20),
-            // Add more details as needed
-            // Text(
-            //   'Details: ${project.details ?? 'No details available.'}', // Assuming 'details' is a field in Data
-            //   style: TextStyle(fontSize: 16),
-            // ),
+            SizedBox(height: 10),
+            Text(
+              'Present Address: ${project.presentAddress ?? 'N/A'}',
+              style: TextStyle(fontSize: 18),
+            ),
           ],
         ),
       ),

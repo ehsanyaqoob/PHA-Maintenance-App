@@ -2,10 +2,12 @@
 import 'package:pharesidence/Generic_Widgets/Widgets/pha_text.dart';
 import 'package:pharesidence/exports/exports.dart';
 
+import '../../../../../models/projects_models.dart';
 import 'projects_view_controller.dart';
 
+
 class ProjectDetailsView extends StatelessWidget {
-  final Project project;
+  final Data project;
 
   const ProjectDetailsView({Key? key, required this.project}) : super(key: key);
 
@@ -24,7 +26,7 @@ class ProjectDetailsView extends StatelessWidget {
           children: [
             SizedBox(height: 20.h),
             PHAText(
-              text: 'Project: ${project.name}',
+              text: 'Project: ${project.fullName}', // Use the correct field
               fontSize: 22.sp,
               fontWeight: FontWeight.bold,
               color: AppColors.AppPrimary,
@@ -36,26 +38,27 @@ class ProjectDetailsView extends StatelessWidget {
               fontWeight: FontWeight.bold,
             ),
             SizedBox(height: 10.h),
-          // _buildPropertyList(project.property_details),
+           // _buildPropertyList(project.propertyDetails ?? []), // Use the correct field
           ],
         ),
       ),
     );
   }
 
-  // Widget to display the list of properties in the project
   Widget _buildPropertyList(List<String> properties) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: properties.map((property) {
-        return Padding(
-          padding: const EdgeInsets.symmetric(vertical: 8.0),
-          child: PHAText(
-            text: property,
-            fontSize: 16.sp,
-          ),
-        );
-      }).toList(),
+    return Expanded(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: properties.map((property) {
+          return Padding(
+            padding: const EdgeInsets.symmetric(vertical: 8.0),
+            child: PHAText(
+              text: property,
+              fontSize: 16.sp,
+            ),
+          );
+        }).toList(),
+      ),
     );
   }
 }
