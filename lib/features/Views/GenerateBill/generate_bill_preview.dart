@@ -1,8 +1,14 @@
-import 'package:pharesidence/exports/exports.dart';
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:pharesidence/Generic_Widgets/Widgets/pha_text.dart';
+import 'package:pharesidence/exports/exports.dart';
 
 class BillPreviewView extends StatelessWidget {
-  const BillPreviewView({Key? key}) : super(key: key);
+  const BillPreviewView({
+    Key? key,
+    required this.psid,
+  }) : super(key: key);
+
+  final String psid;
 
   @override
   Widget build(BuildContext context) {

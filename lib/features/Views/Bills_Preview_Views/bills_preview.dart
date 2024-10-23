@@ -182,7 +182,7 @@ class MaintenanceDetailsView extends StatelessWidget {
                   fillColor: true,
                   topMargin: 20.0,
                   onTap: () {
-                    Get.to(BillPreviewView());
+                    Get.to(BillPreviewView(psid: '',));
                   },
                 ),
               ],

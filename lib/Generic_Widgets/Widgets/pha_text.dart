@@ -1,3 +1,4 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 
 import 'package:pharesidence/exports/exports.dart';
 
@@ -51,12 +52,12 @@ class PHATextFormField extends StatelessWidget {
   final TextInputAction textInputAction;
   final ValueChanged<String>? onSubmitted;
   final String? Function(String?)? validator; // Adding validator parameter
-
+  final String? initialValue; // Change type from double? to String?
   PHATextFormField({
-    super.key,
-    this.title = '',
-    required this.hint,
+    Key? key,
     this.controller,
+    required this.hint,
+    this.title = '',
     this.inputType = TextInputType.text,
     this.inputFormatters,
     this.prefix,
@@ -72,8 +73,9 @@ class PHATextFormField extends StatelessWidget {
     this.textCapitalization = TextCapitalization.sentences,
     this.textInputAction = TextInputAction.next,
     this.onSubmitted,
-    this.validator, // Making it optional
-  });
+    this.validator,
+    this.initialValue, // Make initialValue optional
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
