@@ -7,7 +7,7 @@ import '../../features/Views/GenerateBill/generate_bill_preview.dart';
       context: context,
       isScrollControlled: true,
       builder: (BuildContext context) {
-        return BillPreviewView();
+        return BillPreviewView(psid: '',);
       },
     );
   }

@@ -4,6 +4,8 @@ import 'package:pharesidence/Generic_Widgets/Widgets/pha_text.dart';
 import 'package:pharesidence/exports/exports.dart';
 import 'package:pharesidence/features/Views/signin_view.dart/signin_view.dart';
 
+import '../../../Generic_Widgets/Radio_Button/pha_radio_button.dart';
+
 class SignUpView extends StatelessWidget {
   const SignUpView({super.key});
 
@@ -128,7 +130,15 @@ class SignUpView extends StatelessWidget {
                       ),
                     )),
                     SizedBox(height: 20),
-
+                    // Radio buttons for Tenant or Owner
+                    PHARadioButton(
+                      items: ['Tenant', 'Owner'],
+                      selectedValue: 'Tenant', 
+                      onSelected: (value) {
+                        print('Selected: $value');
+                      },
+                    ),
+                     SizedBox(height: 20),
                     // Remember me checkbox
                     // Obx(() => Row(
                     //   children: [
@@ -172,8 +182,6 @@ class SignUpView extends StatelessWidget {
               ),
             ),
           ),
-
-
           // Loading overlay, uncomment when implementing real sign-up process
           // if (isLoading)
           //   Container(

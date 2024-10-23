@@ -17,13 +17,13 @@ class MembershipModel {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['status'] = this.status;
-    data['message'] = this.message;
-    if (this.data != null) {
-      data['data'] = this.data!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> dataMap = {};
+    dataMap['status'] = status;
+    dataMap['message'] = message;
+    if (data != null) {
+      dataMap['data'] = data!.map((v) => v.toJson()).toList();
     }
-    return data;
+    return dataMap; 
   }
 }
 
@@ -39,9 +39,9 @@ class MembershipData {
   String? presentAddress;
   String? cell;
   String? status;
-  Null? createdAt;
-  Null? updatedAt;
-  Null? deletedAt;
+  DateTime? createdAt; // Changed to DateTime
+  DateTime? updatedAt; // Changed to DateTime
+  DateTime? deletedAt; // Changed to DateTime
   String? projectName;
 
   MembershipData(
@@ -73,29 +73,36 @@ class MembershipData {
     presentAddress = json['present_address'];
     cell = json['cell'];
     status = json['status'];
-    createdAt = json['created_at'];
-    updatedAt = json['updated_at'];
-    deletedAt = json['deleted_at'];
+
+    // Parse date strings to DateTime if they are not null
+    createdAt = json['created_at'] != null ? DateTime.parse(json['created_at']) : null;
+    updatedAt = json['updated_at'] != null ? DateTime.parse(json['updated_at']) : null;
+    deletedAt = json['deleted_at'] != null ? DateTime.parse(json['deleted_at']) : null;
+
     projectName = json['projectName'];
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['registration_no'] = this.registrationNo;
-    data['project_id'] = this.projectId;
-    data['full_name'] = this.fullName;
-    data['cnic'] = this.cnic;
-    data['lane_no'] = this.laneNo;
-    data['house_no'] = this.houseNo;
-    data['category'] = this.category;
-    data['present_address'] = this.presentAddress;
-    data['cell'] = this.cell;
-    data['status'] = this.status;
-    data['created_at'] = this.createdAt;
-    data['updated_at'] = this.updatedAt;
-    data['deleted_at'] = this.deletedAt;
-    data['projectName'] = this.projectName;
-    return data;
+    final Map<String, dynamic> dataMap = {};
+    dataMap['id'] = id;
+    dataMap['registration_no'] = registrationNo;
+    dataMap['project_id'] = projectId;
+    dataMap['full_name'] = fullName;
+    dataMap['cnic'] = cnic;
+    dataMap['lane_no'] = laneNo;
+    dataMap['house_no'] = houseNo;
+    dataMap['category'] = category;
+    dataMap['present_address'] = presentAddress;
+    dataMap['cell'] = cell;
+    dataMap['status'] = status;
+
+    // Format DateTime objects to ISO 8601 strings for JSON
+    dataMap['created_at'] = createdAt?.toIso8601String();
+    dataMap['updated_at'] = updatedAt?.toIso8601String();
+    dataMap['deleted_at'] = deletedAt?.toIso8601String();
+
+    dataMap['projectName'] = projectName;
+    return dataMap;
   }
 }
+

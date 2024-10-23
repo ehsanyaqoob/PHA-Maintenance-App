@@ -5,6 +5,8 @@ import 'package:pharesidence/exports/exports.dart';
 import 'package:pharesidence/features/Views/Home/home_view.dart';
 import 'dart:convert';
 
+import 'package:shared_preferences/shared_preferences.dart';
+
 class SigninController extends GetxController {
   var cnic = ''.obs;
   var cell = ''.obs; // Change phone to cell
@@ -46,6 +48,12 @@ class SigninController extends GetxController {
 
         if (responseData['status'] == true) {
           debugPrint("Token: ${responseData['data']['token']}");
+             // Save login state to SharedPreferences
+          SharedPreferences prefs = await SharedPreferences.getInstance();
+          await prefs.setBool('isLoggedIn', true); // Save user login session
+
+          // Save API data to SharedPreferences
+          await prefs.setString('apiData', jsonEncode(responseData['data'])); // Save entire data
 
           // Navigating to HomeView and passing the entire data dynamically
           Get.to(() => HomeView(apiData: responseData['data']));

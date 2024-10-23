@@ -4,35 +4,94 @@ import 'package:pharesidence/models/additionalInfo_model.dart';
 import 'dart:convert';
 import '../../Api_Providers/Api_Responses/api_urls.dart';
 import '../../exports/exports.dart';
+import '../../features/Views/Home/Additional_inof_view/additional_info.dart';
 import '../../models/projects_models.dart';
 
 class ProjectsViewController extends GetxController {
+/// Scenario for pay full amount & pay partial amount
+
+var selectedPaymentOption = 'Pay full'.obs; 
+var fullAmount = ''.obs; 
+var partialAmount = ''.obs; 
+
+String getFullAmount() {
+  if (additionalInfoList.isNotEmpty) {
+    return additionalInfoList.first.totalAmountDue.toString(); 
+  }
+  return '0'; 
+}
+
+void setPartialAmount(String value) {
+  // Allow updating partial amount regardless of the selected payment option
+  if (selectedPaymentOption.value == 'Pay Partial') {
+    partialAmount.value = value; 
+  }
+}
+
+void setPaymentOption(String value) {
+  selectedPaymentOption.value = value; 
+  if (value == 'Pay full') {
+    fullAmount.value = getFullAmount(); 
+    partialAmount.value = ''; // Clear the partial amount when switching to full payment
+  } else if (value == 'Pay Partial') {
+    partialAmount.value = ''; // Clear any existing partial amount
+  }
+}
+
+
+
+
   var isLoading = true.obs;
   var projects = <MembershipData>[].obs;
 
- 
   Future<void> fetchProjects(String cnic) async {
+    if (cnic.isEmpty) {
+      Get.snackbar('Error', 'CNIC cannot be empty');
+      return;
+    }
+
+    isLoading.value = true;
+
     try {
       final Map<String, dynamic> requestBody = {"cnic": cnic.trim()};
+
+      // Debugging: Print request body
+      debugPrint("Request Body: $requestBody");
+
       final response = await http.post(
         Uri.parse(GetCNICByMembership),
         headers: {"Content-Type": "application/json"},
         body: jsonEncode(requestBody),
       );
 
+      // Debugging: Print response status and body
+      debugPrint("Response Status: ${response.statusCode}");
+      debugPrint("Response Body: ${response.body}");
+
       if (response.statusCode == 200) {
         final Map<String, dynamic> data = jsonDecode(response.body);
         var model = MembershipModel.fromJson(data);
+
+        // Debugging: Print the parsed model data
+        debugPrint("Parsed Model: $model");
+
         if (model.status == true) {
-         //Handle there business logic
-          print(model.data);
+          // Check if model.data is not null and not empty
+          if (model.data != null && model.data!.isNotEmpty) {
+            // Assign the list only if it's not null
+            projects.assignAll(model.data!); // Use `!` to assert it's not null
+            debugPrint("Projects fetched successfully: ${model.data}");
+          } else {
+            Get.snackbar('Info', 'No projects available');
+            debugPrint("No projects available");
+          }
         } else {
-          Get.snackbar('Error', model.message ?? 'Invalid credentials');
+          Get.snackbar('Error', model.message ?? 'Invalid response');
+          debugPrint("Error: ${model.message}");
         }
       } else {
-        // Log full response for debugging
-        debugPrint("Response: ${response.body}");
-        Get.snackbar('Error', 'Login failed: ${response.body}');
+        debugPrint("Error Response: ${response.body}");
+        Get.snackbar('Error', 'Failed to fetch projects: ${response.body}');
       }
     } catch (e) {
       debugPrint("Exception: $e");
@@ -40,76 +99,90 @@ class ProjectsViewController extends GetxController {
     } finally {
       isLoading.value = false;
     }
-  }
+  }var additionalInfoList = <AdditionalInfoData>[].obs;
 
+Future<void> fetchAdditionalInfo(String cnic) async {
+  try {
+    isLoading.value = true;
+    debugPrint("Fetching additional info for CNIC: $cnic");
+    
+    final Map<String, dynamic> requestBody = {"cnic": cnic.trim()};
+    debugPrint("Request Body: $requestBody");
 
+    final response = await http.post(
+      Uri.parse(getAdditionalInfoByCNIC),
+      headers: {"Content-Type": "application/json"},
+      body: jsonEncode(requestBody),
+    );
 
-  Future<void> fetchAdditionalInfo(String cnic) async {
-    try {
-      final Map<String, dynamic> requestBody = {"cnic": cnic.trim()};
-      final response = await http.post(
-        Uri.parse(getAdditionalInfoByCNIC),
-        headers: {"Content-Type": "application/json"},
-        body: jsonEncode(requestBody),
-      );
+    debugPrint("Response Status Code: ${response.statusCode}");
+    debugPrint("Response Body: ${response.body}");
 
-      if (response.statusCode == 200) {
-        final Map<String, dynamic> data = jsonDecode(response.body);
-        var model = AdditionalInfoModel.fromJson(data);
-        if (model.status == true) {
-          //Handle there business logic
-        } else {
-          Get.snackbar('Error', model.message ?? 'Invalid credentials');
-        }
+    if (response.statusCode == 200) {
+      final Map<String, dynamic> data = jsonDecode(response.body);
+      var model = AdditionalInfoModel.fromJson(data);
+      debugPrint("Response Data: $data");
+
+      if (model.status == true && model.data != null && model.data!.isNotEmpty) {
+        additionalInfoList.value = model.data!;
+        debugPrint("Additional Info List: ${additionalInfoList}");
       } else {
-        // Log full response for debugging
-        debugPrint("Response: ${response.body}");
-        Get.snackbar('Error', 'Login failed: ${response.body}');
+        Get.snackbar('Error', model.message ?? 'No additional info found.');
+        debugPrint("Error: ${model.message}");
       }
-    } catch (e) {
-      debugPrint("Exception: $e");
-      Get.snackbar('Error', 'An error occurred: $e');
-    } finally {
-      isLoading.value = false;
+    } else {
+      Get.snackbar('Error', 'Fetching additional info failed: ${response.body}');
+      debugPrint("Error Response: ${response.body}");
     }
+  } catch (e) {
+    Get.snackbar('Error', 'An error occurred: $e');
+    debugPrint("Exception: $e");
+  } finally {
+    isLoading.value = false;
+    debugPrint("Loading state: ${isLoading.value}");
   }
+}
 
-  Future<void> getPSID(String cnic) async {
-    try {
-      final Map<String, dynamic> requestBody = {
-        "consumerno": "12345",
-        "full_name": "John Doe",
-        "cnic": "1234567890123",
-        "challanId": "12345",
-        "due_date": "2024-12-31",
-        "iss_date": "2024-12-01",
-        "due_amount": 1700,
-        "adue_amount": 1700,
-        "reserved": "PHA_Maintenance"
-      };
-      final response = await http.post(
-        Uri.parse(getAdditionalInfoByCNIC),
-        headers: {"Content-Type": "application/json"},
-        body: jsonEncode(requestBody),
-      );
 
-      if (response.statusCode == 200) {
-        final Map<String, dynamic> data = jsonDecode(response.body);
-        if (data['status'] == true) {
-          //Handle there business logic
-        } else {
-          Get.snackbar('Error', data['message'] ?? 'Invalid credentials');
-        }
+Future<void> getPSID(String registration, double amount) async {
+  try {
+    final Map<String, dynamic> requestBody = {
+      "consumerno": "12345", // Replace with appropriate data if needed
+      "full_name": "John Doe", // Replace with actual name if needed
+      "cnic": registration, // Use the registration parameter here
+      "challanId": "12345", // Static value, change if needed
+      "due_date": "2024-12-31", // Static date, change if needed
+      "iss_date": "2024-12-01", // Static date, change if needed
+      "due_amount": amount, // Use the amount parameter
+      "adue_amount": amount, // Use the amount parameter
+      "reserved": "PHA_Maintenance" // Static value, change if needed
+    };
+    
+    final response = await http.post(
+      Uri.parse(getAdditionalInfoByCNIC),
+      headers: {"Content-Type": "application/json"},
+      body: jsonEncode(requestBody),
+    );
+
+    debugPrint("Response Status Code: ${response.statusCode}");
+    debugPrint("Response Body: ${response.body}");
+
+    if (response.statusCode == 200) {
+      final Map<String, dynamic> data = jsonDecode(response.body);
+      debugPrint("API Response Data: $data");
+
+      if (data['status'] == true) {
+        // Handle business logic for successful response
+        return data['psid']; // Assuming 'psid' is returned in the response
       } else {
-        // Log full response for debugging
-        debugPrint("Response: ${response.body}");
-        Get.snackbar('Error', 'Login failed: ${response.body}');
+        Get.snackbar('Error', data['message'] ?? 'Invalid credentials');
       }
-    } catch (e) {
-      debugPrint("Exception: $e");
-      Get.snackbar('Error', 'An error occurred: $e');
-    } finally {
-      isLoading.value = false;
+    } else {
+      Get.snackbar('Error', 'Failed to generate PSID: ${response.body}');
     }
+  } catch (e) {
+    debugPrint("Exception: $e");
+    Get.snackbar('Error', 'An error occurred: $e');
   }
+}
 }

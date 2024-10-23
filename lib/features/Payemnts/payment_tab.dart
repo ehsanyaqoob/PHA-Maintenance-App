@@ -72,7 +72,7 @@ class _PaymentViewsState extends State<PaymentViews> {
                   child: PHAButton(
                     title: 'Pay Now',
                     onTap: () {
-                      Get.to(BillPreviewView());
+                      Get.to(BillPreviewView(psid: '',));
                       print('Pay Now Button Pressed');
                     },
                   ),

@@ -1,5 +1,12 @@
+import 'package:get/get.dart';
 import 'package:pharesidence/Generic_Widgets/Widgets/pha_text.dart';
 import 'package:pharesidence/exports/exports.dart';
+
+import '../../drawer/notifications.dart';
+import '../../drawer/privacy_policy.dart';
+import '../../drawer/rateus.dart';
+import '../../drawer/terms_conditions.dart';
+
 class CustomDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -13,47 +20,49 @@ class CustomDrawer extends StatelessWidget {
             ),
             child: Row(
               children: [
-                Image.asset('assets/png/logo.png', width: 60, height: 60), 
+                Image.asset('assets/png/logo.png', width: 60, height: 60),
                 SizedBox(width: 10),
                 PHAText(
                   text: 'PHAF MAINTENANCE\nSERVICES',
                   fontSize: 14.sp,
                   fontWeight: FontWeight.bold,
                   color: AppColors.AppPrimary,
-                  
                 ),
               ],
             ),
           ),
           ListTile(
-            leading: Icon(Icons.star, color: AppColors.AppPrimary, size: 30,),
-            title: PHAText(text: 'Rate Us', fontSize: 16.sp, ),
+            leading: Icon(Icons.star, color: AppColors.AppPrimary, size: 30),
+            title: PHAText(text: 'Rate Us', fontSize: 16.sp),
             onTap: () {
-              // Handle navigation or action
+             // Get.to(RateUsView()); // Navigate to Rate Us View
             },
           ),
           ListTile(
-            leading: Icon(Icons.privacy_tip, color: AppColors.AppPrimary,size: 30,),
+            leading:
+                Icon(Icons.privacy_tip, color: AppColors.AppPrimary, size: 30),
             title: PHAText(text: 'Privacy Policy', fontSize: 16.sp),
             onTap: () {
-              // Handle navigation or action
+              Get.to(PrivacyPolicyView()); // Navigate to Privacy Policy View
             },
           ),
           ListTile(
-            leading: Icon(Icons.article, color: AppColors.AppPrimary,size: 30,),
+            leading: Icon(Icons.article, color: AppColors.AppPrimary, size: 30),
             title: PHAText(text: 'Terms & Conditions', fontSize: 16.sp),
             onTap: () {
-              // Handle navigation or action
+              Get.to(
+                  TermsConditionsView()); // Navigate to Terms & Conditions View
             },
           ),
           ListTile(
             leading: Stack(
               children: [
-                Icon(Icons.notifications, color: AppColors.AppPrimary,size: 30,),
+                Icon(Icons.notifications,
+                    color: AppColors.AppPrimary, size: 30),
                 Positioned(
                   right: 0,
                   child: CircleAvatar(
-                    radius:8,
+                    radius: 8,
                     backgroundColor: Colors.blue,
                     child: Text(
                       '2',
@@ -65,15 +74,14 @@ class CustomDrawer extends StatelessWidget {
             ),
             title: PHAText(text: 'Notifications', fontSize: 16.sp),
             onTap: () {
-              // Handle navigation or action
+              Get.to(NotificationsView()); // Navigate to Notifications View
             },
           ),
-          Spacer(),
           ListTile(
             leading: Icon(Icons.logout, color: AppColors.AppPrimary),
             title: PHAText(text: 'Logout', fontSize: 16.sp),
             onTap: () {
-              // Handle logout
+              // Get.to(LogoutView()); // Navigate to Logout View
             },
           ),
         ],
