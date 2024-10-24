@@ -1,4 +1,7 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:pharesidence/Api_Providers/Api_Responses/api_urls.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:pharesidence/Generic_Widgets/Widgets/pha_text.dart';
 import 'package:pharesidence/exports/exports.dart';
 import 'package:pharesidence/features/Views/GenerateBill/generate_bill_preview.dart';
@@ -11,6 +14,8 @@ class PaymentViews extends StatefulWidget {
 }
 
 class _PaymentViewsState extends State<PaymentViews> {
+  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,7 +34,8 @@ class _PaymentViewsState extends State<PaymentViews> {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
+            padding:
+                const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
@@ -44,7 +50,8 @@ class _PaymentViewsState extends State<PaymentViews> {
                 // Payment Method List
                 Column(
                   children: [
-                    _buildPaymentCard("Bank Transfer", 'assets/png/bank.png', () {
+                    _buildPaymentCard("Bank Transfer", 'assets/png/bank.png',
+                        () {
                       // Navigate to Bank Transfer Payment
                       print("Bank Transfer selected");
                     }),
@@ -56,9 +63,9 @@ class _PaymentViewsState extends State<PaymentViews> {
                       // Navigate to Cash Payment
                       print("Cash selected");
                     }),
-                    _buildPaymentCard("Credit/Debit Card", 'assets/png/card.png', () {
-                      // Navigate to Credit/Debit Card Payment
-                      print("Credit/Debit Card selected");
+                    _buildPaymentCard(
+                        "Credit/Debit Card", 'assets/png/card.png', () {
+                      _openPaymentPage();
                     }),
                     _buildPaymentCard("Others", 'assets/png/cash.png', () {
                       // Navigate to Other Payment Options
@@ -72,7 +79,9 @@ class _PaymentViewsState extends State<PaymentViews> {
                   child: PHAButton(
                     title: 'Pay Now',
                     onTap: () {
-                      Get.to(BillPreviewView(psid: '',));
+                      Get.to(BillPreviewView(
+                        psid: '',
+                      ));
                       print('Pay Now Button Pressed');
                     },
                   ),
@@ -89,7 +98,7 @@ class _PaymentViewsState extends State<PaymentViews> {
   Widget _buildPaymentCard(String title, String iconPath, VoidCallback onTap) {
     return Container(
       height: 60.h,
-      margin: EdgeInsets.only(bottom: 10), 
+      margin: EdgeInsets.only(bottom: 10),
       decoration: BoxDecoration(
         gradient: LinearGradient(
           colors: [AppColors.servicecards, AppColors.CardColor],
@@ -108,7 +117,7 @@ class _PaymentViewsState extends State<PaymentViews> {
       child: ListTile(
         leading: Image.asset(
           iconPath,
-          width: 40, 
+          width: 40,
           height: 40,
         ),
         title: PHAText(
@@ -121,5 +130,48 @@ class _PaymentViewsState extends State<PaymentViews> {
         onTap: onTap,
       ),
     );
+  }
+
+  void _openPaymentPage() async {
+    try {
+      // Check if the URL can be launched
+      if (await canLaunch(payFastUrl)) {
+        // Request permission to open the browser
+        final bool permissionGranted = await _requestBrowserPermission();
+        if (permissionGranted) {
+          // Launch the URL
+          await launch(payFastUrl);
+        }
+      } else {
+        Get.snackbar('Error',
+            'Cannot launch the URL. Please check your connection or URL.');
+      }
+    } catch (e) {
+      Get.snackbar('Error', 'An error occurred: ${e.toString()}');
+    }
+  }
+
+  Future<bool> _requestBrowserPermission() async {
+    return await showDialog<bool>(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              title: Text("Permission Required"),
+              content: Text(
+                  "This will open your browser to complete the payment. Do you want to proceed?"),
+              actions: [
+                TextButton(
+                  onPressed: () => Navigator.of(context).pop(false),
+                  child: Text("No"),
+                ),
+                TextButton(
+                  onPressed: () => Navigator.of(context).pop(true),
+                  child: Text("Yes"),
+                ),
+              ],
+            );
+          },
+        ) ??
+        false;
   }
 }

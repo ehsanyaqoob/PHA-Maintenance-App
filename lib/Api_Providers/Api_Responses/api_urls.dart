@@ -4,6 +4,7 @@ const String baseUrl = 'http://20.46.49.230/api';
 // Projects URL
 const String getProjectsByCnicUrl = '$baseUrl/getProjectsByCnic';
 
+ final String payFastUrl = "/initiate-payment"; 
 // GetCNIC by Membership
 const String GetCNICByMembership = '$baseUrl/getProjectsByCnic';
 const String getAdditionalInfoByCNIC = '$baseUrl/getAddtionalInfoByCnic';

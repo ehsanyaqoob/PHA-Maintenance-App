@@ -102,35 +102,38 @@ class AdditionalProjectDetailsView extends StatelessWidget {
                 );
               }),
             ),
-// Widget code for the radio button and text field
-PHARadioButton(
-  items: ['Pay full', 'Pay Partial'],
-  selectedValue: controller.selectedPaymentOption.value,
-  onSelected: (value) {
-    controller.setPaymentOption(value);
-  },
-),
-SizedBox(height: 20),
+ PHARadioButton(
+              items: ['Pay full', 'Pay Partial'],
+              selectedValue: controller.selectedPaymentOption.value,
+              onSelected: (value) {
+                controller.setPaymentOption(value);
+              },
+            ),
+            SizedBox(height: 20),
 
-Obx(() {
-  // Display fields based on selected payment option
-  if (controller.selectedPaymentOption.value == 'Pay full') {
-    return PHATextFormField(
-      hint: 'Total Amount Due', // Optional hint
-      initialValue: controller.fullAmount.value, // Display the full amount
-      readOnly: true, // Make it read-only for full payments
-    );
-  } else {
-    return PHATextFormField(
-      hint: 'Enter Partial Amount',
-      initialValue: controller.partialAmount.value, // Show the current partial amount
-      onChanged: (value) {
-        controller.setPartialAmount(value); // Update the partial amount
-      },
-      inputType: TextInputType.number, // Specify that this is a number input
-    );
-  }
-}),
+            Obx(() {
+              if (controller.selectedPaymentOption.value == 'Pay full') {
+                return PHATextFormField(
+                  hint: 'Total Amount Due', 
+                  controller: controller
+                      .fullAmountController, 
+                  readOnly: true,
+                );
+              } else {
+                return PHATextFormField(
+                  hint: 'Enter Partial Amount',
+                  controller: controller
+                      .partialAmountController,
+                  onChanged: (value) {
+                    controller
+                        .setPartialAmount(value); 
+                  },
+                  inputType: TextInputType
+                      .number,
+                );
+              }
+            }),
+
 
             SizedBox(height: 20),
             Divider(color: AppColors.AppPrimary, thickness: 1),
@@ -148,18 +151,19 @@ Obx(() {
 PHAButton(
   title: 'Generate Bill',
   onTap: () async {
-    final registration = controller.additionalInfoList.first.registrationNo; 
-    final amount = controller.selectedPaymentOption.value == 'Pay full'
-        ? double.parse(controller.getFullAmount()) 
-        : double.parse(controller.partialAmount.value); 
+    // final registration = controller.additionalInfoList.first.registrationNo; 
+    // final amount = controller.selectedPaymentOption.value == 'Pay full'
+    //     ? double.parse(controller.getFullAmount()) 
+    //     : double.parse(controller.partialAmount.value); 
 
-    // Call getPSID and await the response
-    // final psid = await getPSID(registration, amount); 
+    // // Call getPSID and await the response
+    // // final psid = await getPSID(registration, amount); 
 
-    // Navigate to the BillPreviewView with the returned PSID
-    // if (psid != null) {
-    //   Get.to(() => BillPreviewView(psid: psid));
-    // }
+    // // Navigate to the BillPreviewView with the returned PSID
+    // // if (psid != null) {
+    // //   Get.to(() => BillPreviewView(psid: psid));
+    // // }
+    
   },
 ),
 
