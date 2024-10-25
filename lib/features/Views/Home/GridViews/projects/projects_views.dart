@@ -35,7 +35,7 @@ class _ProjectsViewsState extends State<ProjectsViews> {
 
     await Future.delayed(Duration(seconds: 2)); // Simulate 2-second loader
     await _controller.fetchProjects(widget.cnic);
-    
+
     setState(() {
       _isLoading = false;
     });
@@ -79,25 +79,41 @@ class _ProjectsViewsState extends State<ProjectsViews> {
     );
   }
 
-  Widget _buildProjectList(List<MembershipData> projectList) {
-    return ListView.builder(
-      itemCount: projectList.length,
-      padding: EdgeInsets.all(10),
-      itemBuilder: (context, index) {
-        return _buildProjectCard(projectList[index]);
-      },
-    );
-  }
+ Widget _buildProjectList(List<MembershipData> projectList) {
+  return ListView.builder(
+    itemCount: projectList.length,
+    padding: const EdgeInsets.all(10),
+    itemBuilder: (context, index) {
+      return Padding(
+        padding: const EdgeInsets.symmetric(vertical: 8),
+        child: _buildProjectCard(projectList[index]),
+      );
+    },
+  );
+}
 
-  Widget _buildProjectCard(MembershipData project) {
-    return GestureDetector(
-      onTap: () {
-        _showProjectDetails(project);
-      },
-      child: Card(
-        elevation: 5,
-        margin: EdgeInsets.symmetric(vertical: 10),
-        shape: RoundedRectangleBorder(
+Widget _buildProjectCard(MembershipData project) {
+  return GestureDetector(
+    onTap: () {
+      _showProjectDetails(project);
+    },
+    child: Card(
+      elevation: 5,
+      margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(15),
+      ),
+      shadowColor: AppColors.AppPrimary.withOpacity(0.5),
+      child: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: [ const Color(0xff2E2D74),
+                  const Color(0xff2E2D74),
+                  const Color(0xff2E2D74),
+                  const Color(0xff2E81A4)],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+          ),
           borderRadius: BorderRadius.circular(15),
         ),
         child: Padding(
@@ -105,40 +121,71 @@ class _ProjectsViewsState extends State<ProjectsViews> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                project.projectName ?? 'N/A',
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                ),
+              Row(
+                children: [
+                  Icon(
+                    Icons.work_outline,
+                    color: AppColors.AppSecondary,
+                  ),
+                  SizedBox(width: 8),
+                  Expanded(
+                    child: Text(
+                      project.projectName ?? 'N/A',
+                      style: const TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                ],
               ),
-              SizedBox(height: 8),
-              Text(
-                'Status: ${project.status ?? 'Unknown'}', // Display project status
-                style: TextStyle(
-                  fontSize: 16,
-                  color: Colors.grey[700],
-                ),
+              const SizedBox(height: 10),
+              Row(
+                children: [
+                  Icon(
+                    Icons.check_circle,
+                    color: Colors.white70,
+                  ),
+                  SizedBox(width: 8),
+                  Text(
+                    'Status: ${project.status ?? 'Unknown'}',
+                    style: const TextStyle(
+                      fontSize: 16,
+                      color: Colors.white70,
+                    ),
+                  ),
+                ],
               ),
-              SizedBox(height: 8),
-              Text(
-                'CNIC: ${project.cnic ?? 'N/A'}', // Display CNIC
-                style: TextStyle(
-                  fontSize: 16,
-                  color: Colors.grey[700],
-                ),
+              const SizedBox(height: 8),
+              Row(
+                children: [
+                  Icon(
+                    Icons.account_circle,
+                    color: Colors.white70,
+                  ),
+                  SizedBox(width: 8),
+                  Text(
+                    'CNIC: ${project.cnic ?? 'N/A'}',
+                    style: const TextStyle(
+                      fontSize: 16,
+                      color: Colors.white70,
+                    ),
+                  ),
+                ],
               ),
             ],
           ),
         ),
       ),
-    );
-  }
+    ),
+  );
+}
 
-  void _showProjectDetails(MembershipData project) {
-    // Navigate to detailed view of the project
-    Get.to(() => ProjectDetailsView(project: project));
-  }
+void _showProjectDetails(MembershipData project) {
+  Get.to(() => ProjectDetailsView(project: project));
+}
+
 }
 
 class ProjectDetailsView extends StatelessWidget {
@@ -162,51 +209,59 @@ class ProjectDetailsView extends StatelessWidget {
               _buildProfileSection(), // Add profile-like section
               SizedBox(height: 20),
               _buildDetailCard('Project Name', project.projectName, Icons.work),
-              _buildDetailCard('Project ID', project.projectId?.toString(), Icons.fingerprint),
-              _buildDetailCard('Registration No.', project.registrationNo, Icons.confirmation_number),
+              _buildDetailCard('Project ID', project.projectId?.toString(),
+                  Icons.fingerprint),
+              _buildDetailCard('Registration No.', project.registrationNo,
+                  Icons.confirmation_number),
               _buildDetailCard('CNIC', project.cnic, Icons.credit_card),
               _buildDetailCard('Lane No.', project.laneNo, Icons.location_on),
               _buildDetailCard('House No.', project.houseNo, Icons.home),
               _buildDetailCard('Category', project.category, Icons.category),
-              _buildDetailCard('Present Address', project.presentAddress, Icons.place),
+              _buildDetailCard(
+                  'Present Address', project.presentAddress, Icons.place),
               _buildDetailCard('Cell', project.cell, Icons.phone),
               _buildDetailCard('Status', project.status, Icons.info_outline),
               _buildDetailCard(
                 'Created At',
-                project.createdAt != null ? project.createdAt!.toIso8601String() : 'N/A',
+                project.createdAt != null
+                    ? project.createdAt!.toIso8601String()
+                    : 'N/A',
                 Icons.date_range,
               ),
               _buildDetailCard(
                 'Updated At',
-                project.updatedAt != null ? project.updatedAt!.toIso8601String() : 'N/A',
+                project.updatedAt != null
+                    ? project.updatedAt!.toIso8601String()
+                    : 'N/A',
                 Icons.update,
               ),
               _buildDetailCard(
                 'Deleted At',
-                project.deletedAt != null ? project.deletedAt!.toIso8601String() : 'N/A',
+                project.deletedAt != null
+                    ? project.deletedAt!.toIso8601String()
+                    : 'N/A',
                 Icons.delete_outline,
               ),
               SizedBox(height: 20),
-           PHAButton(
-  title: 'See Additional Info',
-  fillColor: true,
-  onTap: () async {
-    final controller = Get.find<ProjectsViewController>();
-    String? cnic = project.cnic;
+              PHAButton(
+                title: 'See Additional Info',
+                fillColor: true,
+                onTap: () async {
+                  final controller = Get.find<ProjectsViewController>();
+                  String? cnic = project.cnic;
 
-    if (cnic != null && cnic.isNotEmpty) {
-      await controller.fetchAdditionalInfo(cnic);
-      if (controller.additionalInfoList.isNotEmpty) {
-        Get.to(() => AdditionalProjectDetailsView());
-      } else {
-        Get.snackbar('Error', 'No additional info found.');
-      }
-    } else {
-      Get.snackbar('Error', 'CNIC is not available');
-    }
-  },
-),
-
+                  if (cnic != null && cnic.isNotEmpty) {
+                    await controller.fetchAdditionalInfo(cnic);
+                    if (controller.additionalInfoList.isNotEmpty) {
+                      Get.to(() => AdditionalProjectDetailsView());
+                    } else {
+                      Get.snackbar('Error', 'No additional info found.');
+                    }
+                  } else {
+                    Get.snackbar('Error', 'CNIC is not available');
+                  }
+                },
+              ),
             ],
           ),
         ),

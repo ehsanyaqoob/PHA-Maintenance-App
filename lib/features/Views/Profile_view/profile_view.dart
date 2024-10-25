@@ -28,63 +28,7 @@ class _ProfileViewState extends State<ProfileView> {
         onLeadingPressed: () {
           Get.back();
         },
-        actions: [
-          Padding(
-            padding: const EdgeInsets.all(12.0),
-            child: GestureDetector(
-              onTap: () async {
-                      // Show the custom loader
-                      showDialog(
-                        context: context,
-                        barrierDismissible: false,
-                        builder: (BuildContext context) {
-                          return const PHALoader();
-                        },
-                      );
-
-                      await Future.delayed(Duration(seconds: 2));
-                      await _authService.logoutUser();
-
-                      // Close the loader
-                      Navigator.of(context).pop();
-
-                      Get.offAll(() => GetStartView());
-                    },
-              child: Container(
-                height: 35,
-                width: 100,
-                decoration: BoxDecoration(
-                  color: AppColors.AppSecondary,
-                  borderRadius: BorderRadius.circular(40),
-                  boxShadow: [
-                    BoxShadow(
-                      color: AppColors.AppPrimary.withOpacity(0.85),
-                      offset: Offset(0, 0),
-                      blurRadius: 2,
-                      spreadRadius: 2,
-                    ),
-                  ],
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    PHAText(
-                      text: 'logout',
-                      fontSize: 16,
-                    ),
-                     Icon(
-                        Icons.logout,
-                        color: AppColors.AppPrimary,
-                        size: 22,
-                      ),
-                     
-                    
-                  ],
-                ),
-              ),
-            ),
-          ),
-        ],
+        
       ),
       body: SingleChildScrollView(
         child: Padding(

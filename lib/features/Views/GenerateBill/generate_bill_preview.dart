@@ -1,14 +1,22 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:pharesidence/Generic_Widgets/Widgets/pha_text.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart'; // Import for Clipboard
 import 'package:pharesidence/exports/exports.dart';
+import 'package:pharesidence/Generic_Widgets/Widgets/pha_text.dart';
 
-class BillPreviewView extends StatelessWidget {
-  const BillPreviewView({
-    Key? key,
-    required this.psid,
-  }) : super(key: key);
+class GenerateBillPreviewView extends StatelessWidget {
+  final String psid; // Add a field for PSID
 
-  final String psid;
+  const GenerateBillPreviewView({Key? key, required this.psid}) : super(key: key);
+  
+  void _copyPSID(BuildContext context) {
+    // Copy the PSID to the clipboard
+    Clipboard.setData(ClipboardData(text: psid)).then((_) {
+      // Show a snackbar or a toast to indicate that the PSID has been copied
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('PSID copied to clipboard!')),
+      );
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +28,7 @@ class BillPreviewView extends StatelessWidget {
       ),
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 26.0, ),
+          padding: const EdgeInsets.symmetric(horizontal: 26.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
@@ -35,6 +43,26 @@ class BillPreviewView extends StatelessWidget {
                 color: AppColors.appBlack,
               ),
               SizedBox(height: 15.h),
+
+              // New section to display PSID with a copy icon
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  PHAText(
+                    textAlign: TextAlign.center,
+                    text: 'PSID: $psid', 
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16,
+                  ),
+                  IconButton(
+                    icon: Icon(Icons.copy), // Copy icon
+                    onPressed: () => _copyPSID(context), // Copy action
+                    tooltip: 'Copy PSID',
+                  ),
+                ],
+              ),
+              SizedBox(height: 15.h),
+
               PHAText(
                 textAlign: TextAlign.center,
                 text: 'Consumer Information',
@@ -67,18 +95,15 @@ class BillPreviewView extends StatelessWidget {
                   {'label': 'Bill No', 'value': '123567'},
                   {'label': 'Period', 'value': '1 month'},
                   {'label': 'Issue Date', 'value': '10/10/2024'},
-                  {'label': 'Due Date', 'value': '10/11/204'},
-                  {'label': 'Bill No', 'value': '123567'},
-                  {'label': 'Maintenance Chrges', 'value': '4500'},
+                  {'label': 'Due Date', 'value': '10/11/2024'},
+                  {'label': 'Maintenance Charges', 'value': '4500'},
                   {'label': 'Late Payment Charges', 'value': '200'},
-                  {'label': 'Total charges', 'value': '4700'},
+                  {'label': 'Total Charges', 'value': '4700'},
                 ],
               ),
-              SizedBox(
-                height: 15.h,
-              ),
+              SizedBox(height: 15.h),
               Container(
-                width: double.infinity, // Take full width
+                width: double.infinity,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(20),
                   color: Colors.white,
@@ -92,13 +117,11 @@ class BillPreviewView extends StatelessWidget {
                   ],
                 ),
                 child: Padding(
-                  padding: const EdgeInsets.all(
-                      16.0), // Optional padding to space the text
+                  padding: const EdgeInsets.all(16.0),
                   child: Column(
                     children: [
                       PHAText(
-                        text:
-                            'Please pay the amount through the following methods before the due date to avoid late fees.',
+                        text: 'Please pay the amount through the following methods before the due date to avoid late fees.',
                         textAlign: TextAlign.center,
                         fontSize: 16.sp,
                       ),
@@ -106,19 +129,16 @@ class BillPreviewView extends StatelessWidget {
                   ),
                 ),
               ),
-              SizedBox(
-                height: 15.h,
-              ),
+              SizedBox(height: 15.h),
               PHAText(
                 text: 'Payment Method',
                 textAlign: TextAlign.center,
                 fontSize: 22.sp,
                 fontWeight: FontWeight.bold,
-              ), SizedBox(
-                height: 10.h,
               ),
+              SizedBox(height: 10.h),
               Container(
-                width: double.infinity, // Take full width
+                width: double.infinity,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(20),
                   color: Colors.white,
@@ -127,13 +147,12 @@ class BillPreviewView extends StatelessWidget {
                       color: AppColors.socialGrey.withOpacity(0.85),
                       spreadRadius: 2,
                       blurRadius: 10,
-                      offset: Offset(0, 0), // Shadow on all sides
+                      offset: Offset(0, 0),
                     ),
                   ],
                 ),
                 child: Padding(
-                  padding: const EdgeInsets.all(
-                      16.0), // Optional padding to space the text
+                  padding: const EdgeInsets.all(16.0),
                   child: Column(
                     children: [
                       PHAText(
@@ -145,12 +164,12 @@ class BillPreviewView extends StatelessWidget {
                   ),
                 ),
               ),
-              SizedBox(height: 20.h,),
+              SizedBox(height: 20.h),
               PHAButton(
                 title: 'Proceed to Pay',
                 fillColor: true,
               ),
-              SizedBox(height: 20.h,),
+              SizedBox(height: 20.h),
             ],
           ),
         ),
@@ -171,7 +190,7 @@ class GenericDetailsCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: double.infinity, // Take full width
+      width: double.infinity,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
         color: Colors.white,
@@ -180,7 +199,7 @@ class GenericDetailsCard extends StatelessWidget {
             color: AppColors.socialGrey.withOpacity(0.85),
             spreadRadius: 2,
             blurRadius: 10,
-            offset: Offset(0, 0), // Shadow on all sides
+            offset: Offset(0, 0),
           ),
         ],
       ),

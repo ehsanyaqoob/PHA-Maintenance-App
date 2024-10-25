@@ -14,8 +14,6 @@ class PaymentViews extends StatefulWidget {
 }
 
 class _PaymentViewsState extends State<PaymentViews> {
-  
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -52,15 +50,18 @@ class _PaymentViewsState extends State<PaymentViews> {
                   children: [
                     _buildPaymentCard("Bank Transfer", 'assets/png/bank.png',
                         () {
-                      // Navigate to Bank Transfer Payment
+                                                _openPaymentPage();
+
                       print("Bank Transfer selected");
                     }),
                     _buildPaymentCard("PSID", 'assets/png/cash.png', () {
-                      // Navigate to PSID Payment
+                      _openPaymentPage();
+
                       print("PSID selected");
                     }),
                     _buildPaymentCard("Cash", 'assets/png/cash.png', () {
-                      // Navigate to Cash Payment
+                      _openPaymentPage();
+
                       print("Cash selected");
                     }),
                     _buildPaymentCard(
@@ -68,7 +69,8 @@ class _PaymentViewsState extends State<PaymentViews> {
                       _openPaymentPage();
                     }),
                     _buildPaymentCard("Others", 'assets/png/cash.png', () {
-                      // Navigate to Other Payment Options
+                      _openPaymentPage();
+
                       print("Others selected");
                     }),
                   ],
@@ -79,7 +81,7 @@ class _PaymentViewsState extends State<PaymentViews> {
                   child: PHAButton(
                     title: 'Pay Now',
                     onTap: () {
-                      Get.to(BillPreviewView(
+                      Get.to(GenerateBillPreviewView(
                         psid: '',
                       ));
                       print('Pay Now Button Pressed');
@@ -133,45 +135,14 @@ class _PaymentViewsState extends State<PaymentViews> {
   }
 
   void _openPaymentPage() async {
+    final _url = Uri.parse('http://20.46.49.230/api/initiate-payment');
     try {
-      // Check if the URL can be launched
-      if (await canLaunch(payFastUrl)) {
-        // Request permission to open the browser
-        final bool permissionGranted = await _requestBrowserPermission();
-        if (permissionGranted) {
-          // Launch the URL
-          await launch(payFastUrl);
-        }
-      } else {
-        Get.snackbar('Error',
-            'Cannot launch the URL. Please check your connection or URL.');
+      // Use launchUrl with error handling
+      if (!await launchUrl(_url)) {
+        throw Exception('Could not launch $_url');
       }
     } catch (e) {
       Get.snackbar('Error', 'An error occurred: ${e.toString()}');
     }
-  }
-
-  Future<bool> _requestBrowserPermission() async {
-    return await showDialog<bool>(
-          context: context,
-          builder: (context) {
-            return AlertDialog(
-              title: Text("Permission Required"),
-              content: Text(
-                  "This will open your browser to complete the payment. Do you want to proceed?"),
-              actions: [
-                TextButton(
-                  onPressed: () => Navigator.of(context).pop(false),
-                  child: Text("No"),
-                ),
-                TextButton(
-                  onPressed: () => Navigator.of(context).pop(true),
-                  child: Text("Yes"),
-                ),
-              ],
-            );
-          },
-        ) ??
-        false;
   }
 }
