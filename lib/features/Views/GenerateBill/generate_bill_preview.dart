@@ -1,17 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart'; // Import for Clipboard
+import 'package:get/get.dart';
 import 'package:pharesidence/exports/exports.dart';
 import 'package:pharesidence/Generic_Widgets/Widgets/pha_text.dart';
+import 'package:pharesidence/features/Payemnts/payment_tab.dart';
+import 'package:pharesidence/models/additionalInfo_model.dart';
 
 class GenerateBillPreviewView extends StatelessWidget {
-  final String psid; // Add a field for PSID
+  final String psid;
+  final AdditionalInfoData additionalInfo;
 
-  const GenerateBillPreviewView({Key? key, required this.psid}) : super(key: key);
-  
+  const GenerateBillPreviewView({
+    Key? key,
+    required this.psid,
+    required this.additionalInfo,
+  }) : super(key: key);
+
   void _copyPSID(BuildContext context) {
-    // Copy the PSID to the clipboard
     Clipboard.setData(ClipboardData(text: psid)).then((_) {
-      // Show a snackbar or a toast to indicate that the PSID has been copied
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('PSID copied to clipboard!')),
       );
@@ -43,26 +49,33 @@ class GenerateBillPreviewView extends StatelessWidget {
                 color: AppColors.appBlack,
               ),
               SizedBox(height: 15.h),
+              PHAText(
+                textAlign: TextAlign.center,
+                text:
+                    'Please make sure that you have copied the \nbelow PSID for making Payments using any mehtod ',
+                fontSize: 14,
+              ),
 
-              // New section to display PSID with a copy icon
+              // PSID Section with Copy Icon
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   PHAText(
                     textAlign: TextAlign.center,
-                    text: 'PSID: $psid', 
+                    text: 'PSID: $psid',
                     fontWeight: FontWeight.bold,
                     fontSize: 16,
                   ),
                   IconButton(
-                    icon: Icon(Icons.copy), // Copy icon
-                    onPressed: () => _copyPSID(context), // Copy action
+                    icon: Icon(Icons.copy),
+                    onPressed: () => _copyPSID(context),
                     tooltip: 'Copy PSID',
                   ),
                 ],
               ),
               SizedBox(height: 15.h),
 
+              // Consumer Information Section
               PHAText(
                 textAlign: TextAlign.center,
                 text: 'Consumer Information',
@@ -72,10 +85,34 @@ class GenerateBillPreviewView extends StatelessWidget {
               SizedBox(height: 15.h),
               GenericDetailsCard(
                 details: [
-                  {'label': 'Name', 'value': 'Riaz Shakeel'},
-                  {'label': 'Property', 'value': 'Apartment 23D'},
-                  {'label': 'Location', 'value': 'Kuri Road'},
-                  {'label': 'Category', 'value': 'Type C'},
+                  {'label': 'Name', 'value': additionalInfo.fullName ?? 'N/A'},
+                  {
+                    'label': 'Registration No',
+                    'value': additionalInfo.registrationNo ?? 'N/A'
+                  },
+                  {'label': 'CNIC', 'value': additionalInfo.cnic ?? 'N/A'},
+                  {
+                    'label': 'Lane No',
+                    'value': additionalInfo.laneNo?.toString() ?? 'N/A'
+                  },
+                  {
+                    'label': 'House No',
+                    'value': additionalInfo.houseNo?.toString() ?? 'N/A'
+                  },
+                  {
+                    'label': 'Category',
+                    'value': additionalInfo.category ?? 'N/A'
+                  },
+                  {
+                    'label': 'Project',
+                    'value': additionalInfo.projectName ?? 'N/A'
+                  },
+                  {
+                    'label': 'Present Address',
+                    'value': additionalInfo.presentAddress ?? 'N/A'
+                  },
+                  {'label': 'Cell', 'value': additionalInfo.cell ?? 'N/A'},
+                  {'label': 'Status', 'value': additionalInfo.status ?? 'N/A'},
                 ],
               ),
               SizedBox(height: 15.h),
@@ -83,6 +120,8 @@ class GenerateBillPreviewView extends StatelessWidget {
                 thickness: 2,
                 color: AppColors.appBlack,
               ),
+
+              // Bill Details Section
               PHAText(
                 textAlign: TextAlign.center,
                 text: 'Bill Details',
@@ -92,16 +131,31 @@ class GenerateBillPreviewView extends StatelessWidget {
               SizedBox(height: 15.h),
               GenericDetailsCard(
                 details: [
-                  {'label': 'Bill No', 'value': '123567'},
-                  {'label': 'Period', 'value': '1 month'},
-                  {'label': 'Issue Date', 'value': '10/10/2024'},
-                  {'label': 'Due Date', 'value': '10/11/2024'},
-                  {'label': 'Maintenance Charges', 'value': '4500'},
-                  {'label': 'Late Payment Charges', 'value': '200'},
-                  {'label': 'Total Charges', 'value': '4700'},
+                  {
+                    'label': 'Issue Date',
+                    'value': additionalInfo.issueDate ?? 'N/A'
+                  },
+                  {
+                    'label': 'Due Date',
+                    'value': additionalInfo.dueDate ?? 'N/A'
+                  },
+                  {
+                    'label': 'Maintenance Charges',
+                    'value': additionalInfo.amount?.toString() ?? 'N/A'
+                  },
+                  {
+                    'label': 'Late Payment Charges',
+                    'value': additionalInfo.lateFee?.toString() ?? 'N/A'
+                  },
+                  {
+                    'label': 'Total Amount Due',
+                    'value': additionalInfo.totalAmountDue?.toString() ?? 'N/A'
+                  },
                 ],
               ),
               SizedBox(height: 15.h),
+
+              // Payment Instructions
               Container(
                 width: double.infinity,
                 decoration: BoxDecoration(
@@ -121,7 +175,8 @@ class GenerateBillPreviewView extends StatelessWidget {
                   child: Column(
                     children: [
                       PHAText(
-                        text: 'Please pay the amount through the following methods before the due date to avoid late fees.',
+                        text:
+                            'Please pay the amount through the following methods before the due date to avoid late fees.',
                         textAlign: TextAlign.center,
                         fontSize: 16.sp,
                       ),
@@ -130,44 +185,51 @@ class GenerateBillPreviewView extends StatelessWidget {
                 ),
               ),
               SizedBox(height: 15.h),
-              PHAText(
-                text: 'Payment Method',
-                textAlign: TextAlign.center,
-                fontSize: 22.sp,
-                fontWeight: FontWeight.bold,
-              ),
-              SizedBox(height: 10.h),
-              Container(
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
-                  color: Colors.white,
-                  boxShadow: [
-                    BoxShadow(
-                      color: AppColors.socialGrey.withOpacity(0.85),
-                      spreadRadius: 2,
-                      blurRadius: 10,
-                      offset: Offset(0, 0),
-                    ),
-                  ],
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Column(
-                    children: [
-                      PHAText(
-                        text: 'Credit Card',
-                        textAlign: TextAlign.center,
-                        fontSize: 16.sp,
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              SizedBox(height: 20.h),
+
+              // // Payment Method Section
+              // PHAText(
+              //   text: 'Payment Method',
+              //   textAlign: TextAlign.center,
+              //   fontSize: 22.sp,
+              //   fontWeight: FontWeight.bold,
+              // ),
+              // SizedBox(height: 10.h),
+              // Container(
+              //   width: double.infinity,
+              //   decoration: BoxDecoration(
+              //     borderRadius: BorderRadius.circular(20),
+              //     color: Colors.white,
+              //     boxShadow: [
+              //       BoxShadow(
+              //         color: AppColors.socialGrey.withOpacity(0.85),
+              //         spreadRadius: 2,
+              //         blurRadius: 10,
+              //         offset: Offset(0, 0),
+              //       ),
+              //     ],
+              //   ),
+              //   child: Padding(
+              //     padding: const EdgeInsets.all(16.0),
+              //     child: Column(
+              //       children: [
+              //         PHAText(
+              //           text: 'Credit Card',
+              //           textAlign: TextAlign.center,
+              //           fontSize: 16.sp,
+              //         ),
+              //       ],
+              //     ),
+              //   ),
+              // ),
+              // SizedBox(height: 20.h),
+
+              SizedBox(height: 20),
+              // Payment Button
               PHAButton(
-                title: 'Proceed to Pay',
-                fillColor: true,
+                title: 'Pay Now',
+                onTap: () {
+                  Get.to(PaymentViews());
+                },
               ),
               SizedBox(height: 20.h),
             ],
@@ -179,12 +241,12 @@ class GenerateBillPreviewView extends StatelessWidget {
 }
 
 class GenericDetailsCard extends StatelessWidget {
-  final List<Map<String, String>> details; // List of key-value pairs
+  final List<Map<String, String>> details;
   final double fontSize;
 
-  GenericDetailsCard({
+  const GenericDetailsCard({
     required this.details,
-    this.fontSize = 22,
+    this.fontSize = 14,
   });
 
   @override
@@ -210,16 +272,23 @@ class GenericDetailsCard extends StatelessWidget {
               .map((detail) => Column(
                     children: [
                       Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           PHAText(
+                            textAlign: TextAlign.center,
                             text: detail['label']!,
                             fontWeight: FontWeight.w600,
                             fontSize: fontSize,
                           ),
-                          PHAText(
-                            text: detail['value']!,
-                            fontSize: fontSize,
+                          Expanded(
+                            // Ensures text wraps and doesn't overflow
+                            child: PHAText(
+                              textAlign: TextAlign.end,
+                              text: detail['value']!,
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 3,
+                              fontSize: fontSize,
+                            ),
                           ),
                         ],
                       ),

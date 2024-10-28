@@ -1,5 +1,8 @@
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get_connect/http/src/utils/utils.dart';
+import 'package:pharesidence/Generic_Widgets/Widgets/custom_generic_button.dart';
+import 'package:pharesidence/Generic_Widgets/Widgets/pha_text.dart';
 import 'package:pharesidence/exports/exports.dart';
 import 'package:pharesidence/models/additionalInfo_model.dart';
 import '../../../../../Generic_Widgets/Widgets/custom_loarder.dart';
@@ -79,113 +82,150 @@ class _ProjectsViewsState extends State<ProjectsViews> {
     );
   }
 
- Widget _buildProjectList(List<MembershipData> projectList) {
-  return ListView.builder(
-    itemCount: projectList.length,
-    padding: const EdgeInsets.all(10),
-    itemBuilder: (context, index) {
-      return Padding(
-        padding: const EdgeInsets.symmetric(vertical: 8),
-        child: _buildProjectCard(projectList[index]),
-      );
-    },
-  );
-}
+  Widget _buildProjectList(List<MembershipData> projectList) {
+    return ListView.builder(
+      itemCount: projectList.length,
+      padding: const EdgeInsets.all(10),
+      itemBuilder: (context, index) {
+        return Padding(
+          padding: const EdgeInsets.symmetric(vertical: 8),
+          child: _buildProjectCard(projectList[index]),
+        );
+      },
+    );
+  }
 
-Widget _buildProjectCard(MembershipData project) {
-  return GestureDetector(
-    onTap: () {
-      _showProjectDetails(project);
-    },
-    child: Card(
-      elevation: 5,
-      margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(15),
-      ),
-      shadowColor: AppColors.AppPrimary.withOpacity(0.5),
-      child: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: [ const Color(0xff2E2D74),
-                  const Color(0xff2E2D74),
-                  const Color(0xff2E2D74),
-                  const Color(0xff2E81A4)],
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-          ),
+  Widget _buildProjectCard(MembershipData project) {
+    return GestureDetector(
+      onTap: () {
+        _showProjectDetails(project);
+      },
+      child: Card(
+        elevation: 5,
+        margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+        shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(15),
         ),
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                children: [
-                  Icon(
-                    Icons.work_outline,
-                    color: AppColors.AppSecondary,
-                  ),
-                  SizedBox(width: 8),
-                  Expanded(
-                    child: Text(
-                      project.projectName ?? 'N/A',
-                      style: const TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
+        shadowColor: AppColors.AppPrimary.withOpacity(0.5),
+        child: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: [
+                const Color(0xff2E2D74),
+                const Color(0xff2E2D74),
+                const Color(0xff2E2D74),
+                const Color(0xff2E81A4),
+              ],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            ),
+            borderRadius: BorderRadius.circular(15),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    Icon(
+                      Icons.person_outline,
+                      color: AppColors.AppSecondary,
+                    ),
+                    SizedBox(width: 8),
+                    Expanded(
+                      child: Text(
+                        project.projectName ?? 'N/A',
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
                       ),
                     ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 10),
-              Row(
-                children: [
-                  Icon(
-                    Icons.check_circle,
-                    color: Colors.white70,
-                  ),
-                  SizedBox(width: 8),
-                  Text(
-                    'Status: ${project.status ?? 'Unknown'}',
-                    style: const TextStyle(
-                      fontSize: 16,
+                  ],
+                ),
+                const SizedBox(height: 10),
+                Row(
+                  children: [
+                    Icon(
+                      Icons.fingerprint,
                       color: Colors.white70,
                     ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 8),
-              Row(
-                children: [
-                  Icon(
-                    Icons.account_circle,
-                    color: Colors.white70,
-                  ),
-                  SizedBox(width: 8),
-                  Text(
-                    'CNIC: ${project.cnic ?? 'N/A'}',
-                    style: const TextStyle(
-                      fontSize: 16,
+                    SizedBox(width: 8),
+                    Text(
+                      'ID: ${project.id ?? 'Unknown'}',
+                      style: const TextStyle(
+                        fontSize: 16,
+                        color: Colors.white70,
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 8),
+                Row(
+                  children: [
+                    Icon(
+                      Icons.article_outlined,
                       color: Colors.white70,
                     ),
-                  ),
-                ],
-              ),
-            ],
+                    SizedBox(width: 8),
+                    Text(
+                      'Reg No: ${project.registrationNo ?? 'N/A'}',
+                      style: const TextStyle(
+                        fontSize: 16,
+                        color: Colors.white70,
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 12),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                     CustomButtonWithIcon(
+                            text: 'See Details',
+                            icon: Icons.details,
+                            backgroundColor: AppColors.AppSecondary,
+                            textColor: AppColors.AppPrimary,
+                            iconColor: AppColors.AppPrimary,
+                            onTap: () {
+                              Get.to(ProjectDetailsView(project: project,));
+                            },
+                          ), CustomButtonWithIcon(
+                            text: 'Pay Bill',
+                            icon: Icons.details,
+                            backgroundColor: AppColors.AppSecondary,
+                            textColor: AppColors.AppPrimary,
+                            iconColor: AppColors.AppPrimary,
+                           onTap: () async {
+                      final controller = Get.find<ProjectsViewController>();
+                      String? cnic = project.cnic;
+
+                      if (cnic != null && cnic.isNotEmpty) {
+                        await controller.fetchAdditionalInfo(cnic);
+                        if (controller.additionalInfoList.isNotEmpty) {
+                          Get.to(() => AdditionalProjectDetailsView());
+                        } else {
+                          Get.snackbar('Error', 'No additional info found.');
+                        }
+                      } else {
+                        Get.snackbar('Error', 'CNIC is not available');
+                      };}
+                          ),
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       ),
-    ),
-  );
-}
+    );
+  }
 
-void _showProjectDetails(MembershipData project) {
-  Get.to(() => ProjectDetailsView(project: project));
-}
-
+  void _showProjectDetails(MembershipData project) {
+    Get.to(() => ProjectDetailsView(project: project));
+  }
 }
 
 class ProjectDetailsView extends StatelessWidget {
@@ -242,26 +282,8 @@ class ProjectDetailsView extends StatelessWidget {
                     : 'N/A',
                 Icons.delete_outline,
               ),
-              SizedBox(height: 20),
-              PHAButton(
-                title: 'See Additional Info',
-                fillColor: true,
-                onTap: () async {
-                  final controller = Get.find<ProjectsViewController>();
-                  String? cnic = project.cnic;
-
-                  if (cnic != null && cnic.isNotEmpty) {
-                    await controller.fetchAdditionalInfo(cnic);
-                    if (controller.additionalInfoList.isNotEmpty) {
-                      Get.to(() => AdditionalProjectDetailsView());
-                    } else {
-                      Get.snackbar('Error', 'No additional info found.');
-                    }
-                  } else {
-                    Get.snackbar('Error', 'CNIC is not available');
-                  }
-                },
-              ),
+          
+             
             ],
           ),
         ),

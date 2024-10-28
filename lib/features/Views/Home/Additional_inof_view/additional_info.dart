@@ -131,45 +131,35 @@ class AdditionalProjectDetailsView extends StatelessWidget {
             SizedBox(height: 20),
             Divider(color: AppColors.AppPrimary, thickness: 1),
 
-            SizedBox(height: 20),
-            // Payment Button
-            PHAButton(
-              title: 'Pay Now',
-              onTap: () {
-                Get.to(PaymentViews());
-              },
-            ),
+           
             SizedBox(height: 20),
 
-            PHAButton(
-              title: 'Generate Bill',
-              onTap: () async {
-                try {
-                  // Retrieve registration number and payment amount based on user selection
-                  final registrationNo =
-                      controller.additionalInfoList.first.registrationNo;
-                  final amount =
-                      controller.selectedPaymentOption.value == 'Pay full'
-                          ? double.parse(controller.getFullAmount())
-                          : double.parse(controller.partialAmount.value);
-                  // Call getPSID function to retrieve the PSID
-                  final result = await getPSID(registrationNo, amount);
-                  // Check if result is not null
-                  if (result != null) {
-                    final psid = result["psid"];
-                    // Navigate to the BillPreviewView with the PSID
-                    Get.to(() => GenerateBillPreviewView(psid: psid));
-                  } else {
-                    // Handle the case where PSID is null
-                    Get.snackbar(
-                        'Error', 'Failed to generate PSID. Please try again.');
-                  }
-                } catch (e) {
-                  // Handle any exceptions that might occur during the process
-                  Get.snackbar('Error', 'An unexpected error occurred: $e');
-                }
-              },
-            ),
+           PHAButton(
+  title: 'Generate Bill',
+  onTap: () async {
+    try {
+      final additionalInfo = controller.additionalInfoList.first;
+      final registrationNo = additionalInfo.registrationNo;
+      final amount = controller.selectedPaymentOption.value == 'Pay full'
+          ? double.parse(controller.getFullAmount())
+          : double.parse(controller.partialAmount.value);
+      final result = await getPSID(registrationNo, amount);
+
+      if (result != null) {
+        final psid = result["psid"];
+        Get.to(() => GenerateBillPreviewView(
+          additionalInfo: additionalInfo,
+          psid: psid,
+        ));
+      } else {
+        Get.snackbar('Error', 'Failed to generate PSID. Please try again.');
+      }
+    } catch (e) {
+      Get.snackbar('Error', 'An unexpected error occurred: $e');
+    }
+  },
+),
+
 
             SizedBox(height: 20),
           ],

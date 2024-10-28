@@ -54,7 +54,7 @@ class _PaymentViewsState extends State<PaymentViews> {
 
                       print("Bank Transfer selected");
                     }),
-                    _buildPaymentCard("PSID", 'assets/png/cash.png', () {
+                    _buildPaymentCard("1 Bill", 'assets/png/cash.png', () {
                       _openPaymentPage();
 
                       print("PSID selected");
@@ -81,9 +81,9 @@ class _PaymentViewsState extends State<PaymentViews> {
                   child: PHAButton(
                     title: 'Pay Now',
                     onTap: () {
-                      Get.to(GenerateBillPreviewView(
-                        psid: '',
-                      ));
+                      // Get.to(BillPreviewView(
+                      //   psid: '',
+                      // ));
                       print('Pay Now Button Pressed');
                     },
                   ),

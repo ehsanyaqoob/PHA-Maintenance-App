@@ -28,6 +28,9 @@ class _ProfileViewState extends State<ProfileView> {
         onLeadingPressed: () {
           Get.back();
         },
+        actions: [
+          
+        ],
         
       ),
       body: SingleChildScrollView(
