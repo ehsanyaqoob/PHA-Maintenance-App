@@ -15,10 +15,13 @@ class PHAText extends Text {
     TextDecorationStyle? textDecorationStyle,
     Color? decorationColor,
     String font = 'Poppins',
+    int? maxLines, // Make maxLines optional
+    TextOverflow? overflow, // Make overflow optional
   }) : super(
           text,
           textAlign: textAlign,
-          overflow: TextOverflow.clip,
+          overflow: overflow ?? TextOverflow.ellipsis, // Default to ellipsis
+          maxLines: maxLines ?? 2, // Default to 2 lines
           style: TextStyle(
             color: color,
             fontFamily: font,
@@ -51,8 +54,9 @@ class PHATextFormField extends StatelessWidget {
   final TextCapitalization textCapitalization;
   final TextInputAction textInputAction;
   final ValueChanged<String>? onSubmitted;
-  final String? Function(String?)? validator; // Adding validator parameter
-  final String? initialValue; // Change type from double? to String?
+  final String? Function(String?)? validator;
+  final String? initialValue;
+
   PHATextFormField({
     Key? key,
     this.controller,
@@ -74,7 +78,7 @@ class PHATextFormField extends StatelessWidget {
     this.textInputAction = TextInputAction.next,
     this.onSubmitted,
     this.validator,
-    this.initialValue, // Make initialValue optional
+    this.initialValue,
   }) : super(key: key);
 
   @override
@@ -152,7 +156,7 @@ class PHATextFormField extends StatelessWidget {
             onChanged: onChanged,
             onTap: onTap,
             obscureText: isObscure ?? false,
-            validator: validator, // Applying the validator here
+            validator: validator,
           ),
         ],
       ),
@@ -160,8 +164,8 @@ class PHATextFormField extends StatelessWidget {
   }
 }
 
-class TextField extends TextFormField {
-  TextField({
+class CustomTextField extends TextFormField {
+  CustomTextField({
     super.key,
     TextEditingController? controller,
     required String hint,

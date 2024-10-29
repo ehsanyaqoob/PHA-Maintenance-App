@@ -86,6 +86,7 @@ class _HomeViewState extends State<HomeView> {
                     PHATextFormField(
                       title: 'Search Projects',
                       hint: 'Search',
+                      suffix: Icon(Icons.access_time),
                       prefix: Icon(Icons.search,
                           size: 28, color: AppColors.blackColor),
                     ),
@@ -102,19 +103,19 @@ class _HomeViewState extends State<HomeView> {
                           _buildCard(
                               'Property & Payments', 'assets/svg/home.svg', () {
                             // Show PhaLoader when the fetch operation starts
-                            PHALoader.show();
+                            // PHALoader.show();
                             controller
                                 .fetchProjects(widget.apiData['cnic'])
                                 .then((_) {
-                              // Hide PhaLoader once the fetching is done
-                              PHALoader.hide();
+                              // // Hide PhaLoader once the fetching is done
+                              // PHALoader.hide();
 
                               // Navigate to ProjectsViews after fetching
                               Get.to(
                                   ProjectsViews(cnic: widget.apiData['cnic']));
                             }).catchError((error) {
-                              // Hide PhaLoader if an error occurs
-                              PHALoader.hide();
+                              // // Hide PhaLoader if an error occurs
+                              // PHALoader.hide();
                               Get.snackbar(
                                   'Error', 'Failed to fetch projects: $error');
                             });

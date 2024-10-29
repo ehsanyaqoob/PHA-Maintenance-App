@@ -6,6 +6,7 @@ import 'package:pharesidence/Generic_Widgets/Widgets/pha_text.dart';
 import 'dart:convert'; // Import for jsonEncode and jsonDecode
 import 'package:pharesidence/exports/exports.dart';
 import 'package:pharesidence/features/Payemnts/payment_tab.dart';
+import 'package:pharesidence/models/get_psid_model.dart';
 import '../../../../Api_Providers/Api_Responses/api_urls.dart';
 import '../../../../Shared/Controllers.dart/project_controller.dart';
 import '../../GenerateBill/generate_bill_preview.dart';
@@ -37,7 +38,6 @@ class AdditionalProjectDetailsView extends StatelessWidget {
                     final additionalInfo = controller.additionalInfoList[index];
 
                     return Card(
-
                       margin: EdgeInsets.symmetric(
                           vertical: 10.0, horizontal: 12.0),
                       shape: RoundedRectangleBorder(
@@ -86,13 +86,11 @@ class AdditionalProjectDetailsView extends StatelessWidget {
                                 additionalInfo.issueDate),
                             _buildInfoRow(Icons.calendar_today_outlined,
                                 'Due Date', additionalInfo.dueDate),
-                            _buildInfoRow(Icons.money,
-                                'Total Amount Due', additionalInfo.amount),
+                            _buildInfoRow(Icons.money, 'Total Amount Due',
+                                additionalInfo.amount),
                             _buildInfoRow(Icons.money, 'Late Fee',
                                 additionalInfo.lateFee.toString()),
-                            _buildInfoRow(
-                                Icons.money,
-                                'Total Amount Due',
+                            _buildInfoRow(Icons.money, 'Total Amount Due',
                                 additionalInfo.totalAmountDue.toString()),
                           ],
                         ),
@@ -102,64 +100,63 @@ class AdditionalProjectDetailsView extends StatelessWidget {
                 );
               }),
             ),
-// Widget code for the radio button and text field
-PHARadioButton(
-  items: ['Pay full', 'Pay Partial'],
-  selectedValue: controller.selectedPaymentOption.value,
-  onSelected: (value) {
-    controller.setPaymentOption(value);
-  },
-),
-SizedBox(height: 20),
+            PHARadioButton(
+              items: ['Pay full', 'Pay Partial'],
+              selectedValue: controller.selectedPaymentOption.value,
+              onSelected: (value) {
+                controller.setPaymentOption(value);
+              },
+            ),
+            SizedBox(height: 20),
 
-Obx(() {
-  // Display fields based on selected payment option
-  if (controller.selectedPaymentOption.value == 'Pay full') {
-    return PHATextFormField(
-      hint: 'Total Amount Due', // Optional hint
-      initialValue: controller.fullAmount.value, // Display the full amount
-      readOnly: true, // Make it read-only for full payments
-    );
-  } else {
-    return PHATextFormField(
-      hint: 'Enter Partial Amount',
-      initialValue: controller.partialAmount.value, // Show the current partial amount
-      onChanged: (value) {
-        controller.setPartialAmount(value); // Update the partial amount
-      },
-      inputType: TextInputType.number, // Specify that this is a number input
-    );
-  }
-}),
+            Obx(() {
+              if (controller.selectedPaymentOption.value == 'Pay full') {
+                return PHATextFormField(
+                  hint: 'Total Amount Due',
+                  controller: controller.fullAmountController,
+                  readOnly: true,
+                );
+              } else {
+                return PHATextFormField(
+                  hint: 'Enter Partial Amount',
+                  controller: controller.partialAmountController,
+                  onChanged: (value) {
+                    controller.setPartialAmount(value);
+                  },
+                  inputType: TextInputType.number,
+                );
+              }
+            }),
 
             SizedBox(height: 20),
             Divider(color: AppColors.AppPrimary, thickness: 1),
 
+           
             SizedBox(height: 20),
-            // Payment Button
-            PHAButton(
-              title: 'Pay Now',
-              onTap: () {
-                Get.to(PaymentViews());
-              },
-            ),
-            SizedBox(height: 20),
-     
-PHAButton(
+
+           PHAButton(
   title: 'Generate Bill',
   onTap: () async {
-    final registration = controller.additionalInfoList.first.registrationNo; 
-    final amount = controller.selectedPaymentOption.value == 'Pay full'
-        ? double.parse(controller.getFullAmount()) 
-        : double.parse(controller.partialAmount.value); 
+    try {
+      final additionalInfo = controller.additionalInfoList.first;
+      final registrationNo = additionalInfo.registrationNo;
+      final amount = controller.selectedPaymentOption.value == 'Pay full'
+          ? double.parse(controller.getFullAmount())
+          : double.parse(controller.partialAmount.value);
+      final result = await getPSID(registrationNo, amount);
 
-    // Call getPSID and await the response
-    // final psid = await getPSID(registration, amount); 
-
-    // Navigate to the BillPreviewView with the returned PSID
-    // if (psid != null) {
-    //   Get.to(() => BillPreviewView(psid: psid));
-    // }
+      if (result != null) {
+        final psid = result["psid"];
+        Get.to(() => GenerateBillPreviewView(
+          additionalInfo: additionalInfo,
+          psid: psid,
+        ));
+      } else {
+        Get.snackbar('Error', 'Failed to generate PSID. Please try again.');
+      }
+    } catch (e) {
+      Get.snackbar('Error', 'An unexpected error occurred: $e');
+    }
   },
 ),
 
@@ -190,36 +187,46 @@ PHAButton(
     );
   }
 
-  Future<void> getPSID(String cnic) async {
+  Future<Map<String, dynamic>?> getPSID(
+      String registrationNo, double amount) async {
     try {
+      // Constructing the request body with the required parameters
       final Map<String, dynamic> requestBody = {
-        "consumerno": "12345",
-        "full_name": "John Doe",
-        "cnic": cnic,
-        "challanId": "12345",
-        "due_date": "2024-12-31",
-        "iss_date": "2024-12-01",
-        "due_amount": 1700,
-        "adue_amount": 1700,
-        "reserved": "PHA_Maintenance",
+        "registration_no": registrationNo,
+        "amount": amount.toString(), // Convert amount to String
       };
+
+      debugPrint("Request Body: $requestBody");
+
+      // Sending the POST request
       final response = await http.post(
-        Uri.parse(getAdditionalInfoByCNIC), // Ensure this URL is defined
+        Uri.parse(GetPsid), // Use the constant GetPsid for the URL
         headers: {"Content-Type": "application/json"},
-        body: jsonEncode(requestBody),
+        body: jsonEncode(requestBody), // Encoding the request body as JSON
       );
 
       debugPrint("Response Status Code: ${response.statusCode}");
       debugPrint("Response Body: ${response.body}");
 
       if (response.statusCode == 200) {
-        final Map<String, dynamic> data = jsonDecode(response.body);
-        debugPrint("API Response Data: $data");
+        // Parse the response body
+        final responseData = jsonDecode(response.body);
+        if (responseData['status'] == true && responseData['data'] != null) {
+          // Extract the required parameters from the response
+          final String psid = responseData['data'][0]['psid'];
 
-        if (data['status'] == true) {
-          // Handle business logic for successful response, e.g. navigating to Bill Details
+          // You can fetch any other parameters you need similarly
+          // For example, if you need 'message' from the response:
+          final String message = responseData['message'];
+
+          // Return the parameters in a map
+          return {
+            "psid": psid,
+            "message": message,
+          };
         } else {
-          Get.snackbar('Error', data['message'] ?? 'Invalid credentials');
+          Get.snackbar('Error',
+              'Failed to get valid response: ${responseData['message']}');
         }
       } else {
         Get.snackbar('Error', 'Failed to generate PSID: ${response.body}');
@@ -228,5 +235,6 @@ PHAButton(
       debugPrint("Exception: $e");
       Get.snackbar('Error', 'An error occurred: $e');
     }
+    return null; // Return null in case of any failure
   }
 }

@@ -1,4 +1,7 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:pharesidence/Api_Providers/Api_Responses/api_urls.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:pharesidence/Generic_Widgets/Widgets/pha_text.dart';
 import 'package:pharesidence/exports/exports.dart';
 import 'package:pharesidence/features/Views/GenerateBill/generate_bill_preview.dart';
@@ -29,7 +32,8 @@ class _PaymentViewsState extends State<PaymentViews> {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
+            padding:
+                const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
@@ -44,35 +48,34 @@ class _PaymentViewsState extends State<PaymentViews> {
                 // Payment Method List
                 Column(
                   children: [
-                    _buildPaymentCard("Bank Transfer", 'assets/png/bank.png', () {
-                      // Navigate to Bank Transfer Payment
+                    _buildPaymentCard("Bank Transfer", 'assets/png/bank.png',
+                        () {
+                                                _openPaymentPage();
+
                       print("Bank Transfer selected");
                     }),
-                    _buildPaymentCard("PSID", 'assets/png/cash.png', () {
-                      // Navigate to PSID Payment
+                    _buildPaymentCard("1 Bill", 'assets/png/cash.png', () {
+                      _openPaymentPage();
+
                       print("PSID selected");
                     }),
-                    _buildPaymentCard("Cash", 'assets/png/cash.png', () {
-                      // Navigate to Cash Payment
-                      print("Cash selected");
+                   
+                    _buildPaymentCard(
+                        "Credit/Debit Card", 'assets/png/card.png', () {
+                      _openPaymentPage();
                     }),
-                    _buildPaymentCard("Credit/Debit Card", 'assets/png/card.png', () {
-                      // Navigate to Credit/Debit Card Payment
-                      print("Credit/Debit Card selected");
-                    }),
-                    _buildPaymentCard("Others", 'assets/png/cash.png', () {
-                      // Navigate to Other Payment Options
-                      print("Others selected");
-                    }),
+                  
                   ],
                 ),
-                SizedBox(height: 30.h),
+                SizedBox(height: 60.h),
                 // Pay Now Button Section
                 Center(
                   child: PHAButton(
                     title: 'Pay Now',
                     onTap: () {
-                      Get.to(BillPreviewView(psid: '',));
+                      // Get.to(BillPreviewView(
+                      //   psid: '',
+                      // ));
                       print('Pay Now Button Pressed');
                     },
                   ),
@@ -89,7 +92,7 @@ class _PaymentViewsState extends State<PaymentViews> {
   Widget _buildPaymentCard(String title, String iconPath, VoidCallback onTap) {
     return Container(
       height: 60.h,
-      margin: EdgeInsets.only(bottom: 10), 
+      margin: EdgeInsets.only(bottom: 10),
       decoration: BoxDecoration(
         gradient: LinearGradient(
           colors: [AppColors.servicecards, AppColors.CardColor],
@@ -108,7 +111,7 @@ class _PaymentViewsState extends State<PaymentViews> {
       child: ListTile(
         leading: Image.asset(
           iconPath,
-          width: 40, 
+          width: 40,
           height: 40,
         ),
         title: PHAText(
@@ -121,5 +124,17 @@ class _PaymentViewsState extends State<PaymentViews> {
         onTap: onTap,
       ),
     );
+  }
+
+  void _openPaymentPage() async {
+    final _url = Uri.parse('http://20.46.49.230/api/initiate-payment');
+    try {
+      // Use launchUrl with error handling
+      if (!await launchUrl(_url)) {
+        throw Exception('Could not launch $_url');
+      }
+    } catch (e) {
+      Get.snackbar('Error', 'An error occurred: ${e.toString()}');
+    }
   }
 }

@@ -10,33 +10,53 @@ import '../../models/projects_models.dart';
 class ProjectsViewController extends GetxController {
 /// Scenario for pay full amount & pay partial amount
 
-var selectedPaymentOption = 'Pay full'.obs; 
-var fullAmount = ''.obs; 
-var partialAmount = ''.obs; 
+  var selectedPaymentOption = 'Pay full'.obs;
+  var fullAmount = ''.obs;
+  var partialAmount = ''.obs;
+  TextEditingController fullAmountController = TextEditingController();
+  TextEditingController partialAmountController = TextEditingController();
 
-String getFullAmount() {
-  if (additionalInfoList.isNotEmpty) {
-    return additionalInfoList.first.totalAmountDue.toString(); 
+  @override
+  void onInit() {
+    super.onInit();
+    fullAmount.value = getFullAmount();
+    fullAmountController.text = fullAmount.value;
   }
-  return '0'; 
-}
 
-void setPartialAmount(String value) {
-  // Allow updating partial amount regardless of the selected payment option
-  if (selectedPaymentOption.value == 'Pay Partial') {
-    partialAmount.value = value; 
+  @override
+  void onClose() {
+    fullAmountController.dispose();
+    partialAmountController.dispose();
+    super.onClose();
   }
-}
 
-void setPaymentOption(String value) {
-  selectedPaymentOption.value = value; 
-  if (value == 'Pay full') {
-    fullAmount.value = getFullAmount(); 
-    partialAmount.value = ''; // Clear the partial amount when switching to full payment
-  } else if (value == 'Pay Partial') {
-    partialAmount.value = ''; // Clear any existing partial amount
+  String getFullAmount() {
+    if (additionalInfoList.isNotEmpty) {
+      return additionalInfoList.first.totalAmountDue.toString();
+    }
+    return '0';
   }
-}
+
+  void setPartialAmount(String value) {
+    if (selectedPaymentOption.value == 'Pay Partial') {
+      partialAmount.value = value;
+      partialAmountController.text = value; 
+    }
+  }
+
+  void setPaymentOption(String value) {
+    selectedPaymentOption.value = value;
+
+    if (value == 'Pay full') {
+      fullAmount.value = getFullAmount();
+      fullAmountController.text = fullAmount.value; 
+      partialAmountController.clear(); 
+    } else if (value == 'Pay Partial') {
+      partialAmount.value = '';
+      partialAmountController.clear(); }
+    update();
+  }
+
 
 
 
