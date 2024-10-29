@@ -59,23 +59,15 @@ class _PaymentViewsState extends State<PaymentViews> {
 
                       print("PSID selected");
                     }),
-                    _buildPaymentCard("Cash", 'assets/png/cash.png', () {
-                      _openPaymentPage();
-
-                      print("Cash selected");
-                    }),
+                   
                     _buildPaymentCard(
                         "Credit/Debit Card", 'assets/png/card.png', () {
                       _openPaymentPage();
                     }),
-                    _buildPaymentCard("Others", 'assets/png/cash.png', () {
-                      _openPaymentPage();
-
-                      print("Others selected");
-                    }),
+                  
                   ],
                 ),
-                SizedBox(height: 30.h),
+                SizedBox(height: 60.h),
                 // Pay Now Button Section
                 Center(
                   child: PHAButton(

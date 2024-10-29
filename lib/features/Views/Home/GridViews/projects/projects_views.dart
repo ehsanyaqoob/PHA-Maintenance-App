@@ -135,7 +135,7 @@ class _ProjectsViewsState extends State<ProjectsViews> {
                     SizedBox(width: 8),
                     Expanded(
                       child: Text(
-                        project.projectName ?? 'N/A',
+                      'Project Name: ${project.projectName ?? 'Unknown'}',
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
@@ -154,7 +154,7 @@ class _ProjectsViewsState extends State<ProjectsViews> {
                     ),
                     SizedBox(width: 8),
                     Text(
-                      'ID: ${project.id ?? 'Unknown'}',
+                      'Project ID: ${project.id ?? 'Unknown'}',
                       style: const TextStyle(
                         fontSize: 16,
                         color: Colors.white70,
@@ -166,12 +166,29 @@ class _ProjectsViewsState extends State<ProjectsViews> {
                 Row(
                   children: [
                     Icon(
+                      Icons.category,
+                      color: Colors.white70,
+                    ),
+                    SizedBox(width: 8),
+                    Text(
+                      'Category: ${project.category ?? 'N/A'}',
+                      style: const TextStyle(
+                        fontSize: 16,
+                        color: Colors.white70,
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 12),
+                Row(
+                  children: [
+                    Icon(
                       Icons.article_outlined,
                       color: Colors.white70,
                     ),
                     SizedBox(width: 8),
                     Text(
-                      'Reg No: ${project.registrationNo ?? 'N/A'}',
+                      'Membership No: ${project.registrationNo ?? 'N/A'}',
                       style: const TextStyle(
                         fontSize: 16,
                         color: Colors.white70,

@@ -155,35 +155,6 @@ class GenerateBillPreviewView extends StatelessWidget {
               ),
               SizedBox(height: 15.h),
 
-              // Payment Instructions
-              Container(
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
-                  color: Colors.white,
-                  boxShadow: [
-                    BoxShadow(
-                      color: AppColors.socialGrey.withOpacity(0.85),
-                      spreadRadius: 2,
-                      blurRadius: 10,
-                      offset: Offset(0, 0),
-                    ),
-                  ],
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Column(
-                    children: [
-                      PHAText(
-                        text:
-                            'Please pay the amount through the following methods before the due date to avoid late fees.',
-                        textAlign: TextAlign.center,
-                        fontSize: 16.sp,
-                      ),
-                    ],
-                  ),
-                ),
-              ),
               SizedBox(height: 15.h),
 
               // // Payment Method Section
@@ -227,6 +198,14 @@ class GenerateBillPreviewView extends StatelessWidget {
               // Payment Button
               PHAButton(
                 title: 'Pay Now',
+                onTap: () {
+                  Get.to(PaymentViews());
+                },
+              ),
+              SizedBox(height: 20.h),
+
+              PHAButton(
+                title: 'Print now',
                 onTap: () {
                   Get.to(PaymentViews());
                 },
