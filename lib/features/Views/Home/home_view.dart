@@ -161,8 +161,23 @@ Widget _buildPropertiesSummary() {
             Expanded(
               child: SummaryItem(
                 image: 'assets/png/icon_gray_structure.svg',
-                count: '2',
+                count: '0',
                 type: 'Grey Structure',
+                onTap: () {
+                  Get.snackbar(
+                    'Grey Structure',
+                    'Sorry! You don\'t have any Grey Structure property.',
+                    icon: Icon(Icons.error, color: Colors.white),
+                    snackPosition: SnackPosition.TOP,
+                    backgroundColor: Colors.redAccent,
+                    colorText: Colors.white,
+                    borderRadius: 8,
+                    margin: EdgeInsets.all(15),
+                    duration: Duration(seconds: 5),
+                    isDismissible: true,
+                    forwardAnimationCurve: Curves.easeOutBack,
+                  );
+                },
               ),
             ),
             SizedBox(width: 8),
@@ -171,6 +186,21 @@ Widget _buildPropertiesSummary() {
                 image: 'assets/png/icon_apartments.svg',
                 count: '0',
                 type: 'Apartment',
+                onTap: () {
+                  Get.snackbar(
+                    'Apartment',
+                    'Sorry! You don\'t have any Apartment property.',
+                    icon: Icon(Icons.error, color: Colors.white),
+                    snackPosition: SnackPosition.TOP,
+                    backgroundColor: Colors.redAccent,
+                    colorText: Colors.white,
+                    borderRadius: 8,
+                    margin: EdgeInsets.all(15),
+                    duration: Duration(seconds: 5),
+                    isDismissible: true,
+                    forwardAnimationCurve: Curves.easeOutBack,
+                  );
+                },
               ),
             ),
             SizedBox(width: 8),
@@ -179,6 +209,21 @@ Widget _buildPropertiesSummary() {
                 image: 'assets/png/icon_commercial.svg',
                 count: '0',
                 type: 'Commercial',
+                onTap: () {
+                  Get.snackbar(
+                    'Commercial',
+                    'Sorry! You don\'t have any Commercial property.',
+                    icon: Icon(Icons.error, color: Colors.white),
+                    snackPosition: SnackPosition.TOP,
+                    backgroundColor: Colors.redAccent,
+                    colorText: Colors.white,
+                    borderRadius: 8,
+                    margin: EdgeInsets.all(15),
+                    duration: Duration(seconds: 5),
+                    isDismissible: true,
+                    forwardAnimationCurve: Curves.easeOutBack,
+                  );
+                },
               ),
             ),
           ],
@@ -366,51 +411,60 @@ class SummaryItem extends StatelessWidget {
   final String image;
   final String count;
   final String type;
+  final VoidCallback onTap; // Callback for tap action
 
-  SummaryItem({required this.image, required this.count, required this.type});
+  SummaryItem({
+    required this.image,
+    required this.count,
+    required this.type,
+    required this.onTap, // Add onTap as a required parameter
+  });
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Stack(
-          alignment: Alignment.center,
-          children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(20.0),
-              child: SvgPicture.asset(
-                image,
-                width: 100,
-                height: 100,
-                fit: BoxFit.cover,
+    return GestureDetector(
+      onTap: onTap, // Assign the onTap callback here
+      child: Column(
+        children: [
+          Stack(
+            alignment: Alignment.center,
+            children: [
+              ClipRRect(
+                borderRadius: BorderRadius.circular(20.0),
+                child: SvgPicture.asset(
+                  image,
+                  width: 100,
+                  height: 100,
+                  fit: BoxFit.cover,
+                ),
               ),
-            ),
-            Positioned(
-              child: CircleAvatar(
-                backgroundColor: Colors.white,
-                radius: 20,
-                child: Text(
-                  count,
-                  style: TextStyle(
-                    fontSize: 22,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black,
+              Positioned(
+                child: CircleAvatar(
+                  backgroundColor: Colors.white,
+                  radius: 20,
+                  child: Text(
+                    count,
+                    style: TextStyle(
+                      fontSize: 22,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black,
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
-        ),
-        SizedBox(height: 8),
-        Text(
-          type,
-          style: TextStyle(
-            fontSize: 14,
-            fontWeight: FontWeight.w600,
-            color: Colors.black,
+            ],
           ),
-        ),
-      ],
+          SizedBox(height: 8),
+          Text(
+            type,
+            style: TextStyle(
+              fontSize: 14,
+              fontWeight: FontWeight.w600,
+              color: Colors.black,
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

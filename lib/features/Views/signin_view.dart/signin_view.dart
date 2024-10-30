@@ -7,6 +7,7 @@ import 'package:pharesidence/Shared/Controllers.dart/signin_controller.dart';
 import 'package:pharesidence/exports/exports.dart';
 import 'package:pharesidence/features/Views/Splash_view/get_start_view.dart';
 import 'package:pharesidence/features/Views/signup_view.dart/signup_view.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 
 class SignInView extends StatefulWidget {
@@ -17,8 +18,18 @@ class SignInView extends StatefulWidget {
 }
 
 class _SignInViewState extends State<SignInView> {
+   void _openPhaContactUs() async {
+    final _url = Uri.parse('https://pha.kashpay.pk/contact-us/');
+    try {
+      // Use launchUrl with error handling
+      if (!await launchUrl(_url)) {
+        throw Exception('Could not launch $_url');
+      }
+    } catch (e) {
+      Get.snackbar('Error', 'An error occurred: ${e.toString()}');
+    }
+  }
   final SigninController controller = Get.put(SigninController());
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -122,21 +133,27 @@ class _SignInViewState extends State<SignInView> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        BottomTab(
-                          image: 'assets/png/icon_calendar.svg',
-                          label: 'News/Events',
-                          onTap: () {},
-                        ),
-                        BottomTab(
-                          image: 'assets/png/icon_building.svg',
-                          label: 'Projects',
-                          onTap: () {},
-                        ),
-                        BottomTab(
-                          image: 'assets/png/icon_phone.svg',
-                          label: 'Contact',
-                          onTap: () {},
-                        ),
+                       BottomTab(
+                      image: 'assets/png/icon_calendar.svg',
+                      label: 'News/Events',
+                      onTap: () {
+                        Get.to(const EventsView());
+                      },
+                    ),
+                    BottomTab(
+                      image: 'assets/png/icon_building.svg',
+                      label: 'Projects',
+                      onTap: () {
+                        Get.to(const ProjectsView());
+                      },
+                    ),
+                    BottomTab(
+                      image: 'assets/png/icon_phone.svg',
+                      label: 'Contact',
+                      onTap: () async {
+                        _openPhaContactUs();
+                      },
+                    ),
                       ],
                     ),
                     const SizedBox(height: 20),

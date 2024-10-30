@@ -144,16 +144,47 @@ class _ProjectsViewsState extends State<ProjectsViews> {
                     ),
                   ],
                 ),
-                const SizedBox(height: 10),
+               
+                // const SizedBox(height: 12),
+                // Row(
+                //   children: [
+                //     Icon(
+                //       Icons.category,
+                //       color: Colors.white70,
+                //     ),
+                //     SizedBox(width: 8),
+                //     PHAText(
+                //       text: 'Category: ${project.category ?? 'N/A'}',
+                //       fontSize: 16,
+                //       color: Colors.white70,
+                //     ),
+                //   ],
+                // ),
+                const SizedBox(height: 12),
                 Row(
                   children: [
                     Icon(
-                      Icons.fingerprint,
+                      Icons.article_outlined,
                       color: Colors.white70,
                     ),
                     SizedBox(width: 8),
                     PHAText(
-                      text: 'Project ID: ${project.id ?? 'Unknown'}',
+                      text: 'Membership No: ${project.registrationNo ?? 'N/A'}',
+                      fontSize: 16,
+                      color: Colors.white70,
+                    ),
+                  ],
+                ),
+                 const SizedBox(height: 10),
+                Row(
+                  children: [
+                    Icon(
+                      Icons.streetview,
+                      color: Colors.white70,
+                    ),
+                    SizedBox(width: 8),
+                    PHAText(
+                      text: 'Lane No: ${project.id ?? 'Unknown'}',
                       fontSize: 16,
                       color: Colors.white70,
                     ),
@@ -170,42 +201,12 @@ class _ProjectsViewsState extends State<ProjectsViews> {
                     Flexible(
                       // Use Flexible to avoid overflow
                       child: PHAText(
-                        text: '${project.presentAddress ?? 'N/A'}',
+                        text: ' House No: ${project.houseNo ?? 'N/A'}',
                         fontSize: 16,
                         color: Colors.white70,
                         maxLines: 2, // Limit the number of lines
                         overflow: TextOverflow.ellipsis, // Handle overflow
                       ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 12),
-                Row(
-                  children: [
-                    Icon(
-                      Icons.category,
-                      color: Colors.white70,
-                    ),
-                    SizedBox(width: 8),
-                    PHAText(
-                      text: 'Category: ${project.category ?? 'N/A'}',
-                      fontSize: 16,
-                      color: Colors.white70,
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 12),
-                Row(
-                  children: [
-                    Icon(
-                      Icons.article_outlined,
-                      color: Colors.white70,
-                    ),
-                    SizedBox(width: 8),
-                    PHAText(
-                      text: 'Membership No: ${project.registrationNo ?? 'N/A'}',
-                      fontSize: 16,
-                      color: Colors.white70,
                     ),
                   ],
                 ),

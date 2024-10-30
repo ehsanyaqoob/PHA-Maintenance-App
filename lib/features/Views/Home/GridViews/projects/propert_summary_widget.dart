@@ -76,7 +76,7 @@ class _PropertySummaryWidgetState extends State<PropertySummaryWidget> {
                 child: SummaryItem(
                   image: property.image,
                   count: property.count,
-                  type: property.type,
+                  type: property.type, onTap: () {  },
                 ),
               );
             }).toList(),
