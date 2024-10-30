@@ -100,6 +100,7 @@ class AdditionalProjectDetailsView extends StatelessWidget {
                 );
               }),
             ),
+
             PHARadioButton(
               items: ['Pay full', 'Pay Partial'],
               selectedValue: controller.selectedPaymentOption.value,
@@ -126,6 +127,7 @@ class AdditionalProjectDetailsView extends StatelessWidget {
                 );
               }
             }),
+            
             SizedBox(height: 20),
             Divider(color: AppColors.AppPrimary, thickness: 1),
             SizedBox(height: 20),
@@ -140,7 +142,6 @@ class AdditionalProjectDetailsView extends StatelessWidget {
                           ? double.parse(controller.getFullAmount())
                           : double.parse(controller.partialAmount.value);
                   final result = await getPSID(registrationNo, amount);
-
                   if (result != null) {
                     final psid = result["psid"];
                     Get.to(() => GenerateBillPreviewView(
