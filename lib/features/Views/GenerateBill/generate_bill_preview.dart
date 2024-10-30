@@ -42,7 +42,7 @@ class GenerateBillPreviewView extends StatelessWidget {
                 textAlign: TextAlign.center,
                 text: 'Maintenance Charges Bill',
                 fontWeight: FontWeight.bold,
-                fontSize: 22,
+                fontSize: 26,
               ),
               Divider(
                 thickness: 2,
@@ -53,7 +53,7 @@ class GenerateBillPreviewView extends StatelessWidget {
                 textAlign: TextAlign.center,
                 text:
                     'Please make sure that you have copied the \nbelow PSID for making Payments using any mehtod ',
-                fontSize: 14,
+                fontSize: 12.sp,
               ),
 
               // PSID Section with Copy Icon
@@ -64,7 +64,8 @@ class GenerateBillPreviewView extends StatelessWidget {
                     textAlign: TextAlign.center,
                     text: 'PSID: $psid',
                     fontWeight: FontWeight.bold,
-                    fontSize: 16,
+                    color: AppColors.AppPrimary,
+                    fontSize: 16.sp,
                   ),
                   IconButton(
                     icon: Icon(Icons.copy),
@@ -87,7 +88,7 @@ class GenerateBillPreviewView extends StatelessWidget {
                 details: [
                   {'label': 'Name', 'value': additionalInfo.fullName ?? 'N/A'},
                   {
-                    'label': 'Registration No',
+                    'label': 'Membership No',
                     'value': additionalInfo.registrationNo ?? 'N/A'
                   },
                   {'label': 'CNIC', 'value': additionalInfo.cnic ?? 'N/A'},
@@ -205,7 +206,7 @@ class GenerateBillPreviewView extends StatelessWidget {
               SizedBox(height: 20.h),
 
               PHAButton(
-                title: 'Print now',
+                title: 'Print now / Download',
                 onTap: () {
                   Get.to(PaymentViews());
                 },
@@ -225,7 +226,7 @@ class GenericDetailsCard extends StatelessWidget {
 
   const GenericDetailsCard({
     required this.details,
-    this.fontSize = 14,
+    this.fontSize = 16,
   });
 
   @override
@@ -258,6 +259,7 @@ class GenericDetailsCard extends StatelessWidget {
                             text: detail['label']!,
                             fontWeight: FontWeight.w600,
                             fontSize: fontSize,
+                            color: AppColors.AppPrimary,
                           ),
                           Expanded(
                             // Ensures text wraps and doesn't overflow
@@ -267,6 +269,7 @@ class GenericDetailsCard extends StatelessWidget {
                               overflow: TextOverflow.ellipsis,
                               maxLines: 3,
                               fontSize: fontSize,
+                              color: AppColors.greycolor,
                             ),
                           ),
                         ],

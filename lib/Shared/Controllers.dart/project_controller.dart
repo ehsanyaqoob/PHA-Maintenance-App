@@ -8,7 +8,7 @@ import '../../features/Views/Home/Additional_inof_view/additional_info.dart';
 import '../../models/projects_models.dart';
 
 class ProjectsViewController extends GetxController {
-/// Scenario for pay full amount & pay partial amount
+// Inside your controller class
 
   var selectedPaymentOption = 'Pay full'.obs;
   var fullAmount = ''.obs;
@@ -19,8 +19,12 @@ class ProjectsViewController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+    // Set the default payment option
+    selectedPaymentOption.value = 'Pay full';
+    // Set the full amount
     fullAmount.value = getFullAmount();
-    fullAmountController.text = fullAmount.value;
+    fullAmountController.text =
+        fullAmount.value; // Initialize the controller with the full amount
   }
 
   @override
@@ -34,13 +38,14 @@ class ProjectsViewController extends GetxController {
     if (additionalInfoList.isNotEmpty) {
       return additionalInfoList.first.totalAmountDue.toString();
     }
-    return '0';
+    // by default TotalAmount is se
+    return additionalInfoList.first.totalAmountDue.toString();
   }
 
   void setPartialAmount(String value) {
     if (selectedPaymentOption.value == 'Pay Partial') {
       partialAmount.value = value;
-      partialAmountController.text = value; 
+      partialAmountController.text = value;
     }
   }
 
@@ -49,17 +54,14 @@ class ProjectsViewController extends GetxController {
 
     if (value == 'Pay full') {
       fullAmount.value = getFullAmount();
-      fullAmountController.text = fullAmount.value; 
-      partialAmountController.clear(); 
+      fullAmountController.text = fullAmount.value;
+      partialAmountController.clear();
     } else if (value == 'Pay Partial') {
       partialAmount.value = '';
-      partialAmountController.clear(); }
+      partialAmountController.clear();
+    }
     update();
   }
-
-
-
-
 
   var isLoading = true.obs;
   var projects = <MembershipData>[].obs;
@@ -119,90 +121,94 @@ class ProjectsViewController extends GetxController {
     } finally {
       isLoading.value = false;
     }
-  }var additionalInfoList = <AdditionalInfoData>[].obs;
-
-Future<void> fetchAdditionalInfo(String cnic) async {
-  try {
-    isLoading.value = true;
-    debugPrint("Fetching additional info for CNIC: $cnic");
-    
-    final Map<String, dynamic> requestBody = {"cnic": cnic.trim()};
-    debugPrint("Request Body: $requestBody");
-
-    final response = await http.post(
-      Uri.parse(getAdditionalInfoByCNIC),
-      headers: {"Content-Type": "application/json"},
-      body: jsonEncode(requestBody),
-    );
-
-    debugPrint("Response Status Code: ${response.statusCode}");
-    debugPrint("Response Body: ${response.body}");
-
-    if (response.statusCode == 200) {
-      final Map<String, dynamic> data = jsonDecode(response.body);
-      var model = AdditionalInfoModel.fromJson(data);
-      debugPrint("Response Data: $data");
-
-      if (model.status == true && model.data != null && model.data!.isNotEmpty) {
-        additionalInfoList.value = model.data!;
-        debugPrint("Additional Info List: ${additionalInfoList}");
-      } else {
-        Get.snackbar('Error', model.message ?? 'No additional info found.');
-        debugPrint("Error: ${model.message}");
-      }
-    } else {
-      Get.snackbar('Error', 'Fetching additional info failed: ${response.body}');
-      debugPrint("Error Response: ${response.body}");
-    }
-  } catch (e) {
-    Get.snackbar('Error', 'An error occurred: $e');
-    debugPrint("Exception: $e");
-  } finally {
-    isLoading.value = false;
-    debugPrint("Loading state: ${isLoading.value}");
   }
-}
 
+  var additionalInfoList = <AdditionalInfoData>[].obs;
 
-Future<void> getPSID(String registration, double amount) async {
-  try {
-    final Map<String, dynamic> requestBody = {
-      "consumerno": "12345", // Replace with appropriate data if needed
-      "full_name": "John Doe", // Replace with actual name if needed
-      "cnic": registration, // Use the registration parameter here
-      "challanId": "12345", // Static value, change if needed
-      "due_date": "2024-12-31", // Static date, change if needed
-      "iss_date": "2024-12-01", // Static date, change if needed
-      "due_amount": amount, // Use the amount parameter
-      "adue_amount": amount, // Use the amount parameter
-      "reserved": "PHA_Maintenance" // Static value, change if needed
-    };
-    
-    final response = await http.post(
-      Uri.parse(getAdditionalInfoByCNIC),
-      headers: {"Content-Type": "application/json"},
-      body: jsonEncode(requestBody),
-    );
+  Future<void> fetchAdditionalInfo(String cnic) async {
+    try {
+      isLoading.value = true;
+      debugPrint("Fetching additional info for CNIC: $cnic");
 
-    debugPrint("Response Status Code: ${response.statusCode}");
-    debugPrint("Response Body: ${response.body}");
+      final Map<String, dynamic> requestBody = {"cnic": cnic.trim()};
+      debugPrint("Request Body: $requestBody");
 
-    if (response.statusCode == 200) {
-      final Map<String, dynamic> data = jsonDecode(response.body);
-      debugPrint("API Response Data: $data");
+      final response = await http.post(
+        Uri.parse(getAdditionalInfoByCNIC),
+        headers: {"Content-Type": "application/json"},
+        body: jsonEncode(requestBody),
+      );
 
-      if (data['status'] == true) {
-        // Handle business logic for successful response
-        return data['psid']; // Assuming 'psid' is returned in the response
+      debugPrint("Response Status Code: ${response.statusCode}");
+      debugPrint("Response Body: ${response.body}");
+
+      if (response.statusCode == 200) {
+        final Map<String, dynamic> data = jsonDecode(response.body);
+        var model = AdditionalInfoModel.fromJson(data);
+        debugPrint("Response Data: $data");
+
+        if (model.status == true &&
+            model.data != null &&
+            model.data!.isNotEmpty) {
+          additionalInfoList.value = model.data!;
+          debugPrint("Additional Info List: ${additionalInfoList}");
+        } else {
+          Get.snackbar('Error', model.message ?? 'No additional info found.');
+          debugPrint("Error: ${model.message}");
+        }
       } else {
-        Get.snackbar('Error', data['message'] ?? 'Invalid credentials');
+        Get.snackbar(
+            'Error', 'Fetching additional info failed: ${response.body}');
+        debugPrint("Error Response: ${response.body}");
       }
-    } else {
-      Get.snackbar('Error', 'Failed to generate PSID: ${response.body}');
+    } catch (e) {
+      Get.snackbar('Error', 'An error occurred: $e');
+      debugPrint("Exception: $e");
+    } finally {
+      isLoading.value = false;
+      debugPrint("Loading state: ${isLoading.value}");
     }
-  } catch (e) {
-    debugPrint("Exception: $e");
-    Get.snackbar('Error', 'An error occurred: $e');
   }
-}
+
+  Future<void> getPSID(String registration, double amount) async {
+    try {
+      final Map<String, dynamic> requestBody = {
+        "consumerno": "12345", // Replace with appropriate data if needed
+        "full_name": "John Doe", // Replace with actual name if needed
+        "cnic": registration, // Use the registration parameter here
+        "challanId": "12345", // Static value, change if needed
+        "due_date": "2024-12-31", // Static date, change if needed
+        "iss_date": "2024-12-01", // Static date, change if needed
+        "due_amount": amount, // Use the amount parameter
+        "adue_amount": amount, // Use the amount parameter
+        "reserved": "PHA_Maintenance" // Static value, change if needed
+      };
+
+      final response = await http.post(
+        Uri.parse(getAdditionalInfoByCNIC),
+        headers: {"Content-Type": "application/json"},
+        body: jsonEncode(requestBody),
+      );
+
+      debugPrint("Response Status Code: ${response.statusCode}");
+      debugPrint("Response Body: ${response.body}");
+
+      if (response.statusCode == 200) {
+        final Map<String, dynamic> data = jsonDecode(response.body);
+        debugPrint("API Response Data: $data");
+
+        if (data['status'] == true) {
+          // Handle business logic for successful response
+          return data['psid']; // Assuming 'psid' is returned in the response
+        } else {
+          Get.snackbar('Error', data['message'] ?? 'Invalid credentials');
+        }
+      } else {
+        Get.snackbar('Error', 'Failed to generate PSID: ${response.body}');
+      }
+    } catch (e) {
+      debugPrint("Exception: $e");
+      Get.snackbar('Error', 'An error occurred: $e');
+    }
+  }
 }

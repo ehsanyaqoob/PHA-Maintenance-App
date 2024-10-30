@@ -182,7 +182,7 @@ Widget _buildPropertiesSummary() {
               ),
             ),
           ],
-        )
+        ),
       ],
     ),
   );

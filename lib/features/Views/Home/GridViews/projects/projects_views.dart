@@ -167,15 +167,16 @@ class _ProjectsViewsState extends State<ProjectsViews> {
                       color: Colors.white70,
                     ),
                     SizedBox(width: 8),
-                    Flexible(  // Use Flexible to avoid overflow
-                    child: PHAText(
-                      text: '${project.presentAddress ?? 'N/A'}',
-                      fontSize: 16,
-                      color: Colors.white70,
-                      maxLines: 2,  // Limit the number of lines
-                      overflow: TextOverflow.ellipsis,  // Handle overflow
+                    Flexible(
+                      // Use Flexible to avoid overflow
+                      child: PHAText(
+                        text: '${project.presentAddress ?? 'N/A'}',
+                        fontSize: 16,
+                        color: Colors.white70,
+                        maxLines: 2, // Limit the number of lines
+                        overflow: TextOverflow.ellipsis, // Handle overflow
+                      ),
                     ),
-                  ),
                   ],
                 ),
                 const SizedBox(height: 12),
