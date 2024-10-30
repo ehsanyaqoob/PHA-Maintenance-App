@@ -134,13 +134,12 @@ class _ProjectsViewsState extends State<ProjectsViews> {
                     ),
                     SizedBox(width: 8),
                     Expanded(
-                      child: Text(
-                      'Project Name: ${project.projectName ?? 'Unknown'}',
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
-                        ),
+                      child: PHAText(
+                        text:
+                            'Project Name: ${project.projectName ?? 'Unknown'}',
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
                       ),
                     ),
                   ],
@@ -153,12 +152,10 @@ class _ProjectsViewsState extends State<ProjectsViews> {
                       color: Colors.white70,
                     ),
                     SizedBox(width: 8),
-                    Text(
-                      'Project ID: ${project.id ?? 'Unknown'}',
-                      style: const TextStyle(
-                        fontSize: 16,
-                        color: Colors.white70,
-                      ),
+                    PHAText(
+                      text: 'Project ID: ${project.id ?? 'Unknown'}',
+                      fontSize: 16,
+                      color: Colors.white70,
                     ),
                   ],
                 ),
@@ -166,16 +163,33 @@ class _ProjectsViewsState extends State<ProjectsViews> {
                 Row(
                   children: [
                     Icon(
+                      Icons.home,
+                      color: Colors.white70,
+                    ),
+                    SizedBox(width: 8),
+                    Flexible(  // Use Flexible to avoid overflow
+                    child: PHAText(
+                      text: '${project.presentAddress ?? 'N/A'}',
+                      fontSize: 16,
+                      color: Colors.white70,
+                      maxLines: 2,  // Limit the number of lines
+                      overflow: TextOverflow.ellipsis,  // Handle overflow
+                    ),
+                  ),
+                  ],
+                ),
+                const SizedBox(height: 12),
+                Row(
+                  children: [
+                    Icon(
                       Icons.category,
                       color: Colors.white70,
                     ),
                     SizedBox(width: 8),
-                    Text(
-                      'Category: ${project.category ?? 'N/A'}',
-                      style: const TextStyle(
-                        fontSize: 16,
-                        color: Colors.white70,
-                      ),
+                    PHAText(
+                      text: 'Category: ${project.category ?? 'N/A'}',
+                      fontSize: 16,
+                      color: Colors.white70,
                     ),
                   ],
                 ),
@@ -187,12 +201,10 @@ class _ProjectsViewsState extends State<ProjectsViews> {
                       color: Colors.white70,
                     ),
                     SizedBox(width: 8),
-                    Text(
-                      'Membership No: ${project.registrationNo ?? 'N/A'}',
-                      style: const TextStyle(
-                        fontSize: 16,
-                        color: Colors.white70,
-                      ),
+                    PHAText(
+                      text: 'Membership No: ${project.registrationNo ?? 'N/A'}',
+                      fontSize: 16,
+                      color: Colors.white70,
                     ),
                   ],
                 ),
@@ -200,36 +212,41 @@ class _ProjectsViewsState extends State<ProjectsViews> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                     CustomButtonWithIcon(
-                            text: 'See Details',
-                            icon: Icons.details,
-                            backgroundColor: AppColors.AppSecondary,
-                            textColor: AppColors.AppPrimary,
-                            iconColor: AppColors.AppPrimary,
-                            onTap: () {
-                              Get.to(ProjectDetailsView(project: project,));
-                            },
-                          ), CustomButtonWithIcon(
-                            text: 'Pay Bill',
-                            icon: Icons.details,
-                            backgroundColor: AppColors.AppSecondary,
-                            textColor: AppColors.AppPrimary,
-                            iconColor: AppColors.AppPrimary,
-                           onTap: () async {
-                      final controller = Get.find<ProjectsViewController>();
-                      String? cnic = project.cnic;
+                    CustomButtonWithIcon(
+                      text: 'See Details',
+                      icon: Icons.details,
+                      backgroundColor: AppColors.AppSecondary,
+                      textColor: AppColors.AppPrimary,
+                      iconColor: AppColors.AppPrimary,
+                      onTap: () {
+                        Get.to(ProjectDetailsView(
+                          project: project,
+                        ));
+                      },
+                    ),
+                    CustomButtonWithIcon(
+                        text: 'Pay Bill',
+                        icon: Icons.details,
+                        backgroundColor: AppColors.AppSecondary,
+                        textColor: AppColors.AppPrimary,
+                        iconColor: AppColors.AppPrimary,
+                        onTap: () async {
+                          final controller = Get.find<ProjectsViewController>();
+                          String? cnic = project.cnic;
 
-                      if (cnic != null && cnic.isNotEmpty) {
-                        await controller.fetchAdditionalInfo(cnic);
-                        if (controller.additionalInfoList.isNotEmpty) {
-                          Get.to(() => AdditionalProjectDetailsView());
-                        } else {
-                          Get.snackbar('Error', 'No additional info found.');
-                        }
-                      } else {
-                        Get.snackbar('Error', 'CNIC is not available');
-                      };}
-                          ),
+                          if (cnic != null && cnic.isNotEmpty) {
+                            await controller.fetchAdditionalInfo(cnic);
+                            if (controller.additionalInfoList.isNotEmpty) {
+                              Get.to(() => AdditionalProjectDetailsView());
+                            } else {
+                              Get.snackbar(
+                                  'Error', 'No additional info found.');
+                            }
+                          } else {
+                            Get.snackbar('Error', 'CNIC is not available');
+                          }
+                          ;
+                        }),
                   ],
                 ),
               ],
@@ -299,8 +316,6 @@ class ProjectDetailsView extends StatelessWidget {
                     : 'N/A',
                 Icons.delete_outline,
               ),
-          
-             
             ],
           ),
         ),

@@ -108,7 +108,6 @@ class AdditionalProjectDetailsView extends StatelessWidget {
               },
             ),
             SizedBox(height: 20),
-
             Obx(() {
               if (controller.selectedPaymentOption.value == 'Pay full') {
                 return PHATextFormField(
@@ -127,40 +126,36 @@ class AdditionalProjectDetailsView extends StatelessWidget {
                 );
               }
             }),
-
             SizedBox(height: 20),
             Divider(color: AppColors.AppPrimary, thickness: 1),
-
-           
             SizedBox(height: 20),
+            PHAButton(
+              title: 'Generate Bill',
+              onTap: () async {
+                try {
+                  final additionalInfo = controller.additionalInfoList.first;
+                  final registrationNo = additionalInfo.registrationNo;
+                  final amount =
+                      controller.selectedPaymentOption.value == 'Pay full'
+                          ? double.parse(controller.getFullAmount())
+                          : double.parse(controller.partialAmount.value);
+                  final result = await getPSID(registrationNo, amount);
 
-           PHAButton(
-  title: 'Generate Bill',
-  onTap: () async {
-    try {
-      final additionalInfo = controller.additionalInfoList.first;
-      final registrationNo = additionalInfo.registrationNo;
-      final amount = controller.selectedPaymentOption.value == 'Pay full'
-          ? double.parse(controller.getFullAmount())
-          : double.parse(controller.partialAmount.value);
-      final result = await getPSID(registrationNo, amount);
-
-      if (result != null) {
-        final psid = result["psid"];
-        Get.to(() => GenerateBillPreviewView(
-          additionalInfo: additionalInfo,
-          psid: psid,
-        ));
-      } else {
-        Get.snackbar('Error', 'Failed to generate PSID. Please try again.');
-      }
-    } catch (e) {
-      Get.snackbar('Error', 'An unexpected error occurred: $e');
-    }
-  },
-),
-
-
+                  if (result != null) {
+                    final psid = result["psid"];
+                    Get.to(() => GenerateBillPreviewView(
+                          additionalInfo: additionalInfo,
+                          psid: psid,
+                        ));
+                  } else {
+                    Get.snackbar(
+                        'Error', 'Failed to generate PSID. Please try again.');
+                  }
+                } catch (e) {
+                  Get.snackbar('Error', 'An unexpected error occurred: $e');
+                }
+              },
+            ),
             SizedBox(height: 20),
           ],
         ),

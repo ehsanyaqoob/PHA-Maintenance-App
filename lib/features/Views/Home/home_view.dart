@@ -86,7 +86,7 @@ class _HomeViewState extends State<HomeView> {
                     PHATextFormField(
                       title: 'Search Projects',
                       hint: 'Search',
-                      suffix: Icon(Icons.access_time),
+                      suffix: Icon(Icons.home),
                       prefix: Icon(Icons.search,
                           size: 28, color: AppColors.blackColor),
                     ),
@@ -151,7 +151,7 @@ Widget _buildPropertiesSummary() {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         PHAText(
-            text: 'Your Properties',
+            text: 'Properties Summary',
             fontSize: 18.sp,
             fontWeight: FontWeight.w800),
         SizedBox(height: 6.h),
@@ -162,7 +162,7 @@ Widget _buildPropertiesSummary() {
               child: SummaryItem(
                 image: 'assets/png/icon_gray_structure.svg',
                 count: '2',
-                type: 'Grey Structure(s)',
+                type: 'Grey Structure',
               ),
             ),
             SizedBox(width: 8),
@@ -170,7 +170,7 @@ Widget _buildPropertiesSummary() {
               child: SummaryItem(
                 image: 'assets/png/icon_apartments.svg',
                 count: '0',
-                type: 'Apartment(s)',
+                type: 'Apartment',
               ),
             ),
             SizedBox(width: 8),
@@ -178,7 +178,7 @@ Widget _buildPropertiesSummary() {
               child: SummaryItem(
                 image: 'assets/png/icon_commercial.svg',
                 count: '0',
-                type: 'Commercial(s)',
+                type: 'Commercial',
               ),
             ),
           ],
@@ -392,7 +392,7 @@ class SummaryItem extends StatelessWidget {
                 child: Text(
                   count,
                   style: TextStyle(
-                    fontSize: 20,
+                    fontSize: 22,
                     fontWeight: FontWeight.bold,
                     color: Colors.black,
                   ),

@@ -81,13 +81,11 @@ class SplashView extends StatelessWidget {
                     child: AnimatedScale(
                       scale: controller.showPHAText.value ? 1.0 : 0.95,
                       duration: const Duration(milliseconds: 700),
-                      child: Text(
-                        'Ministry of Housing and Works',
-                        style: GoogleFonts.balsamiqSans(
-                          fontSize: 12.sp,
-                          fontWeight: FontWeight.w400,
-                          color: const Color(0xFFEAEAEA),
-                        ),
+                      child: PHAText(
+                        text: 'Ministry of Housing and Works',
+                        fontSize: 12.sp,
+                        fontWeight: FontWeight.w400,
+                        color: const Color(0xFFEAEAEA),
                       ),
                     ),
                   )),
