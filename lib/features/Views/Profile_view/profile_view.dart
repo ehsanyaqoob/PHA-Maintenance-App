@@ -97,16 +97,16 @@ class _ProfileViewState extends State<ProfileView> {
                       height: 10,
                     ),
                     Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 50.0),
+                      padding: const EdgeInsets.symmetric(horizontal: 20.0),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
                           CustomButtonWithIcon(
                             text: 'Profile',
                             icon: Icons.person,
-                            backgroundColor: AppColors.AppSecondary,
-                            textColor: AppColors.AppPrimary,
-                            iconColor: AppColors.AppPrimary,
+                            backgroundColor: AppColors.AppPrimary,
+                            textColor: AppColors.AppSecondary,
+                            iconColor: AppColors.AppSecondary,
                             onTap: () {
                               //  Get.to(ProfileSecView());
                             },
@@ -114,9 +114,9 @@ class _ProfileViewState extends State<ProfileView> {
                           CustomButtonWithIcon(
                             text: 'Settings',
                             icon: Icons.settings,
-                            backgroundColor: AppColors.AppSecondary,
-                            textColor: AppColors.AppPrimary,
-                            iconColor: AppColors.AppPrimary,
+                            backgroundColor: AppColors.AppPrimary,
+                            textColor: AppColors.AppSecondary,
+                            iconColor: AppColors.AppSecondary,
                             onTap: () {
                               //Get.to(SettingsView());
                             },
@@ -203,7 +203,7 @@ class _ProfileViewState extends State<ProfileView> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Icon(Icons.bookmark_add_rounded,
-                              size: 40, color: AppColors.appWhite),
+                              size: 40, color: AppColors.AppPrimary),
                           PHAText(
                             textAlign: TextAlign.center,
                             text: 'Account\nStatement',
@@ -236,7 +236,7 @@ class _ProfileViewState extends State<ProfileView> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Icon(Icons.person_2_outlined,
-                              size: 40, color: AppColors.appWhite),
+                              size: 40, color: AppColors.AppPrimary),
                           PHAText(
                             textAlign: TextAlign.center,
                             text: 'Payee\nManagement',

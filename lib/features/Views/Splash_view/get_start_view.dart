@@ -1,5 +1,7 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:pharesidence/Generic_Widgets/Widgets/pha_text.dart';
 import 'package:pharesidence/exports/exports.dart';
 import 'package:pharesidence/features/Views/signin_view.dart/signin_view.dart';
@@ -13,6 +15,18 @@ class GetStartView extends StatefulWidget {
 }
 
 class _GetStartViewState extends State<GetStartView> {
+  void _openPhaContactUs() async {
+    final _url = Uri.parse('https://pha.kashpay.pk/contact-us/');
+    try {
+      // Use launchUrl with error handling
+      if (!await launchUrl(_url)) {
+        throw Exception('Could not launch $_url');
+      }
+    } catch (e) {
+      Get.snackbar('Error', 'An error occurred: ${e.toString()}');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,7 +42,6 @@ class _GetStartViewState extends State<GetStartView> {
               ),
             ),
           ),
-
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 24),
             child: Column(
@@ -43,9 +56,14 @@ class _GetStartViewState extends State<GetStartView> {
                 ),
                 PHAText(
                   text: 'PHAF Maintenance Service',
-                  fontSize: 16.sp,
+                  fontSize: 18.sp,
                   fontWeight: FontWeight.w700,
                   textAlign: TextAlign.center,
+                ),
+                PHAText(
+                  text: 'Ministry of Housing and Works',
+                  fontSize: 12.sp,
+                  fontWeight: FontWeight.w400,
                 ),
                 const Spacer(),
                 PHAButton(
@@ -78,17 +96,23 @@ class _GetStartViewState extends State<GetStartView> {
                     BottomTab(
                       image: 'assets/png/icon_calendar.svg',
                       label: 'News/Events',
-                      onTap: () {},
+                      onTap: () {
+                        Get.to(const EventsView());
+                      },
                     ),
                     BottomTab(
                       image: 'assets/png/icon_building.svg',
                       label: 'Projects',
-                      onTap: () {},
+                      onTap: () {
+                        Get.to(const ProjectsView());
+                      },
                     ),
                     BottomTab(
                       image: 'assets/png/icon_phone.svg',
                       label: 'Contact',
-                      onTap: () {},
+                      onTap: () async {
+                        _openPhaContactUs();
+                      },
                     ),
                   ],
                 ),
@@ -102,10 +126,16 @@ class _GetStartViewState extends State<GetStartView> {
 }
 
 class BottomTab extends StatelessWidget {
-  String image;
-  String label;
-  VoidCallback onTap;
-  BottomTab({super.key, required this.image, required this.label, required this.onTap});
+  final String image;
+  final String label;
+  final VoidCallback onTap;
+
+  const BottomTab({
+    super.key,
+    required this.image,
+    required this.label,
+    required this.onTap,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -116,9 +146,11 @@ class BottomTab extends StatelessWidget {
           Container(
             height: 50.h,
             width: 50.h,
-            padding: EdgeInsets.all(16),
-            decoration:
-            BoxDecoration(shape: BoxShape.circle, color: Color(0xff2E2D74)),
+            padding: const EdgeInsets.all(16),
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: Color(0xff2E2D74),
+            ),
             child: SvgPicture.asset(image),
           ),
           const SizedBox(height: 8),
@@ -134,3 +166,181 @@ class BottomTab extends StatelessWidget {
   }
 }
 
+class EventsView extends StatelessWidget {
+  const EventsView({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: CustomAppBar(
+        title: 'Events and News ',
+        backgroundColor: AppColors.AppSecondary,
+      ),
+      body: ListView.builder(
+        padding: const EdgeInsets.all(16.0),
+        itemCount: 10,
+        itemBuilder: (context, index) {
+          return EventCard(
+            title: 'Event ${index + 1}',
+            date: 'Date: ${index + 1}/10/2024',
+            description: 'Description for event ${index + 1}.',
+          );
+        },
+      ),
+    );
+  }
+}
+
+class EventCard extends StatelessWidget {
+  final String title;
+  final String date;
+  final String description;
+
+  const EventCard({
+    required this.title,
+    required this.date,
+    required this.description,
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      elevation: 5,
+      margin: const EdgeInsets.symmetric(vertical: 10.0),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(15),
+      ),
+      shadowColor: Colors.blue.withOpacity(0.5), // Example shadow color
+      child: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: [
+              const Color(0xff2E2D74),
+              const Color(0xff2E81A4),
+            ],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+          ),
+          borderRadius: BorderRadius.circular(15),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                title,
+                style: const TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                ),
+              ),
+              const SizedBox(height: 4),
+              Text(
+                date,
+                style: const TextStyle(
+                  fontSize: 16,
+                  color: Colors.white70,
+                ),
+              ),
+              const SizedBox(height: 8),
+              Text(
+                description,
+                style: const TextStyle(
+                  fontSize: 14,
+                  color: Colors.white70,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class ProjectsView extends StatelessWidget {
+  const ProjectsView({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: CustomAppBar(
+        title: 'On Going Projects',
+        backgroundColor:AppColors.AppSecondary,
+      ),
+      body: ListView.builder(
+        padding: const EdgeInsets.all(16.0),
+        itemCount: 10, // Replace with actual project count
+        itemBuilder: (context, index) {
+          return ProjectCard(
+            title: 'Project ${index + 1}', // Replace with actual title
+            description: 'Description for project ${index + 1}.',
+          );
+        },
+      ),
+    );
+  }
+}
+
+class ProjectCard extends StatelessWidget {
+  final String title;
+  final String description;
+
+  const ProjectCard({
+    required this.title,
+    required this.description,
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      elevation: 5,
+      margin: const EdgeInsets.symmetric(vertical: 10.0),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(15),
+      ),
+      shadowColor: Colors.blue.withOpacity(0.5), // Example shadow color
+      child: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: [
+              const Color(0xff2E2D74),
+              const Color(0xff2E81A4),
+            ],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+          ),
+          borderRadius: BorderRadius.circular(15),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                title,
+                style: const TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                ),
+              ),
+              const SizedBox(height: 8),
+              Text(
+                description,
+                style: const TextStyle(
+                  fontSize: 14,
+                  color: Colors.white70,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}

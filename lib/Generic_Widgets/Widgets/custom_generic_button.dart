@@ -1,3 +1,4 @@
+import 'package:pharesidence/Generic_Widgets/Widgets/pha_text.dart';
 import 'package:pharesidence/exports/exports.dart';
 
 class CustomButtonWithIcon extends StatelessWidget {
@@ -17,14 +18,14 @@ class CustomButtonWithIcon extends StatelessWidget {
     Key? key,
     required this.text,
     required this.icon,
-    this.height = 30.0,
-    this.width = 120.0,
+    this.height = 40.0,
+    this.width = 150.0,
     this.backgroundColor = Colors.blue,
     this.textColor = Colors.white,
     this.iconColor = Colors.white,
     this.borderRadius = 30.0,
-    this.fontSize = 16.0,
-    this.iconSize = 22.0,
+    this.fontSize = 14.0,
+    this.iconSize = 18.0,
     this.onTap,
   }) : super(key: key);
 
@@ -38,17 +39,14 @@ class CustomButtonWithIcon extends StatelessWidget {
         decoration: BoxDecoration(
           color: backgroundColor,
           borderRadius: BorderRadius.circular(borderRadius),
-          
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(
-              text,
-              style: TextStyle(
-                fontSize: fontSize,
-                color: textColor,
-              ),
+            PHAText(
+              text: text,
+              fontSize: fontSize,
+              color: textColor,
             ),
             SizedBox(width: 6),
             Icon(
