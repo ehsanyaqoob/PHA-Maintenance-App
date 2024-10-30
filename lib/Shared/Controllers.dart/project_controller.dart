@@ -39,7 +39,8 @@ class ProjectsViewController extends GetxController {
       return additionalInfoList.first.totalAmountDue.toString();
     }
     // by default TotalAmount is se
-    return additionalInfoList.first.totalAmountDue.toString();
+    // return additionalInfoList.first.totalAmountDue.toString();
+    return '0';
   }
 
   void setPartialAmount(String value) {

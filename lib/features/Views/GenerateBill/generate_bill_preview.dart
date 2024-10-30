@@ -208,7 +208,24 @@ class GenerateBillPreviewView extends StatelessWidget {
               PHAButton(
                 title: 'Print now / Download',
                 onTap: () {
-                  Get.to(PaymentViews());
+                  //
+                  Get.snackbar(
+                    'Receipt',
+                    'Sorry! Receipt / PDF preview is not available.',
+                    icon: Icon(Icons.error, color: Colors.white),
+                    snackPosition: SnackPosition
+                        .TOP, 
+                    backgroundColor:
+                        Colors.redAccent, 
+                    colorText: Colors.white, 
+                    borderRadius: 8, 
+                    margin:
+                        EdgeInsets.all(15), 
+                    duration: Duration(seconds: 5), 
+                    isDismissible: true, 
+                    forwardAnimationCurve:
+                        Curves.easeOutBack, 
+                  );
                 },
               ),
               SizedBox(height: 20.h),
