@@ -1,6 +1,6 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:pharesidence/Dummy/PHAProjects/pha_project_cities.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:pharesidence/Generic_Widgets/Widgets/pha_text.dart';
 import 'package:pharesidence/exports/exports.dart';
@@ -104,7 +104,7 @@ class _GetStartViewState extends State<GetStartView> {
                       image: 'assets/png/icon_building.svg',
                       label: 'Projects',
                       onTap: () {
-                        Get.to(const ProjectsView());
+                  Get.to(ProjectCities());
                       },
                     ),
                     BottomTab(
@@ -243,90 +243,6 @@ class EventCard extends StatelessWidget {
                 style: const TextStyle(
                   fontSize: 16,
                   color: Colors.white70,
-                ),
-              ),
-              const SizedBox(height: 8),
-              Text(
-                description,
-                style: const TextStyle(
-                  fontSize: 14,
-                  color: Colors.white70,
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class ProjectsView extends StatelessWidget {
-  const ProjectsView({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: CustomAppBar(
-        title: 'On Going Projects',
-        backgroundColor:AppColors.AppSecondary,
-      ),
-      body: ListView.builder(
-        padding: const EdgeInsets.all(16.0),
-        itemCount: 10, // Replace with actual project count
-        itemBuilder: (context, index) {
-          return ProjectCard(
-            title: 'Project ${index + 1}', // Replace with actual title
-            description: 'Description for project ${index + 1}.',
-          );
-        },
-      ),
-    );
-  }
-}
-
-class ProjectCard extends StatelessWidget {
-  final String title;
-  final String description;
-
-  const ProjectCard({
-    required this.title,
-    required this.description,
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      elevation: 5,
-      margin: const EdgeInsets.symmetric(vertical: 10.0),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(15),
-      ),
-      shadowColor: Colors.blue.withOpacity(0.5), // Example shadow color
-      child: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: [
-              const Color(0xff2E2D74),
-              const Color(0xff2E81A4),
-            ],
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-          ),
-          borderRadius: BorderRadius.circular(15),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                title,
-                style: const TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
                 ),
               ),
               const SizedBox(height: 8),

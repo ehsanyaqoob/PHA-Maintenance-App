@@ -94,28 +94,20 @@ class _HomeViewState extends State<HomeView> {
                     // Properties Summary
                     _buildPropertiesSummary(),
 
-                    // Horizontal ListView instead of GridView
+// Implement vertical scroll with ListView and full width for cards
                     SizedBox(
-                      height: 160.h,
+                      height: 400, // Adjust height as needed
                       child: ListView(
-                        scrollDirection: Axis.horizontal,
+                        scrollDirection: Axis.vertical,
                         children: [
                           _buildCard(
                               'Property & Payments', 'assets/svg/home.svg', () {
-                            // Show PhaLoader when the fetch operation starts
-                            // PHALoader.show();
                             controller
                                 .fetchProjects(widget.apiData['cnic'])
                                 .then((_) {
-                              // // Hide PhaLoader once the fetching is done
-                              // PHALoader.hide();
-
-                              // Navigate to ProjectsViews after fetching
                               Get.to(
                                   ProjectsViews(cnic: widget.apiData['cnic']));
                             }).catchError((error) {
-                              // // Hide PhaLoader if an error occurs
-                              // PHALoader.hide();
                               Get.snackbar(
                                   'Error', 'Failed to fetch projects: $error');
                             });
@@ -132,6 +124,7 @@ class _HomeViewState extends State<HomeView> {
                         ],
                       ),
                     ),
+
                     SizedBox(height: 100.h),
                   ],
                 ),
@@ -359,46 +352,46 @@ AppBar _buildAppBar(BuildContext context, String name) {
 
 Widget _buildCard(String title, String svgAssetPath, VoidCallback onTap) {
   return Padding(
-    padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 10),
+    padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 12),
     child: Container(
-      height: 100.0,
-      width: 170.w,
-      margin: const EdgeInsets.all(6),
+      width: double.infinity, // Full width
+      padding: const EdgeInsets.all(15),
       decoration: BoxDecoration(
         gradient: LinearGradient(
-          colors: [AppColors.appWhite, AppColors.CardColor],
+          colors: [AppColors.appWhite, AppColors.CardColor.withOpacity(0.9)],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
-        borderRadius: BorderRadius.circular(10),
+        borderRadius: BorderRadius.circular(12),
         boxShadow: [
           BoxShadow(
-            color: AppColors.AppPrimary.withOpacity(0.85),
-            blurRadius: 2,
+            color: AppColors.AppPrimary.withOpacity(0.5),
+            blurRadius: 6,
             spreadRadius: 1,
-            offset: Offset(0, 0),
+            offset: Offset(0, 4),
           ),
         ],
       ),
       child: InkWell(
         onTap: onTap,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+        child: Row(
           children: [
-            // Use SvgPicture instead of Icon
             SvgPicture.asset(
               svgAssetPath,
-              width: 60, // Adjust size as needed
-              height: 60, // Adjust size as needed
-              color: AppColors.AppPrimary, // Optional: You can change the color
+              width: 50,
+              height: 50,
+              color: AppColors.AppPrimary.withOpacity(0.85),
             ),
-            SizedBox(height: 10),
-            PHAText(
-              textAlign: TextAlign.center,
-              text: title,
-              fontSize: 16,
-              fontWeight: FontWeight.w800,
-              color: AppColors.AppPrimary,
+            SizedBox(width: 20),
+            Expanded(
+              child: Text(
+                title,
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: AppColors.AppPrimary,
+                ),
+              ),
             ),
           ],
         ),

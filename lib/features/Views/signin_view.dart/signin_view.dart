@@ -1,5 +1,6 @@
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:pharesidence/Dummy/PHAProjects/pha_project_cities.dart';
 
 import 'package:pharesidence/Generic_Widgets/Widgets/custom_loarder.dart';
 import 'package:pharesidence/Generic_Widgets/Widgets/pha_text.dart';
@@ -144,7 +145,7 @@ class _SignInViewState extends State<SignInView> {
                       image: 'assets/png/icon_building.svg',
                       label: 'Projects',
                       onTap: () {
-                        Get.to(const ProjectsView());
+                  Get.to(ProjectCities());
                       },
                     ),
                     BottomTab(

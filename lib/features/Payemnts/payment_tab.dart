@@ -50,35 +50,21 @@ class _PaymentViewsState extends State<PaymentViews> {
                   children: [
                     _buildPaymentCard("Bank Transfer", 'assets/png/bank.png',
                         () {
-                                                _openPaymentPage();
+                      _openPaymentPage();
 
                       print("Bank Transfer selected");
                     }),
                     _buildPaymentCard("1 Bill", 'assets/png/cash.png', () {
                       _openPaymentPage();
-
                       print("PSID selected");
                     }),
-                   
                     _buildPaymentCard(
                         "Credit/Debit Card", 'assets/png/card.png', () {
+                      print(
+                          'Navigating to PayFast site using external browser');
                       _openPaymentPage();
                     }),
-                  
                   ],
-                ),
-                SizedBox(height: 60.h),
-                // Pay Now Button Section
-                Center(
-                  child: PHAButton(
-                    title: 'Pay Now',
-                    onTap: () {
-                      // Get.to(BillPreviewView(
-                      //   psid: '',
-                      // ));
-                      print('Pay Now Button Pressed');
-                    },
-                  ),
                 ),
               ],
             ),
