@@ -52,7 +52,8 @@ class AdditionalProjectDetailsView extends StatelessWidget {
                             // Project Name with Bold Styling
                             Row(
                               children: [
-                                Icon(Icons.business, color: Colors.blueAccent),
+                                Icon(Icons.business,
+                                    color: AppColors.AppPrimary),
                                 SizedBox(width: 8),
                                 PHAText(
                                   text:
@@ -100,7 +101,6 @@ class AdditionalProjectDetailsView extends StatelessWidget {
                 );
               }),
             ),
-
             PHARadioButton(
               items: ['Pay full', 'Pay Partial'],
               selectedValue: controller.selectedPaymentOption.value,
@@ -127,7 +127,6 @@ class AdditionalProjectDetailsView extends StatelessWidget {
                 );
               }
             }),
-            
             SizedBox(height: 20),
             Divider(color: AppColors.AppPrimary, thickness: 1),
             SizedBox(height: 20),
@@ -170,7 +169,7 @@ class AdditionalProjectDetailsView extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: Row(
         children: [
-          Icon(icon, color: Colors.blueAccent, size: 20),
+          Icon(icon, color: AppColors.AppPrimary, size: 20),
           SizedBox(width: 10),
           PHAText(
             text: '$label: ${value ?? 'N/A'}',
@@ -183,6 +182,7 @@ class AdditionalProjectDetailsView extends StatelessWidget {
     );
   }
 
+// main GetPISD API is here
   Future<Map<String, dynamic>?> getPSID(
       String registrationNo, double amount) async {
     try {

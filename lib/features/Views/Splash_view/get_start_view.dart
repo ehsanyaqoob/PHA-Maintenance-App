@@ -1,5 +1,6 @@
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:pharesidence/Dummy/News/Events/news_events.dart';
 import 'package:pharesidence/Dummy/PHAProjects/pha_project_cities.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:pharesidence/Generic_Widgets/Widgets/pha_text.dart';
@@ -72,16 +73,16 @@ class _GetStartViewState extends State<GetStartView> {
                     Get.to(SignInView());
                   },
                 ),
-                SizedBox(height: 16.h),
+                SizedBox(height: 10.h),
                 GestureDetector(
                   onTap: () {},
                   child: PHAText(
-                    text: "Don't have membership?",
-                    fontSize: 13.sp,
+                    text: "Don't have a membership?",
+                    fontSize: 16.sp,
                     textAlign: TextAlign.center,
                   ),
                 ),
-                SizedBox(height: 4.h),
+                SizedBox(height: 10.h),
                 PHAButton(
                   title: 'Sign Up',
                   filledColor: Color(0xff2E81A4),
@@ -97,7 +98,7 @@ class _GetStartViewState extends State<GetStartView> {
                       image: 'assets/png/icon_calendar.svg',
                       label: 'News/Events',
                       onTap: () {
-                        Get.to(const EventsView());
+                        Get.to( EventsScreen());
                       },
                     ),
                     BottomTab(
@@ -161,101 +162,6 @@ class BottomTab extends StatelessWidget {
             textAlign: TextAlign.center,
           ),
         ],
-      ),
-    );
-  }
-}
-
-class EventsView extends StatelessWidget {
-  const EventsView({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: CustomAppBar(
-        title: 'Events and News ',
-        backgroundColor: AppColors.AppSecondary,
-      ),
-      body: ListView.builder(
-        padding: const EdgeInsets.all(16.0),
-        itemCount: 10,
-        itemBuilder: (context, index) {
-          return EventCard(
-            title: 'Event ${index + 1}',
-            date: 'Date: ${index + 1}/10/2024',
-            description: 'Description for event ${index + 1}.',
-          );
-        },
-      ),
-    );
-  }
-}
-
-class EventCard extends StatelessWidget {
-  final String title;
-  final String date;
-  final String description;
-
-  const EventCard({
-    required this.title,
-    required this.date,
-    required this.description,
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      elevation: 5,
-      margin: const EdgeInsets.symmetric(vertical: 10.0),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(15),
-      ),
-      shadowColor: Colors.blue.withOpacity(0.5), // Example shadow color
-      child: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: [
-              const Color(0xff2E2D74),
-              const Color(0xff2E81A4),
-            ],
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-          ),
-          borderRadius: BorderRadius.circular(15),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                title,
-                style: const TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
-                ),
-              ),
-              const SizedBox(height: 4),
-              Text(
-                date,
-                style: const TextStyle(
-                  fontSize: 16,
-                  color: Colors.white70,
-                ),
-              ),
-              const SizedBox(height: 8),
-              Text(
-                description,
-                style: const TextStyle(
-                  fontSize: 14,
-                  color: Colors.white70,
-                ),
-              ),
-            ],
-          ),
-        ),
       ),
     );
   }

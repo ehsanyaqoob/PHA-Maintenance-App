@@ -15,7 +15,8 @@ class _ProjectCitiesState extends State<ProjectCities> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: PHAText(text: 'Projects Cities', fontSize: 18.sp)),
+      backgroundColor: AppColors.AppSecondary,
+      appBar: CustomAppBar(title:'Project Cities',),
       body: Obx((){
         return ListView.builder(
           itemCount: controller.projects.length,

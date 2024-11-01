@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:pharesidence/Generic_Widgets/Widgets/custom_chechkobx.dart';
+import 'package:pharesidence/Generic_Widgets/Widgets/custom_loarder.dart';
 import 'package:pharesidence/Generic_Widgets/Widgets/pha_text.dart';
 import 'package:pharesidence/exports/exports.dart';
 import 'package:pharesidence/features/Views/signin_view.dart/signin_view.dart';
@@ -174,6 +175,7 @@ class SignUpView extends StatelessWidget {
                       onTap: () {
                         // Perform sign-up logic here
                         print('Sign Up button tapped');
+                    
                       },
                       filledColor: Color(0xff2E81A4),
                     ),

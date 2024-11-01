@@ -1,5 +1,6 @@
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:pharesidence/Dummy/News/Events/news_events.dart';
 import 'package:pharesidence/Dummy/PHAProjects/pha_project_cities.dart';
 
 import 'package:pharesidence/Generic_Widgets/Widgets/custom_loarder.dart';
@@ -138,7 +139,7 @@ class _SignInViewState extends State<SignInView> {
                       image: 'assets/png/icon_calendar.svg',
                       label: 'News/Events',
                       onTap: () {
-                        Get.to(const EventsView());
+                        Get.to(EventsScreen());
                       },
                     ),
                     BottomTab(

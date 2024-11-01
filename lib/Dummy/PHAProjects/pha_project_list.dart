@@ -15,7 +15,8 @@ class _ListOfCitiesState extends State<ListOfCities> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: PHAText(text: 'Project Detail', fontSize: 18.sp)),
+      backgroundColor: AppColors.AppSecondary,
+      appBar: CustomAppBar(title:  'Project Detail', ),
       body: ListView.builder(
         itemCount: widget.city.projects?.length ?? 0,
         itemBuilder: (context, index) {

@@ -24,7 +24,7 @@ class PHALoader extends StatelessWidget {
               child: const Padding(
                 padding: EdgeInsets.all(16.0),
                 child: CircularProgressIndicator(
-                  valueColor: AlwaysStoppedAnimation<Color>(Color(0xffD8AF69)),
+                  valueColor: AlwaysStoppedAnimation<Color>(Color(0xFF3A3B92)),
                 ),
               ),
             ),

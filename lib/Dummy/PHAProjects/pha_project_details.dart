@@ -15,7 +15,8 @@ class _ProjectsDetailsState extends State<ProjectsDetails> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: PHAText(text: widget.project.projectName!.toUpperCase(), fontSize: 18.sp)),
+          backgroundColor: AppColors.AppSecondary,
+      appBar: CustomAppBar(title: widget.project.projectName!.toUpperCase(),),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 24),
