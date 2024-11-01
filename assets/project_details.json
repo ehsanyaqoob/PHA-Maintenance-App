@@ -1,0 +1,299 @@
+{
+  "projects": [
+    {
+      "city": "Islamabad",
+      "city_image": "assets/png/img_islamabad.jpg",
+      "projects": [
+        {
+          "project_name": "PHA-F Officer's Residencia, Kurri Road",
+          "project_image": "assets/png/img_isl_pha_f.jpeg",
+          "project_location": "",
+          "project_type": "Residencia",
+          "project_categories": "Cat-I, II, III",
+          "project_total_apartments": "117",
+          "project_completed_period": "2018",
+          "project_total_price": "Cat-I Rs.11600000, Cat-II Rs. 9400000, Cat-III Rs.5200000",
+          "project_details": "4 Bed Rooms with attach Bath, Living Room, Kitchen, Drawing Room, Dinning Room, Study and Servant Quarter"
+        },
+        {
+          "project_name": "G-8, ISLAMABAD",
+          "project_image": "assets/png/img_isl_g_8.jpg",
+          "project_location": "",
+          "project_type": "Apartments",
+          "project_categories": "Type B",
+          "project_total_apartments": "152",
+          "project_completed_period": "15-18 Months",
+          "project_total_price": "Type B Rs. 1750000",
+          "project_details": "3 Bedrooms, 2 Bath with separate WC, DD/Lounge, Store, Kitchen & Balcony"
+        },
+        {
+          "project_name": "G-11/4 ISLAMABAD",
+          "project_image": "assets/png/img_isl_g_11_4.jpg",
+          "project_location": "",
+          "project_type": "Apartments",
+          "project_categories": "Type C, Type D",
+          "project_total_apartments": "152",
+          "project_completed_period": "12-18 Months",
+          "project_total_price": "Type C Rs.1120000 ,Type D Rs.850000",
+          "project_details": "2 Bed Rooms, 2 Bath, Lounge, Kitchen and Balcony"
+        },
+
+        {
+          "project_name": "I-11, ISLAMABAD",
+          "project_image": "assets/png/img_isl_i_11.jpg",
+          "project_location": "",
+          "project_type": "Apartments",
+          "project_categories": "Type A, Type C, Type D",
+          "project_total_apartments": "252",
+          "project_completed_period": "15-18 Months",
+          "project_total_price": "Type C Rs.960000, Type D Rs.800000",
+          "project_details": "2 Bed Rooms, 2 Bath, Lounge, Kitchen and Balcony"
+        }
+      ,   {
+          "project_name": "G-11/3, ISLAMABAD",
+          "project_image": "assets/png/img_isl_g_11_3.jpg",
+          "project_location": "",
+          "project_type": "Apartments",
+          "project_categories": "Type C, Type E",
+          "project_total_apartments": "208",
+          "project_completed_period": "15-18 Months",
+          "project_total_price": "Type C Rs. 4925000, Type E Rs.1425000",
+          "project_details": "3 Bedrooms, 2 Bath with separate WC, DD/Lounge, Store, Kitchen & Balcony"
+        },
+        {
+          "project_name": "G-10/2, (D-TYPE), ISLAMABAD",
+          "project_image": "assets/png/img_isl_g_10_2.jpg",
+          "project_location": "",
+          "project_type": "Apartments",
+          "project_categories": "Type D",
+          "project_total_apartments": "368",
+          "project_completed_period": "2018",
+          "project_total_price": "GP Rs.3425000,FGE Rs. 1825000",
+          "project_details": "2 Bed, living, 2 baths, store, kitchen & Balcony"
+        }
+      ,      {
+          "project_name": "EXECUTIVE APPTT KURI ROAD, ZONE-IV, ISLAMABAD",
+          "project_image": "assets/png/img_isl_kurri_road.jpg",
+          "project_location": "",
+          "project_type": "Apartments",
+          "project_categories": "Block A& B",
+          "project_total_apartments": "51",
+          "project_completed_period": "",
+          "project_total_price": "Cat-I Rs. 7900000, Cat-II Rs.7719000, Cat-III Rs.7429000,Block B,Cat-I Rs. 8515000, Cat-II Rs.7732000, Cat-III Rs.7443000",
+          "project_details": ""
+        },
+        {
+          "project_name": "I-12",
+          "project_image": "assets/png/img_isl_i_12.jpg",
+          "project_location": "",
+          "project_type": "Apartments",
+          "project_categories": "Type D, Type E",
+          "project_total_apartments": "2400",
+          "project_completed_period": "30 months",
+          "project_total_price": "Federal Type D Rs.3600000, Type E Rs.2975000,General Public Type D Rs.3975000, Type E Rs.3265000",
+          "project_details": "2 Bed Rooms, 2 Bath, Lounge, Kitchen and Balcony"
+        }
+      ,
+        {
+          "project_name": "I-16/3",
+          "project_image": "assets/png/img_isl_i_16_3.jpg",
+          "project_location": "",
+          "project_type": "Apartments",
+          "project_categories": "Type E, Type B",
+          "project_total_apartments": "912",
+          "project_completed_period": "30 months",
+          "project_total_price": "Type B Rs.5200000, Type E Rs.2950000",
+          "project_details": "2 Bed Rooms, 2 Bath, Lounge, Kitchen and Balcony"
+        },
+        {
+          "project_name": "COMMERCIAL TOWER KURRI ROAD PROJECT",
+          "project_image": "assets/png/img_isl_commercial_tower.jpeg",
+          "project_location": "",
+          "project_type": "Apartments",
+          "project_categories": "Type A",
+          "project_total_apartments": "",
+          "project_completed_period": "",
+          "project_total_price": "",
+          "project_details": ""
+        },
+        {
+          "project_name": "G-7 Type B, ISLAMABAD",
+          "project_image": "assets/png/img_isl_g_7_type_b.jpg",
+          "project_location": "",
+          "project_type": "Apartments",
+          "project_categories": "Type B",
+          "project_total_apartments": "208",
+          "project_completed_period": "15-18 months",
+          "project_total_price": "TType B Rs.1900000",
+          "project_details": "3 Bedrooms, 2 Bath with separate WC, DD/Lounge, Store, Kitchen & Balcony"
+        }
+      ]
+    },
+    {
+      "city": "Lahore",
+      "city_image": "assets/png/img_lahore.jpg",
+      "projects": [
+        {
+          "project_name": "NISAR TOWN, RAIWIND ROAD, LAHORE",
+          "project_image": "assets/png/img_lhr_nisar_town.png",
+          "project_location": "",
+          "project_type": "Apartments",
+          "project_categories": "Type B",
+          "project_total_apartments": "248",
+          "project_completed_period": "",
+          "project_total_price": " Rs. 1450000",
+          "project_details": ""
+        },
+        {
+          "project_name": "WHEATMAN ROAD, LAHORE",
+          "project_image": "assets/png/img_lhr_wheatman.png",
+          "project_location": "",
+          "project_type": "Residential",
+          "project_categories": "Type C, Type D",
+          "project_total_apartments": "160",
+          "project_completed_period": "",
+          "project_total_price": "Type C Rs.1060000,\nType D Rs.850000",
+          "project_details": ""
+        },
+        {
+          "project_name": "UET, LAHORE",
+          "project_image": "assets/png/img_lhr_uet.jpg",
+          "project_location": "",
+          "project_type": "Apartments",
+          "project_categories": "Type C, Type D",
+          "project_total_apartments": "112",
+          "project_completed_period": "",
+          "project_total_price": "Rs 1134000 to Rs 825000",
+          "project_details": ""
+        },
+        {
+          "project_name": "MISRI SHAH, LAHORE",
+          "project_image": "assets/png/img_lhr_misri_shah.jpg",
+          "project_location": "",
+          "project_type": "Appartments",
+          "project_categories": "Type C, Type D",
+          "project_total_apartments": "176",
+          "project_completed_period": "",
+          "project_total_price": "Type C Rs.1000000,Type D Rs. 9000000",
+          "project_details": ""
+        },
+        {
+          "project_name": "SHABBIR TOWN, RAIWIND ROAD, LAHORE",
+          "project_image": "assets/png/img_lhr_shabir_town.jpg",
+          "project_location": "",
+          "project_type": "Apartments",
+          "project_categories": "Type B, Type D, Shops",
+          "project_total_apartments": "160",
+          "project_completed_period": "2018-2019",
+          "project_total_price": "Type B Rs.1160000,Type D Rs. 740000 Additional: Rs.3000000",
+          "project_details": ""
+        },
+        {
+          "project_name": "WALTON ROAD, LAHORE",
+          "project_image": "assets/png/img_lhr_walton.png",
+          "project_location": "",
+          "project_type": "Apartments",
+          "project_categories": "Type B",
+          "project_total_apartments": "160",
+          "project_completed_period": "",
+          "project_total_price": "Type B Rs.1600000",
+          "project_details": ""
+        },
+        {
+          "project_name": "WAFAQI COLONY, LAHORE",
+          "project_image": "assets/png/img_lhr_wafaqi.jpg",
+          "project_location": "",
+          "project_type": "Apartments",
+          "project_categories": "Type B, Type D, Type E",
+          "project_total_apartments": "60",
+          "project_completed_period": "2018",
+          "project_total_price": "Federal,Type B Rs.7000000,Type D Rs.1900000,Type E Rs.1500000 General Public,Type E Rs.2400000, Type E Rs.1900000",
+          "project_details": "2 Bed Rooms, 2 Bath, Lounge, Kitchen and Balcony"
+        },{
+          "project_name": "UET Apartments Over Shop, LAHORE",
+          "project_image": "assets/png/img_lhr_uet_shop.jpg",
+          "project_location": "",
+          "project_type": "Apartments",
+          "project_categories": "Type C, D1, D2",
+          "project_total_apartments": "8",
+          "project_completed_period": "",
+          "project_total_price": "Different Prices",
+          "project_details": ""
+        }
+      ]
+    },
+    {
+      "city": "Karachi",
+      "city_image": "assets/png/img_karachi.jpg",
+      "projects": [
+        {
+          "project_name": "GULISTAN-E-JOUHAR, KARACHI",
+          "project_image": "assets/png/img_kar_gulistan_johr.jpg",
+          "project_location": "",
+          "project_type": "Apartments",
+          "project_categories": "Type B",
+          "project_total_apartments": "304",
+          "project_completed_period": "",
+          "project_total_price": "Type B Rs.1500000",
+          "project_details": ""
+        },
+        {
+          "project_name": "LANDHI PBC, KARACHI",
+          "project_image": "assets/png/img_kar_landhi.jpg",
+          "project_location": "",
+          "project_type": "Apartments",
+          "project_categories": "Type C, Type D",
+          "project_total_apartments": "128",
+          "project_completed_period": "15-18 months",
+          "project_total_price": "Type C Rs.960000, Type D Rs.775000",
+          "project_details": "2 Bed Rooms, 2 Bath, Lounge, Kitchen and Balcony"
+        },
+        {
+          "project_name": "ADDITIONAL APARTMENTS (PLOT-B) GULISTAN-E-JOUHAR",
+          "project_image": "assets/png/img_kar_gulistan_johr.jpg",
+          "project_location": "",
+          "project_type": "Apartments",
+          "project_categories": "Type B",
+          "project_total_apartments": "",
+          "project_completed_period": "",
+          "project_total_price": "",
+          "project_details": ""
+        }
+      ]
+    },
+    {
+      "city": "Peshawar",
+      "city_image": "assets/png/img_peshawar.jpg",
+      "projects": [
+        {
+          "project_name": "Surazai Kohat Road",
+          "project_image": "assets/png/img_pesh_residencia.gif",
+          "project_location": "Surazai Kohat Road",
+          "project_type": "",
+          "project_categories": "I, II, III, IV",
+          "project_total_appartments": "8000",
+          "project_completed_period": "3 years",
+          "project_total_price": "",
+          "project_details": ""
+        }
+      ]
+    },
+    {
+      "city": "Quetta",
+      "city_image": "assets/png/img_quetta.jpg",
+      "projects": [
+        {
+          "project_name": "Kuchlak Road Quetta",
+          "project_image": "assets/png/img_quetta_kuchlak.jpg",
+          "project_location": "",
+          "project_type": "Residencia",
+          "project_categories": "Cat-I",
+          "project_total_appartments": "0",
+          "project_completed_period": "2022",
+          "project_total_price": "",
+          "project_details": ""
+        }
+      ]
+    }
+  ]
+}
