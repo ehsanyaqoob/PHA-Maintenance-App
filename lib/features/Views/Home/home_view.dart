@@ -96,7 +96,7 @@ class _HomeViewState extends State<HomeView> {
 
 // Implement vertical scroll with ListView and full width for cards
                     SizedBox(
-                      height: 400, // Adjust height as needed
+                      height: 500.h, // Adjust height as needed
                       child: ListView(
                         scrollDirection: Axis.vertical,
                         children: [
@@ -154,19 +154,19 @@ Widget _buildPropertiesSummary() {
             Expanded(
               child: SummaryItem(
                 image: 'assets/png/icon_gray_structure.svg',
-                count: '0',
+                count: '1',
                 type: 'Grey Structure',
                 onTap: () {
                   Get.snackbar(
                     'Grey Structure',
-                    'Sorry! You don\'t have any Grey Structure property.',
+                    'You just have one Grey Structure property\nplease below property section',
                     icon: Icon(Icons.error, color: Colors.white),
                     snackPosition: SnackPosition.TOP,
-                    backgroundColor: Colors.redAccent,
+                    backgroundColor: AppColors.AppPrimary,
                     colorText: Colors.white,
                     borderRadius: 8,
                     margin: EdgeInsets.all(15),
-                    duration: Duration(seconds: 5),
+                    duration: Duration(seconds: 3),
                     isDismissible: true,
                     forwardAnimationCurve: Curves.easeOutBack,
                   );
