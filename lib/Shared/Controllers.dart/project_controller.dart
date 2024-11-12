@@ -4,6 +4,7 @@ import 'package:pharesidence/models/additionalInfo_model.dart';
 import 'dart:convert';
 import '../../Api_Providers/Api_Responses/api_urls.dart';
 import '../../exports/exports.dart';
+import '../../features/Views/Home/Additional_inof_view/additional_info.dart';
 import '../../models/projects_models.dart';
 
 class ProjectsViewController extends GetxController {

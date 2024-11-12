@@ -43,6 +43,7 @@ class _HomeViewState extends State<HomeView> {
       appBar: _buildAppBar(
         context,
         widget.apiData['name'] ?? 'User',
+        widget.apiData,
       ),
       body: Stack(
         children: [
@@ -159,7 +160,7 @@ Widget _buildPropertiesSummary() {
                 onTap: () {
                   Get.snackbar(
                     'Grey Structure',
-                    'You just have one Grey Structure property\nplease below property section',
+                    'You just have one Grey Structure property\nplease Tap on below property section',
                     icon: Icon(Icons.error, color: Colors.white),
                     snackPosition: SnackPosition.TOP,
                     backgroundColor: AppColors.AppPrimary,
@@ -295,7 +296,8 @@ Widget _buildInfoCard(String label, String value, String image, Color cardColor,
   );
 }
 
-AppBar _buildAppBar(BuildContext context, String name) {
+AppBar _buildAppBar(
+    BuildContext context, String name, Map<String, dynamic> apiData) {
   return AppBar(
     toolbarHeight: 70.h,
     backgroundColor: AppColors.AppSecondary,
@@ -304,8 +306,8 @@ AppBar _buildAppBar(BuildContext context, String name) {
       padding: const EdgeInsets.all(10),
       child: GestureDetector(
         onTap: () {
-          // Navigate to Profile view
-          Get.to(ProfileView());
+          // Navigate to Profile view, passing apiData
+          Get.to(ProfileView(apiData: apiData));
         },
         child: Obx(
           () => CircleAvatar(

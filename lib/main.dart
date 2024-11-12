@@ -1,4 +1,3 @@
-
 // # email --> ehsanyaqoob07@gmail.com
 // # linkdin --> https://www.linkedin.com/in/ehsany/
 // # github --> https://github.com/ehsanyaqoob
@@ -10,8 +9,5 @@ void main() async {
   // await Firebase.initializeApp();
   runApp(AppView());
 }
-
-
-
 
 

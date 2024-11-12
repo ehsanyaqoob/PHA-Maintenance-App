@@ -1,122 +1,176 @@
+import 'package:pharesidence/Generic_Widgets/Widgets/pha_text.dart';
+import 'package:pharesidence/exports/exports.dart';
 
-// import 'package:pharesidence/Generic_Widgets/Widgets/pha_text.dart';
-// import 'package:pharesidence/exports/exports.dart';
-// class ProfileSecView extends StatefulWidget {
-//   @override
-//   _ProfileSecViewState createState() => _ProfileSecViewState();
-// }
+class ProfileSecView extends StatefulWidget {
+  @override
+  _ProfileSecViewState createState() => _ProfileSecViewState();
+}
 
-// class _ProfileSecViewState extends State<ProfileSecView> {
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: CustomAppBar(
-//         title: 'Edit Profile',
-//         centerTitle: false,
-//       ),
-//       backgroundColor: AppColors.AppSecondary,
-//       body: SingleChildScrollView(
-//         child: Padding(
-//           padding: const EdgeInsets.symmetric(horizontal: 26.0, vertical: 24.0),
-//           child: Column(
-//             children: [
-//               CircleAvatar(
-//                 radius: 80,
-//                 backgroundColor: AppColors.AppPrimary,
-//               ),
-//               SizedBox(height: 20),
+class _ProfileSecViewState extends State<ProfileSecView> {
+  bool isEditable = true; // Toggle between edit and view mode
 
-//               // Full Name Field
-//               PHATextFormField(
-//                 hint: 'Full Name',
-//                 prefix: Icon(
-//                   Icons.person_outline,
-//                   size: 24,
-//                   color: AppColors.appWhite,
-//                 ),
-//               ),
-//               SizedBox(height: 20),
+  // Controllers for each input field
+  final TextEditingController fullNameController = TextEditingController();
+  final TextEditingController nicknameController = TextEditingController();
+  final TextEditingController dobController = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController phoneController = TextEditingController();
+  final TextEditingController addressController = TextEditingController();
 
-//               // Nickname Field
-//               PHATextFormField(
-//                 hint: 'Nickname',
-//                 //controller: nicknameController,
-//                 prefix: Icon(
-//                   Icons.person,
-//                   size: 24,
-//                   color: AppColors.appWhite,
-//                 ),
-//               ),
-//               SizedBox(height: 20),
+  @override
+  void dispose() {
+    // Dispose controllers when not needed to avoid memory leaks
+    fullNameController.dispose();
+    nicknameController.dispose();
+    dobController.dispose();
+    emailController.dispose();
+    phoneController.dispose();
+    addressController.dispose();
+    super.dispose();
+  }
 
-//               // Date of Birth Field
-//               PHATextFormField(
-//                 hint: 'Date of Birth',
-//                 //  controller: dobController,
-//                 suffix: Icon(
-//                   Icons.calendar_today,
-//                   size: 24,
-//                   color: AppColors.appWhite,
-//                 ),
+  void _showSnackbar(BuildContext context) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text("Details saved successfully!"),
+        duration: Duration(seconds: 3),
+      ),
+    );
+  }
 
-//                 isObscure: false, // Date of birth should not be obscured
-//               ),
-//               SizedBox(height: 20),
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: CustomAppBar(
+        title: 'Edit Profile',
+        centerTitle: false,
+        actions: [
+          IconButton(
+            icon: Icon(isEditable ? Icons.edit_off : Icons.edit),
+            onPressed: () {
+              setState(() {
+                isEditable = !isEditable; // Toggle edit mode
+              });
+            },
+          ),
+        ],
+      ),
+      backgroundColor: AppColors.AppSecondary,
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 26.0, vertical: 24.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              PHAText(
+                text: 'Personal Information',
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+                color: AppColors.AppPrimary,
+              ),
+              SizedBox(height: 20),
 
-//               // Email Field
-//               PHATextFormField(
-//                 inputType: TextInputType.emailAddress,
-//                 hint: 'Email',
-//                 //controller: emailController,
-//                 suffix: Icon(
-//                   Icons.email,
-//                   size: 24,
-//                   color: AppColors.appWhite,
-//                 ),
-//               ),
-//               SizedBox(height: 20),
+              // Full Name Field
+              PHATextFormField(
+                controller: fullNameController,
+                hint: 'Full Name',
+                prefix: Icon(
+                  Icons.person_outline,
+                  size: 24,
+                  color: AppColors.appWhite,
+                ),
+                enabled: isEditable,
+              ),
+              SizedBox(height: 20),
 
-//               // Phone Number Field
+              // Nickname Field
+              PHATextFormField(
+                controller: nicknameController,
+                hint: 'Nickname',
+                prefix: Icon(
+                  Icons.person,
+                  size: 24,
+                  color: AppColors.appWhite,
+                ),
+                enabled: isEditable,
+              ),
+              SizedBox(height: 20),
 
-//               PHATextFormField(
-//                 inputType: TextInputType.phone,
-//                 hint: 'Phone Number',
-//                 //controller: phoneController,
-//                 suffix: Icon(
-//                   Icons.flag,
-//                   size: 24,
-//                   color: AppColors.appWhite,
-//                 ),
-//               ),
-//               SizedBox(height: 20),
+              // Date of Birth Field
+              PHATextFormField(
+                controller: dobController,
+                hint: 'Date of Birth',
+                suffix: Icon(
+                  Icons.calendar_today,
+                  size: 24,
+                  color: AppColors.appWhite,
+                ),
+                isObscure: false,
+                enabled: isEditable,
+              ),
+              SizedBox(height: 20),
 
-//               // Address Field
-//               PHATextFormField(
-//                 inputType: TextInputType.text,
-//                 hint: 'Address',
-//                 //controller: addressController,
-//                 suffix: Icon(
-//                   Icons.location_on,
-//                   size: 24,
-//                   color: AppColors.appWhite,
-//                 ),
-//               ),
-//               SizedBox(height: 30),
-//               // SizedBox(height: 20),
-//               PHAButton(
-//                 title: 'Continue',
-//                 onTap: () {
-//                   //Navigate to LoginView
-//                   // Get.to(CreatePinView());
-//                 },
-//                 topMargin: 30.0,
-//                 fillColor: true,
-//               ),
-//               SizedBox(height: 20),
-//             ],
-//           ),
-//         ),
-//       ),
-//     );
-//   }
-// }
+              // Email Field
+              PHATextFormField(
+                controller: emailController,
+                inputType: TextInputType.emailAddress,
+                hint: 'Email',
+                suffix: Icon(
+                  Icons.email,
+                  size: 24,
+                  color: AppColors.appWhite,
+                ),
+                enabled: isEditable,
+              ),
+              SizedBox(height: 20),
+
+              // Phone Number Field
+              PHATextFormField(
+                controller: phoneController,
+                inputType: TextInputType.phone,
+                hint: 'Phone Number',
+                suffix: Icon(
+                  Icons.phone,
+                  size: 24,
+                  color: AppColors.appWhite,
+                ),
+                enabled: isEditable,
+              ),
+              SizedBox(height: 20),
+
+              // Address Field
+              PHATextFormField(
+                controller: addressController,
+                inputType: TextInputType.text,
+                hint: 'Address',
+                suffix: Icon(
+                  Icons.location_on,
+                  size: 24,
+                  color: AppColors.appWhite,
+                ),
+                enabled: isEditable,
+              ),
+              SizedBox(height: 30),
+
+              Center(
+                child: PHAButton(
+                  title: 'Save',
+                  onTap: () {
+                    // Save data logic goes here
+                    setState(() {
+                      isEditable = false; // Lock fields after saving
+                    });
+                    _showSnackbar(context); // Show snackbar
+                  },
+                  topMargin: 30.0,
+                  fillColor: true,
+                ),
+              ),
+              SizedBox(height: 20),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
