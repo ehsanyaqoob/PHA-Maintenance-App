@@ -56,7 +56,7 @@ class PHATextFormField extends StatelessWidget {
   final ValueChanged<String>? onSubmitted;
   final String? Function(String?)? validator;
   final String? initialValue;
-
+  final bool?enabled;
   PHATextFormField({
     Key? key,
     this.controller,
@@ -78,7 +78,9 @@ class PHATextFormField extends StatelessWidget {
     this.textInputAction = TextInputAction.next,
     this.onSubmitted,
     this.validator,
-    this.initialValue,
+    this.initialValue, 
+   this.enabled,
+ 
   }) : super(key: key);
 
   @override
@@ -157,6 +159,7 @@ class PHATextFormField extends StatelessWidget {
             onTap: onTap,
             obscureText: isObscure ?? false,
             validator: validator,
+            enabled: enabled ?? true,
           ),
         ],
       ),

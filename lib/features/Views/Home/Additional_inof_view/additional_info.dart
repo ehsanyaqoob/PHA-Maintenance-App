@@ -140,12 +140,22 @@ class AdditionalProjectDetailsView extends StatelessWidget {
                       controller.selectedPaymentOption.value == 'Pay full'
                           ? double.parse(controller.getFullAmount())
                           : double.parse(controller.partialAmount.value);
+
+                  // Get the result of PSID generation
                   final result = await getPSID(registrationNo, amount);
+
                   if (result != null) {
                     final psid = result["psid"];
+
+                    // Pass the partial amount to the next view
                     Get.to(() => GenerateBillPreviewView(
                           additionalInfo: additionalInfo,
                           psid: psid,
+                          partialAmount: controller
+                                      .selectedPaymentOption.value ==
+                                  'Pay Partial'
+                              ? amount
+                              : null, // Pass the partial amount if 'Pay Partial' is selected
                         ));
                   } else {
                     Get.snackbar(

@@ -5,13 +5,19 @@ import 'package:pharesidence/Generic_Widgets/Widgets/bottm_sheet.dart';
 import 'package:pharesidence/Generic_Widgets/Widgets/custom_generic_button.dart';
 import 'package:pharesidence/Generic_Widgets/Widgets/pha_text.dart';
 import 'package:pharesidence/exports/exports.dart';
+import 'package:pharesidence/features/Views/Home/home_view.dart';
+import 'package:pharesidence/features/Views/Profile_view/Edit_Profile/profile_sec_view.dart';
 
 import '../../../Generic_Widgets/Widgets/custom_loarder.dart';
 import '../../../Shared/Prefrences/shared_pref.dart';
 import '../Splash_view/get_start_view.dart';
+import 'Complaint/complaint_view.dart';
+import 'Settings/settings_view.dart';
 
 class ProfileView extends StatefulWidget {
-  const ProfileView({super.key});
+  final Map<String, dynamic> apiData;
+
+  const ProfileView({super.key, required this.apiData});
 
   @override
   State<ProfileView> createState() => _ProfileViewState();
@@ -28,10 +34,7 @@ class _ProfileViewState extends State<ProfileView> {
         onLeadingPressed: () {
           Get.back();
         },
-        actions: [
-          
-        ],
-        
+        actions: [],
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -74,7 +77,7 @@ class _ProfileViewState extends State<ProfileView> {
                       },
                       child: Obx(
                         () => CircleAvatar(
-                          radius: 40,
+                          radius: 60,
                           backgroundImage:
                               controller.avatarPath.value.isNotEmpty
                                   ? FileImage(File(controller.avatarPath.value))
@@ -83,16 +86,20 @@ class _ProfileViewState extends State<ProfileView> {
                         ),
                       ),
                     ),
+                    SizedBox(
+                      height: 10,
+                    ),
                     PHAText(
                       textAlign: TextAlign.center,
-                      text: 'User',
+                      text: widget.apiData['name'] ?? 'User Name',
                       fontSize: 28,
                     ),
-                    PHAText(
-                      textAlign: TextAlign.center,
-                      text: '312035792',
-                      fontSize: 20,
-                    ),
+// PHAText(
+//   textAlign: TextAlign.center,
+//   text: widget.apiData['registration_no'] ?? 'Membership No',
+//   fontSize: 20,
+// ),
+
                     SizedBox(
                       height: 10,
                     ),
@@ -108,7 +115,7 @@ class _ProfileViewState extends State<ProfileView> {
                             textColor: AppColors.AppSecondary,
                             iconColor: AppColors.AppSecondary,
                             onTap: () {
-                              //  Get.to(ProfileSecView());
+                              Get.to(ProfileSecView());
                             },
                           ),
                           CustomButtonWithIcon(
@@ -118,7 +125,7 @@ class _ProfileViewState extends State<ProfileView> {
                             textColor: AppColors.AppSecondary,
                             iconColor: AppColors.AppSecondary,
                             onTap: () {
-                              //Get.to(SettingsView());
+                              Get.to(SettingsView());
                             },
                           ),
                         ],
@@ -152,7 +159,7 @@ class _ProfileViewState extends State<ProfileView> {
                     children: [
                       GestureDetector(
                         onTap: () {
-                          //Get.to(DashboardView());
+                          //Get.to(HomeView(apiData: {},));
                         },
                         child: PHAButton(
                           title: 'Dashboard',
@@ -164,7 +171,7 @@ class _ProfileViewState extends State<ProfileView> {
                       ),
                       GestureDetector(
                         onTap: () {
-                          //     Get.to(ComplaintView());
+                          Get.to(ComplaintView());
                         },
                         child: PHAButton(
                           //topMargin: 6.0,
