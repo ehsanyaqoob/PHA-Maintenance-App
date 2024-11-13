@@ -215,41 +215,46 @@ class _ProjectsViewsState extends State<ProjectsViews> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    CustomButtonWithIcon(
-                      text: 'See Details',
-                      icon: Icons.details,
-                      backgroundColor: AppColors.AppSecondary,
-                      textColor: AppColors.AppPrimary,
-                      iconColor: AppColors.AppPrimary,
-                      onTap: () {
-                        Get.to(ProjectDetailsView(
-                          project: project,
-                        ));
-                      },
-                    ),
-                    CustomButtonWithIcon(
-                        text: 'Pay Bill',
+                    Expanded(
+                      child: CustomButtonWithIcon(
+                        text: 'See Details',
                         icon: Icons.details,
                         backgroundColor: AppColors.AppSecondary,
                         textColor: AppColors.AppPrimary,
                         iconColor: AppColors.AppPrimary,
-                        onTap: () async {
-                          final controller = Get.find<ProjectsViewController>();
-                          String? cnic = project.cnic;
-
-                          if (cnic != null && cnic.isNotEmpty) {
-                            await controller.fetchAdditionalInfo(cnic);
-                            if (controller.additionalInfoList.isNotEmpty) {
-                              Get.to(() => AdditionalProjectDetailsView());
+                        onTap: () {
+                          Get.to(ProjectDetailsView(
+                            project: project,
+                          ));
+                        },
+                      ),
+                    ),
+                    SizedBox(width: 12),
+                    Expanded(
+                      child: CustomButtonWithIcon(
+                          text: 'Pay Bill',
+                          icon: Icons.details,
+                          backgroundColor: AppColors.AppSecondary,
+                          textColor: AppColors.AppPrimary,
+                          iconColor: AppColors.AppPrimary,
+                          onTap: () async {
+                            final controller = Get.find<ProjectsViewController>();
+                            String? cnic = project.cnic;
+                      
+                            if (cnic != null && cnic.isNotEmpty) {
+                              await controller.fetchAdditionalInfo(cnic);
+                              if (controller.additionalInfoList.isNotEmpty) {
+                                Get.to(() => AdditionalProjectDetailsView());
+                              } else {
+                                Get.snackbar(
+                                    'Error', 'No additional info found.');
+                              }
                             } else {
-                              Get.snackbar(
-                                  'Error', 'No additional info found.');
+                              Get.snackbar('Error', 'CNIC is not available');
                             }
-                          } else {
-                            Get.snackbar('Error', 'CNIC is not available');
-                          }
-                          ;
-                        }),
+                            ;
+                          }),
+                    ),
                   ],
                 ),
               ],
