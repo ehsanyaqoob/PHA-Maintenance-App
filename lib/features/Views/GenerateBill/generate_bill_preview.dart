@@ -1,200 +1,200 @@
 import 'package:get/get.dart';
-
+import 'package:flutter/material.dart';
+import 'package:pharesidence/Generic_Widgets/Widgets/custom_loarder.dart';
 import 'package:pharesidence/Generic_Widgets/Widgets/pha_text.dart';
 import 'package:pharesidence/exports/exports.dart';
 import 'package:pharesidence/features/Payemnts/payment_tab.dart';
 import 'package:pharesidence/models/additionalInfo_model.dart';
+import 'package:flutter/services.dart';
+import 'package:printing/printing.dart';
+import 'package:screenshot/screenshot.dart';
+import 'package:pdf/widgets.dart' as pw;
 
-class GenerateBillPreviewView extends StatelessWidget {
+class GenerateBillPreviewView extends StatefulWidget {
   final String psid;
   final AdditionalInfoData additionalInfo;
   final double? partialAmount;
 
-  const GenerateBillPreviewView({
+  GenerateBillPreviewView({
     Key? key,
     required this.psid,
     required this.additionalInfo,
     this.partialAmount,
   }) : super(key: key);
 
+  @override
+  _GenerateBillPreviewViewState createState() => _GenerateBillPreviewViewState();
+}
+
+class _GenerateBillPreviewViewState extends State<GenerateBillPreviewView> {
+  final ScreenshotController screenshotController = ScreenshotController();
+  bool isLoading = false;
+
   void _copyPSID(BuildContext context) {
-    Clipboard.setData(ClipboardData(text: psid)).then((_) {
+    Clipboard.setData(ClipboardData(text: widget.psid)).then((_) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('PSID copied to clipboard!')),
       );
     });
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColors.AppSecondary,
-      appBar: CustomAppBar(
-        title: 'Bill Preview',
-        centerTitle: false,
-      ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 26.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              PHAText(
-                textAlign: TextAlign.center,
-                text: 'Maintenance Charges Bill',
-                fontWeight: FontWeight.bold,
-                fontSize: 26,
-              ),
-              Divider(
-                thickness: 2,
-                color: AppColors.appBlack,
-              ),
-              SizedBox(height: 15.h),
-              PHAText(
-                textAlign: TextAlign.center,
-                text:
-                    'Please make sure that you have copied the \nbelow PSID for making Payments using any method ',
-                fontSize: 12.sp,
-              ),
+  Future<void> _generatePdf(BuildContext context) async {
+    setState(() {
+      isLoading = true;
+    });
 
-              // PSID Section with Copy Icon
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  PHAText(
-                    textAlign: TextAlign.center,
-                    text: 'PSID: $psid',
-                    fontWeight: FontWeight.bold,
-                    color: AppColors.AppPrimary,
-                    fontSize: 16.sp,
-                  ),
-                  IconButton(
-                    icon: Icon(Icons.copy),
-                    onPressed: () => _copyPSID(context),
-                    tooltip: 'Copy PSID',
-                  ),
-                ],
-              ),
-              SizedBox(height: 15.h),
+    // Display loader for 2 seconds
+    await Future.delayed(Duration(seconds: 2));
 
-              // Consumer Information Section
-              PHAText(
-                textAlign: TextAlign.center,
-                text: 'Consumer Information',
-                fontWeight: FontWeight.bold,
-                fontSize: 20,
-              ),
-              SizedBox(height: 15.h),
-              GenericDetailsCard(
-                details: [
-                  {'label': 'Name', 'value': additionalInfo.fullName ?? 'N/A'},
-                  {
-                    'label': 'Membership No',
-                    'value': additionalInfo.registrationNo ?? 'N/A'
-                  },
-                  {'label': 'CNIC', 'value': additionalInfo.cnic ?? 'N/A'},
-                  {
-                    'label': 'Lane No',
-                    'value': additionalInfo.laneNo?.toString() ?? 'N/A'
-                  },
-                  {
-                    'label': 'House No',
-                    'value': additionalInfo.houseNo?.toString() ?? 'N/A'
-                  },
-                  {
-                    'label': 'Category',
-                    'value': additionalInfo.category ?? 'N/A'
-                  },
-                  {
-                    'label': 'Project',
-                    'value': additionalInfo.projectName ?? 'N/A'
-                  },
-                  {
-                    'label': 'Present Address',
-                    'value': additionalInfo.presentAddress ?? 'N/A'
-                  },
-                  {'label': 'Cell', 'value': additionalInfo.cell ?? 'N/A'},
-                  {'label': 'Status', 'value': additionalInfo.status ?? 'N/A'},
-                ],
-              ),
-              SizedBox(height: 15.h),
-              Divider(
-                thickness: 2,
-                color: AppColors.appBlack,
-              ),
+    // Capture the entire widget as an image
+    final image = await screenshotController.capture();
+    if (image == null) {
+      setState(() {
+        isLoading = false;
+      });
+      return;
+    }
 
-              // Bill Details Section
-              PHAText(
-                textAlign: TextAlign.center,
-                text: 'Bill Details',
-                fontWeight: FontWeight.bold,
-                fontSize: 20,
-              ),
-              SizedBox(height: 15.h),
-              GenericDetailsCard(
-                details: [
-                  {
-                    'label': 'Issue Date',
-                    'value': additionalInfo.issueDate ?? 'N/A'
-                  },
-                  {
-                    'label': 'Due Date',
-                    'value': additionalInfo.dueDate ?? 'N/A'
-                  },
-                  {
-                    'label': 'Maintenance Charges',
-                    'value': additionalInfo.amount?.toString() ?? 'N/A'
-                  },
-                  {
-                    'label': 'Late Payment Charges',
-                    'value': additionalInfo.lateFee?.toString() ?? 'N/A'
-                  },
-                  {
-                    'label': 'Total Amount Due',
-                    'value': additionalInfo.totalAmountDue?.toString() ?? 'N/A'
-                  },
-                  {
-                    'label': 'Partial Amount Due',
-                    'value': partialAmount?.toString() ?? 'N/A',
-                  },
-                ],
-              ),
-              SizedBox(height: 15.h),
-
-              SizedBox(height: 15.h),
-
-              // Payment Button
-              PHAButton(
-                title: 'Pay Now',
-                onTap: () {
-                  Get.to(PaymentViews());
-                },
-              ),
-              SizedBox(height: 20.h),
-
-              PHAButton(
-                title: 'Print now / Download',
-                onTap: () {
-                  Get.snackbar(
-                    'Receipt',
-                    'Sorry! Receipt / PDF preview is not available from server.',
-                    icon: Icon(Icons.error, color: Colors.white),
-                    snackPosition: SnackPosition.TOP,
-                    backgroundColor: Colors.redAccent,
-                    colorText: Colors.white,
-                    borderRadius: 8,
-                    margin: EdgeInsets.all(15),
-                    duration: Duration(seconds: 5),
-                    isDismissible: true,
-                    forwardAnimationCurve: Curves.easeOutBack,
-                  );
-                },
-              ),
-              SizedBox(height: 20.h),
-            ],
-          ),
+    // Generate the PDF document
+    final pdf = pw.Document();
+    pdf.addPage(
+      pw.Page(
+        build: (pw.Context context) => pw.Center(
+          child: pw.Image(pw.MemoryImage(image)),
         ),
       ),
+    );
+
+    // Share the generated PDF
+    await Printing.sharePdf(
+      bytes: await pdf.save(),
+      filename: 'bill_preview.pdf',
+    );
+
+    setState(() {
+      isLoading = false;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      children: [
+        // i need to make pdf from here to 
+        Scaffold(
+          backgroundColor: AppColors.AppSecondary,
+          appBar: CustomAppBar(
+            title: 'Bill Preview',
+            centerTitle: false,
+          ),
+          body: Screenshot(
+            controller: screenshotController,
+            child: SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 26.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    PHAText(
+                      textAlign: TextAlign.center,
+                      text: 'Maintenance Charges Bill',
+                      fontWeight: FontWeight.bold,
+                      fontSize: 26,
+                    ),
+                    Divider(
+                      thickness: 2,
+                      color: AppColors.appBlack,
+                    ),
+                    SizedBox(height: 15),
+                    PHAText(
+                      textAlign: TextAlign.center,
+                      text: 'Please make sure that you have copied the \nbelow PSID for making Payments using any method',
+                      fontSize: 12,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        PHAText(
+                          textAlign: TextAlign.center,
+                          text: 'PSID: ${widget.psid}',
+                          fontWeight: FontWeight.bold,
+                          color: AppColors.AppPrimary,
+                          fontSize: 16,
+                        ),
+                        IconButton(
+                          icon: Icon(Icons.copy),
+                          onPressed: () => _copyPSID(context),
+                          tooltip: 'Copy PSID',
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 15),
+                    PHAText(
+                      textAlign: TextAlign.center,
+                      text: 'Consumer Information',
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20,
+                    ),
+                    SizedBox(height: 15),
+                    GenericDetailsCard(
+                      details: [
+                        {'label': 'Name', 'value': widget.additionalInfo.fullName ?? 'N/A'},
+                        {'label': 'Membership No', 'value': widget.additionalInfo.registrationNo ?? 'N/A'},
+                        {'label': 'CNIC', 'value': widget.additionalInfo.cnic ?? 'N/A'},
+                        {'label': 'Lane No', 'value': widget.additionalInfo.laneNo?.toString() ?? 'N/A'},
+                        {'label': 'House No', 'value': widget.additionalInfo.houseNo?.toString() ?? 'N/A'},
+                        {'label': 'Category', 'value': widget.additionalInfo.category ?? 'N/A'},
+                        {'label': 'Project', 'value': widget.additionalInfo.projectName ?? 'N/A'},
+                        {'label': 'Present Address', 'value': widget.additionalInfo.presentAddress ?? 'N/A'},
+                        {'label': 'Cell', 'value': widget.additionalInfo.cell ?? 'N/A'},
+                        {'label': 'Status', 'value': widget.additionalInfo.status ?? 'N/A'},
+                      ],
+                    ),
+                    SizedBox(height: 15),
+                    Divider(thickness: 2, color: AppColors.appBlack),
+                    PHAText(
+                      textAlign: TextAlign.center,
+                      text: 'Bill Details',
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20,
+                    ),
+                    SizedBox(height: 15),
+                    GenericDetailsCard(
+                      details: [
+                        {'label': 'Issue Date', 'value': widget.additionalInfo.issueDate ?? 'N/A'},
+                        {'label': 'Due Date', 'value': widget.additionalInfo.dueDate ?? 'N/A'},
+                        {'label': 'Maintenance Charges', 'value': widget.additionalInfo.amount?.toString() ?? 'N/A'},
+                        {'label': 'Late Payment Charges', 'value': widget.additionalInfo.lateFee?.toString() ?? 'N/A'},
+                        {'label': 'Total Amount Due', 'value': widget.additionalInfo.totalAmountDue?.toString() ?? 'N/A'},
+                        {'label': 'Partial Amount Due', 'value': widget.partialAmount?.toString() ?? 'N/A'},
+                      ],
+                    ),
+
+                    
+                    SizedBox(height: 15),
+                    PHAButton(
+                      title: 'Pay Now',
+                      onTap: () {
+                        Get.to(PaymentViews());
+                      },
+                    ),
+                    SizedBox(height: 20),
+                    PHAButton(
+                      title: 'Print / Download',
+                      onTap: () => _generatePdf(context),
+                    ),
+                    SizedBox(height: 20),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ),
+        if (isLoading)
+          Center(
+            child: PHALoader(),
+          ),
+      ],
     );
   }
 }

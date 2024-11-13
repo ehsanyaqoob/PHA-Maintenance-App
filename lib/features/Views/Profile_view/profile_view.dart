@@ -6,11 +6,13 @@ import 'package:pharesidence/Generic_Widgets/Widgets/custom_generic_button.dart'
 import 'package:pharesidence/Generic_Widgets/Widgets/pha_text.dart';
 import 'package:pharesidence/exports/exports.dart';
 import 'package:pharesidence/features/Views/Home/home_view.dart';
+import 'package:pharesidence/features/Views/Profile_view/Account/account_view.dart';
 import 'package:pharesidence/features/Views/Profile_view/Edit_Profile/profile_sec_view.dart';
 
 import '../../../Generic_Widgets/Widgets/custom_loarder.dart';
 import '../../../Shared/Prefrences/shared_pref.dart';
 import '../Splash_view/get_start_view.dart';
+import 'Account/PayeeManagementView.dart';
 import 'Complaint/complaint_view.dart';
 import 'Settings/settings_view.dart';
 
@@ -105,30 +107,15 @@ class _ProfileViewState extends State<ProfileView> {
                     ),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          CustomButtonWithIcon(
-                            text: 'Profile',
-                            icon: Icons.person,
-                            backgroundColor: AppColors.AppPrimary,
-                            textColor: AppColors.AppSecondary,
-                            iconColor: AppColors.AppSecondary,
-                            onTap: () {
-                              Get.to(ProfileSecView());
-                            },
-                          ),
-                          CustomButtonWithIcon(
-                            text: 'Settings',
-                            icon: Icons.settings,
-                            backgroundColor: AppColors.AppPrimary,
-                            textColor: AppColors.AppSecondary,
-                            iconColor: AppColors.AppSecondary,
-                            onTap: () {
-                              Get.to(SettingsView());
-                            },
-                          ),
-                        ],
+                      child: CustomButtonWithIcon(
+                        text: 'Profile',
+                        icon: Icons.person,
+                        backgroundColor: AppColors.AppPrimary,
+                        textColor: AppColors.AppSecondary,
+                        iconColor: AppColors.AppSecondary,
+                        onTap: () {
+                          Get.to(ProfileSecView());
+                        },
                       ),
                     )
                   ],
@@ -157,17 +144,18 @@ class _ProfileViewState extends State<ProfileView> {
                       horizontal: 36.0, vertical: 20.0),
                   child: Column(
                     children: [
-                      GestureDetector(
-                        onTap: () {
-                          //Get.to(HomeView(apiData: {},));
-                        },
-                        child: PHAButton(
-                          title: 'Dashboard',
-                          fillColor: false,
-                        ),
-                      ),
+                      CustomButtonWithIcon(
+                            text: 'Settings',
+                            icon: Icons.settings,
+                            backgroundColor: AppColors.AppPrimary,
+                            textColor: AppColors.AppSecondary,
+                            iconColor: AppColors.AppSecondary,
+                            onTap: () {
+                              Get.to(SettingsView());
+                            },
+                          ),
                       SizedBox(
-                        height: 10,
+                        height: 20,
                       ),
                       GestureDetector(
                         onTap: () {
@@ -189,7 +177,7 @@ class _ProfileViewState extends State<ProfileView> {
                 children: [
                   GestureDetector(
                     onTap: () {
-                      // Get.to(AccountStatementView());
+                       Get.to(AccountStatementView());
                     },
                     child: Container(
                       height: 100.h,
@@ -222,7 +210,7 @@ class _ProfileViewState extends State<ProfileView> {
                   ),
                   GestureDetector(
                     onTap: () {
-                      // Get.to(PayeeManagementView());
+                       Get.to(PayeeManagementView());
                     },
                     child: Container(
                       height: 100.h,

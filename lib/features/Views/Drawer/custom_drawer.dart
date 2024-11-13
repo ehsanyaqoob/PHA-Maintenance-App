@@ -40,7 +40,7 @@ class CustomDrawer extends StatelessWidget {
             leading: Icon(Icons.star, color: AppColors.AppPrimary, size: 30),
             title: PHAText(text: 'Rate Us', fontSize: 16.sp),
             onTap: () {
-             // Get.to(RateUsView()); // Navigate to Rate Us View
+             Get.to(RateUsView()); // Navigate to Rate Us View
             },
           ),
           ListTile(

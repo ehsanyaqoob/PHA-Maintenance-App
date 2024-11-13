@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<paths xmlns:android="http://schemas.android.com/apk/res/android">
+    
+    <!-- Allow sharing files from external files directory (usually for photos, documents, etc.) -->
+    <external-files-path
+        name="external_files"
+        path="." />
+
+    <!-- Allow sharing files from cache directory -->
+    <cache-path
+        name="cache"
+        path="." />
+
+    <!-- Allow sharing files from the app's internal storage files directory -->
+    <files-path
+        name="internal_files"
+        path="." />
+
+    <!-- Allow sharing files from a specific subdirectory in external storage (optional) -->
+    <!-- Replace "subdirectory" with the actual folder name -->
+    <external-files-path
+        name="external_subdirectory"
+        path="subdirectory/" />
+
+</paths>

@@ -84,6 +84,7 @@ class _ProjectsViewsState extends State<ProjectsViews> {
 
   Widget _buildProjectList(List<MembershipData> projectList) {
     return ListView.builder(
+      shrinkWrap: true,
       itemCount: projectList.length,
       padding: const EdgeInsets.all(10),
       itemBuilder: (context, index) {
@@ -144,7 +145,7 @@ class _ProjectsViewsState extends State<ProjectsViews> {
                     ),
                   ],
                 ),
-               
+
                 // const SizedBox(height: 12),
                 // Row(
                 //   children: [
@@ -175,7 +176,7 @@ class _ProjectsViewsState extends State<ProjectsViews> {
                     ),
                   ],
                 ),
-                 const SizedBox(height: 10),
+                const SizedBox(height: 10),
                 Row(
                   children: [
                     Icon(

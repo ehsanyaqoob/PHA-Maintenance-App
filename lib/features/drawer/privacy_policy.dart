@@ -1,5 +1,6 @@
+import 'package:pharesidence/Generic_Widgets/Widgets/pha_text.dart';
 import 'package:pharesidence/exports/exports.dart';
-
+import 'package:flutter/material.dart';
 
 class PrivacyPolicyView extends StatelessWidget {
   @override
@@ -7,38 +8,91 @@ class PrivacyPolicyView extends StatelessWidget {
     return Scaffold(
       backgroundColor: AppColors.AppSecondary,
       appBar: CustomAppBar(
-        title:'Privacy Policy',
+        title: 'Privacy Policy',
         backgroundColor: AppColors.AppSecondary,
+        elevation: 0,
       ),
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 24.0),
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                'Privacy Policy',
-                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+              PHAText(
+                text: 'Privacy Policy',
+                fontSize: 30,
+                fontWeight: FontWeight.bold,
+                color: AppColors.AppPrimary,
               ),
-              SizedBox(height: 10),
-              Text(
-                'Here is where the privacy policy will be displayed. You can add the full text of your privacy policy here.',
-                style: TextStyle(fontSize: 16),
+              SizedBox(height: 16),
+              PHAText(
+                text:
+                    'Your privacy is important to us. Below is an explanation of how we handle user data and protect your information.',
+                fontSize: 18,
+                color: AppColors.AppPrimary,
+              ),
+              SizedBox(height: 30),
+              _buildSectionHeader(
+                title: 'User Data',
+                icon: Icons.person_outline,
+              ),
+              PHAText(
+                text:
+                    'We collect and manage user data to provide a better service. This includes details such as your device information, usage data, and more.',
+                fontSize: 16,
+                color: AppColors.AppPrimary,
+              ),
+              SizedBox(height: 24),
+              _buildSectionHeader(
+                title: 'Data Security',
+                icon: Icons.security,
+              ),
+              PHAText(
+                text:
+                    'We employ various security measures to ensure your data is protected. We also comply with industry standards for data security.',
+                fontSize: 16,
+                color: AppColors.AppPrimary,
+              ),
+              SizedBox(height: 24),
+              Divider(
+                color: AppColors.AppPrimary.withOpacity(0.4),
+                thickness: 1,
               ),
               SizedBox(height: 20),
-              Text(
-                'User Data',
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              PHAText(
+                text: 'For any inquiries, please contact our support team.',
+                fontSize: 16,
+                color: AppColors.AppPrimary,
               ),
-              Text(
-                'Explain how user data is collected and managed...',
-                style: TextStyle(fontSize: 16),
+              SizedBox(height: 24),
+              PHAText(
+                text: 'This Privacy Policy is subject to change.',
+                fontSize: 14,
+                color: AppColors.AppPrimary.withOpacity(0.6),
               ),
-              // More policy content here...
             ],
           ),
         ),
       ),
+    );
+  }
+
+  Widget _buildSectionHeader({required String title, required IconData icon}) {
+    return Row(
+      children: [
+        Icon(
+          icon,
+          color: AppColors.AppPrimary,
+          size: 24,
+        ),
+        SizedBox(width: 8),
+        PHAText(
+          text: title,
+          fontSize: 22,
+          fontWeight: FontWeight.bold,
+          color: AppColors.AppPrimary,
+        ),
+      ],
     );
   }
 }
