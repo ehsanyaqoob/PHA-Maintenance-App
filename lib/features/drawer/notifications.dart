@@ -1,15 +1,17 @@
-import 'package:pharesidence/Generic_Widgets/Widgets/custom_loarder.dart';
 import 'package:pharesidence/Generic_Widgets/Widgets/pha_text.dart';
 import 'package:pharesidence/exports/exports.dart';
 import 'package:get/get.dart';
 
+import '../../Generic_Widgets/Widgets/custom_loarder.dart';
+
 class NotificationsController extends GetxController {
   var notifications = <String>[].obs;  // Observable list of notifications
+  var isLoading = true.obs;  // Loading state
 
   // Simulating server push notifications with Stream
   Stream<List<String>> getNotificationsStream() async* {
     while (true) {
-      await Future.delayed(Duration(seconds: 5));  // Simulating server-side updates
+      await Future.delayed(Duration(seconds: 2));  // Simulating server-side updates
       notifications.add('New notification at ${DateTime.now()}');
       yield notifications;
     }
@@ -18,6 +20,19 @@ class NotificationsController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+
+    // Add initial dummy notifications
+    notifications.addAll([
+      'Welcome to Notifications!',
+      'Your profile was updated successfully.',
+      'New event available in your area.',
+    ]);
+
+    // Set loading state to false after 2 seconds
+    Future.delayed(Duration(seconds: 2), () {
+      isLoading.value = false;
+    });
+
     getNotificationsStream();  // Start listening for notifications
   }
 }
@@ -41,8 +56,14 @@ class NotificationsView extends StatelessWidget {
         },
         child: Obx(
           () {
+            // Display loader if still loading
+            if (controller.isLoading.value) {
+              return Center(child: PHALoader());
+            }
+
+            // Show notifications list after loading is complete
             if (controller.notifications.isEmpty) {
-              return Center(child: PHALoader());  // Show loader until notifications are loaded
+              return Center(child: Text("No notifications available."));
             } else {
               return ListView.builder(
                 padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),

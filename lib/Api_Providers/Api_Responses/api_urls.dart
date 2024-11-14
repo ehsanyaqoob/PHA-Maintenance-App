@@ -5,6 +5,9 @@ const String baseUrl = 'http://20.46.49.230/api';
 const String getProjectsByCnicUrl = '$baseUrl/getProjectsByCnic';
 const String GetPsid = '$baseUrl/getpsid';
 
+// Generate PDF 
+final String DownloadPDF = '$baseUrl/download-pdf';
+
  final String payFastUrl = "/initiate-payment"; 
 // GetCNIC by Membership
 const String GetCNICByMembership = '$baseUrl/getProjectsByCnic';
@@ -12,7 +15,7 @@ const String getAdditionalInfoByCNIC = '$baseUrl/getAddtionalInfoByCnic';
 
 // Authentication URLs 
 const String loginUrl = '$baseUrl/auth/login';
-const String registerUrl = '$baseUrl/auth/register';
+const String SignUpUrl = '$baseUrl/auth/signup';
 const String verifyOtpUrl = '$baseUrl/auth/verify-otp';
 const String forgotPasswordUrl = '$baseUrl/auth/forgot-password';
 const String resetPasswordUrl = '$baseUrl/auth/reset-password';
