@@ -1,14 +1,12 @@
 import 'package:get/get.dart';
-import 'package:flutter/material.dart';
-import 'package:get/get_connect/http/src/utils/utils.dart';
 import 'package:pharesidence/Generic_Widgets/Widgets/custom_generic_button.dart';
 import 'package:pharesidence/Generic_Widgets/Widgets/pha_text.dart';
 import 'package:pharesidence/exports/exports.dart';
-import 'package:pharesidence/models/additionalInfo_model.dart';
 import '../../../../../Generic_Widgets/Widgets/custom_loarder.dart';
 import '../../../../../Shared/Controllers.dart/project_controller.dart';
 import '../../../../../models/projects_models.dart';
 import '../../Additional_inof_view/additional_info.dart';
+
 
 class ProjectsViews extends StatefulWidget {
   final String cnic;
@@ -21,22 +19,21 @@ class ProjectsViews extends StatefulWidget {
 
 class _ProjectsViewsState extends State<ProjectsViews> {
   final ProjectsViewController _controller = Get.put(ProjectsViewController());
-  bool _isLoading = true; // Add a flag to track loading state
+  bool _isLoading = true; 
 
   @override
   void initState() {
     super.initState();
     _showLoaderForDuration();
-    _controller.fetchProjects(widget.cnic); // Fetch projects using CNIC
+    _controller.fetchProjects(widget.cnic); 
   }
 
   Future<void> _refreshProjects() async {
-    // This method will refresh the project list with a loader
     setState(() {
       _isLoading = true;
     });
 
-    await Future.delayed(Duration(seconds: 2)); // Simulate 2-second loader
+    await Future.delayed(Duration(seconds: 2)); 
     await _controller.fetchProjects(widget.cnic);
 
     setState(() {
@@ -45,7 +42,6 @@ class _ProjectsViewsState extends State<ProjectsViews> {
   }
 
   void _showLoaderForDuration() async {
-    // Show the loader for 2 seconds when the page is loaded
     await Future.delayed(Duration(seconds: 2));
     setState(() {
       _isLoading = false;
@@ -61,21 +57,20 @@ class _ProjectsViewsState extends State<ProjectsViews> {
         centerTitle: false,
       ),
       body: _isLoading
-          ? Center(child: PHALoader()) // Show PHALoader when loading
+          ? Center(child: PHALoader()) 
           : Obx(() {
               if (_controller.isLoading.value) {
                 return Center(
                   child: CircularProgressIndicator(),
-                ); // Show loader while fetching
+                ); 
               }
 
               if (_controller.projects.isEmpty) {
                 return Center(child: Text("No projects available"));
               }
 
-              // Build the project list when data is available
               return RefreshIndicator(
-                onRefresh: _refreshProjects, // Add the refresh functionality
+                onRefresh: _refreshProjects, 
                 child: _buildProjectList(_controller.projects),
               );
             }),
@@ -84,7 +79,7 @@ class _ProjectsViewsState extends State<ProjectsViews> {
 
   Widget _buildProjectList(List<MembershipData> projectList) {
     return ListView.builder(
-      shrinkWrap: true,
+     // shrinkWrap: true,
       itemCount: projectList.length,
       padding: const EdgeInsets.all(10),
       itemBuilder: (context, index) {
