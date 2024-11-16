@@ -16,6 +16,8 @@ class GetStartView extends StatefulWidget {
 }
 
 class _GetStartViewState extends State<GetStartView> {
+  // func for opening external browser
+
   void _openPhaContactUs() async {
     final _url = Uri.parse('https://pha.kashpay.pk/contact-us/');
     try {
@@ -74,13 +76,10 @@ class _GetStartViewState extends State<GetStartView> {
                   },
                 ),
                 SizedBox(height: 10.h),
-                GestureDetector(
-                  onTap: () {},
-                  child: PHAText(
-                    text: "Don't have a membership?",
-                    fontSize: 16.sp,
-                    textAlign: TextAlign.center,
-                  ),
+                PHAText(
+                  text: "Don't have a membership?",
+                  fontSize: 16.sp,
+                  textAlign: TextAlign.center,
                 ),
                 SizedBox(height: 10.h),
                 PHAButton(

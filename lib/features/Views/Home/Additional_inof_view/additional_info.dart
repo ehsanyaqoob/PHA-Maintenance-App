@@ -127,13 +127,18 @@ class AdditionalProjectDetailsView extends StatelessWidget {
                 );
               }
             }),
+
             SizedBox(height: 20),
             Divider(color: AppColors.AppPrimary, thickness: 1),
             SizedBox(height: 20),
+
+// here we need to show him bottom sheet
+// for selection of payments method
             PHAButton(
               title: 'Generate Bill',
               onTap: () async {
                 try {
+                  // Disable button during API call (if supported)
                   final additionalInfo = controller.additionalInfoList.first;
                   final registrationNo = additionalInfo.registrationNo;
                   final amount =
@@ -141,28 +146,37 @@ class AdditionalProjectDetailsView extends StatelessWidget {
                           ? double.parse(controller.getFullAmount())
                           : double.parse(controller.partialAmount.value);
 
-                  // Get the result of PSID generation
+                  // Log request
+                  debugPrint(
+                      "Generating PSID for Registration No: $registrationNo, Amount: $amount");
+
                   final result = await getPSID(registrationNo, amount);
 
                   if (result != null) {
-                    final psid = result["psid"];
+                    final psid = result['psid'];
+                    final pdfLink = result['pdflink'];
 
-                    // Pass the partial amount to the next view
-                    Get.to(() => GenerateBillPreviewView(
-                          additionalInfo: additionalInfo,
-                          psid: psid,
-                          partialAmount: controller
-                                      .selectedPaymentOption.value ==
-                                  'Pay Partial'
-                              ? amount
-                              : null, // Pass the partial amount if 'Pay Partial' is selected
-                        ));
-                  } else {
-                    Get.snackbar(
-                        'Error', 'Failed to generate PSID. Please try again.');
+                    if (psid != null && pdfLink != null && pdfLink.isNotEmpty) {
+                      debugPrint(
+                          "Navigating to GenerateBillPreviewView with PSID: $psid, PDF Link: $pdfLink");
+                      Get.to(() => GenerateBillPreviewView(
+                            additionalInfo: additionalInfo,
+                            psid: psid,
+                            partialAmount:
+                                controller.selectedPaymentOption.value ==
+                                        'Pay Partial'
+                                    ? amount
+                                    : null,
+                            pdflink: pdfLink,
+                          ));
+                    } else {
+                      Get.snackbar('Error', 'PDF link or PSID is invalid.');
+                    }
                   }
                 } catch (e) {
-                  Get.snackbar('Error', 'An unexpected error occurred: $e');
+                  debugPrint("Error in onTap: $e");
+                  Get.snackbar(
+                      'Error', 'Something went wrong. Please try again.');
                 }
               },
             ),
@@ -192,55 +206,53 @@ class AdditionalProjectDetailsView extends StatelessWidget {
     );
   }
 
-// main GetPISD API is here
   Future<Map<String, dynamic>?> getPSID(
       String registrationNo, double amount) async {
     try {
-      // Constructing the request body with the required parameters
       final Map<String, dynamic> requestBody = {
         "registration_no": registrationNo,
-        "amount": amount.toString(), // Convert amount to String
+        "amount": amount.toString(),
       };
 
       debugPrint("Request Body: $requestBody");
 
-      // Sending the POST request
       final response = await http.post(
-        Uri.parse(GetPsid), // Use the constant GetPsid for the URL
+        Uri.parse(GetPsid),
         headers: {"Content-Type": "application/json"},
-        body: jsonEncode(requestBody), // Encoding the request body as JSON
+        body: jsonEncode(requestBody),
       );
 
       debugPrint("Response Status Code: ${response.statusCode}");
       debugPrint("Response Body: ${response.body}");
 
       if (response.statusCode == 200) {
-        // Parse the response body
         final responseData = jsonDecode(response.body);
+
         if (responseData['status'] == true && responseData['data'] != null) {
-          // Extract the required parameters from the response
-          final String psid = responseData['data'][0]['psid'];
+          final List<dynamic> data = responseData['data'];
+          if (data.isNotEmpty) {
+            final psid = data[0]['psid'];
+            final pdflink = data[0]['pdflink'];
+            final message = responseData['message'];
 
-          // You can fetch any other parameters you need similarly
-          // For example, if you need 'message' from the response:
-          final String message = responseData['message'];
-
-          // Return the parameters in a map
-          return {
-            "psid": psid,
-            "message": message,
-          };
+            return {
+              "psid": psid,
+              "pdflink": pdflink,
+              "message": message,
+            };
+          } else {
+            Get.snackbar('Error', 'No data found in response.');
+          }
         } else {
-          Get.snackbar('Error',
-              'Failed to get valid response: ${responseData['message']}');
+          Get.snackbar('Error', responseData['message'] ?? 'Invalid response.');
         }
       } else {
-        Get.snackbar('Error', 'Failed to generate PSID: ${response.body}');
+        Get.snackbar('Error', 'Failed to generate PSID: Server Error.');
       }
     } catch (e) {
       debugPrint("Exception: $e");
-      Get.snackbar('Error', 'An error occurred: $e');
+      Get.snackbar('Error', 'An unexpected error occurred. Please try again.');
     }
-    return null; // Return null in case of any failure
+    return null;
   }
 }

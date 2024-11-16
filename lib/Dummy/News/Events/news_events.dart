@@ -19,6 +19,7 @@ class _EventsScreenState extends State<EventsScreen> {
       "description":
           "Join us for the launch of the affordable housing initiative aimed at providing homes for all.",
       "imagePath": "assets/png/img_background.jpeg",
+
     },
     {
       "title": "Groundbreaking Ceremony for New Housing Project",
@@ -31,6 +32,7 @@ class _EventsScreenState extends State<EventsScreen> {
   ];
 
   final List<Map<String, String>> news = [
+    
     {
       "title": "PHA Announces New Housing Scheme in Karachi",
       "date": "October 28, 2024",
