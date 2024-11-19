@@ -1,9 +1,6 @@
 // Base URL
-
-
-
 // const String baseUrl = 'http://20.46.49.230/api';
-const String baseUrl = 'http://192.168.18.147:8000/api';
+const String baseUrl = 'http://20.46.49.230:8000/api';
 
 // Projects URL
 const String getProjectsByCnicUrl = '$baseUrl/getProjectsByCnic';
@@ -11,8 +8,7 @@ const String GetPsid = '$baseUrl/getpsid';
 
 // Generate PDF 
 final String DownloadPDF = '$baseUrl/download-pdf';
-
- final String payFastUrl = "/initiate-payment"; 
+final String payFastUrl = "/initiate-payment"; 
 // GetCNIC by Membership
 const String GetCNICByMembership = '$baseUrl/getProjectsByCnic';
 const String getAdditionalInfoByCNIC = '$baseUrl/getAddtionalInfoByCnic';
