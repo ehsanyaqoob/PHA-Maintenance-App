@@ -29,7 +29,9 @@ class GenerateBillPreviewView extends StatefulWidget {
 }
 
 class _GenerateBillPreviewViewState extends State<GenerateBillPreviewView> {
+  
   final RxBool isDownloading = false.obs;
+  static const platform = MethodChannel('com.example.download/pdf');
 
   @override
   Widget build(BuildContext context) {
@@ -76,8 +78,27 @@ class _GenerateBillPreviewViewState extends State<GenerateBillPreviewView> {
                           ),
                           IconButton(
                             icon: Icon(Icons.copy),
-                            onPressed: () => Clipboard.setData(
-                                ClipboardData(text: widget.psid)),
+                            onPressed: () {
+                              Clipboard.setData(
+                                  ClipboardData(text: widget.psid));
+
+                              // Show Snackbar
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: PHAText(
+                                    fontSize: 16,
+                                    color: AppColors.AppSecondary,
+                                    text: 'PSID has been copied'),
+                                  behavior: SnackBarBehavior.floating,
+                                  margin: EdgeInsets.only(
+                                    bottom: 100.0,
+                                    left: 16.0,
+                                    right: 16.0,
+                                  ),
+                                  backgroundColor: AppColors.AppPrimary,
+                                ),
+                              );
+                            },
                             tooltip: 'Copy PSID',
                           ),
                         ],
@@ -205,65 +226,30 @@ class _GenerateBillPreviewViewState extends State<GenerateBillPreviewView> {
           ],
         ));
   }
+
 Future<void> _downloadPdf(String url) async {
-    try {
-      isDownloading.value = true;
-
-      // Request storage permissions
-      final permissionStatus = await Permission.storage.request();
-      if (!permissionStatus.isGranted) {
-        // If permission is not granted, show a message
-        Get.snackbar(
-          'Permission Denied',
-          'Storage permission is required to download the PDF',
-          snackPosition: SnackPosition.TOP,
-        );
-        return;
-      }
-
-      // Define Dio for downloading
-      Dio dio = Dio();
-
-      // Get directory to save the file
-      Directory? directory = await getExternalStorageDirectory();
-      String filePath = '${directory!.path}/bill-preview.pdf';
-
-      // Check if file already exists, and handle accordingly
-      if (File(filePath).existsSync()) {
-        // Optionally rename the file if you don't want to overwrite
-        filePath = '${directory.path}/bill-preview-${DateTime.now().millisecondsSinceEpoch}.pdf';
-      }
-
-      // Start the download and save the file
-      await dio.download(
-        url,
-        filePath,
-        onReceiveProgress: (received, total) {
-          if (total != -1) {
-            double progress = (received / total) * 100;
-            print('Download Progress: $progress%');
-            // You can display a loading progress bar here
-          }
-        },
-      );
-
-      // Show success notification
-      Get.snackbar(
-        'Success',
-        'PDF downloaded to $filePath',
-        snackPosition: SnackPosition.TOP,
-      );
-    } catch (e) {
-      // Show error notification if download fails
-      Get.snackbar(
-        'Error',
-        'Failed to download PDF: $e',
-        snackPosition: SnackPosition.TOP,
-      );
-    } finally {
-      isDownloading.value = false;
+    // Request storage permission
+    var status = await Permission.storage.request();
+    if (!status.isGranted) {
+      print("Storage permission denied");
+      return;
     }
-}}
+
+    try {
+      await platform.invokeMethod('downloadPdf', {
+        'url': url,
+        'fileName': 'PHA-Bill-${DateTime.now().millisecondsSinceEpoch}.pdf',
+      });
+      Get.snackbar("Download", "Download started",
+          snackPosition: SnackPosition.TOP);
+      // print("Download started");
+    } catch (e) {
+      Get.snackbar("Download", "Error downloading PDF: $e",
+          snackPosition: SnackPosition.TOP);
+      print("Error downloading PDF: $e");
+    }
+  }
+}
 class GenericDetailsCard extends StatelessWidget {
   final List<Map<String, String>> details;
   final double fontSize;
