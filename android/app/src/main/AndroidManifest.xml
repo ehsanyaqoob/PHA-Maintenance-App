@@ -10,7 +10,6 @@
 
     <application
         android:requestLegacyExternalStorage="true"
-        
         android:usesCleartextTraffic="true"
         android:label="pharesidence"
         android:name="${applicationName}"
