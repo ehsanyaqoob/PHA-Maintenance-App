@@ -1,0 +1,74 @@
+import 'package:http/http.dart' as http;
+import 'package:pharesidence/Utils/exports/exports.dart';
+
+class Config{
+  static String pro_base_url = 'http://175.107.14.182:8080/';
+}
+
+class EndPoints{
+  static var login = '/auth/login';
+  static var signup = '/auth/sginup';
+  static var getProjectByCNIC = '/getProjectsByCnicNew';
+  static var getAdditionalInfoByCNIC = '/getAddtionalInfoByCnicNew';
+  static var getPSID = '/getpsidnew';
+}
+
+class ApiService {
+  final String baseUrl = '${Config.pro_base_url}api';
+
+  Future<ApiResponse<T>> get<T>(String endpoint, bool authorization, T Function(dynamic) fromJson) async {
+    if (!await InternetConnectionChecker().hasConnection) {
+      throw NetworkException('No Internet Connection');
+    }
+    var _header;
+    if (authorization){
+      _header = {
+        'Content-Type' : 'application/json',
+        'Authorization' : 'Bearer ${await Storage.authToken}',
+      };
+    }else{
+      _header = {
+        'Content-Type' : 'application/json',
+      };
+    }
+
+    final response = await http.get(Uri.parse('$baseUrl$endpoint'), headers: _header);
+    if (response.statusCode == 200|| response.statusCode == 404 || response.statusCode == 400) {
+      final Map<String, dynamic> data = json.decode(response.body);
+      print(data);
+      return ApiResponse<T>.fromJson(data, fromJson);
+    } else {
+      throw NetworkException('Internal Server Error');
+    }
+  }
+
+  Future<ApiResponse<T>> post <T>(String endpoint, Map<String, dynamic> body, bool authorization,
+      T Function(dynamic) fromJson) async {
+    if (!await InternetConnectionChecker().hasConnection) {
+      throw NetworkException('No Internet Connection');
+    }
+    var _header;
+    if (authorization){
+      _header = {
+        'Content-Type' : 'application/json',
+        'Authorization' : 'Bearer ${await Storage.authToken}',
+      };
+    }else{
+      _header = {
+        'Content-Type' : 'application/json',
+      };
+    }
+    final response = await http.post(
+      Uri.parse('$baseUrl$endpoint'),
+      headers: _header,
+      body: json.encode(body),
+    );
+
+    if (response.statusCode == 200 || response.statusCode == 404 || response.statusCode == 400) {
+      final Map<String, dynamic> data = json.decode(response.body);
+      return ApiResponse<T>.fromJson(data, fromJson);
+    } else {
+      throw NetworkException('Internal Server Error');
+    }
+  }
+}

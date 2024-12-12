@@ -1,5 +1,5 @@
 import 'package:pharesidence/Generic_Widgets/Widgets/pha_text.dart';
-import 'package:pharesidence/exports/exports.dart';
+import 'package:pharesidence/Utils/exports/exports.dart';
 
 class MembershipItem extends StatelessWidget {
   String title, value;
@@ -19,14 +19,14 @@ class MembershipItem extends StatelessWidget {
           text: title.toUpperCase(),
           fontSize: 13.sp,
           fontWeight: FontWeight.w400,
-          color: AppColors.AppThird,
+          color: AppColors.lightGray_1,
         ),
         SizedBox(width: 12),
         PHAText(
           text: value.toUpperCase(),
           fontSize: 15.sp,
           fontWeight: FontWeight.w700,
-          color: AppColors.AppPrimary,
+          color: AppColors.primary,
         ),
       ],
     );

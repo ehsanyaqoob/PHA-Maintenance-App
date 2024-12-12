@@ -1,4 +1,4 @@
-import 'package:pharesidence/exports/exports.dart';
+import 'package:pharesidence/Utils/exports/exports.dart';
 class CustomCheckbox extends StatefulWidget {
   final bool value;
   final ValueChanged<bool> onChanged;

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pharesidence/Generic_Widgets/Widgets/custom_loarder.dart';
 import 'package:pharesidence/Generic_Widgets/Widgets/pha_text.dart';
-import 'package:pharesidence/exports/exports.dart';
+import 'package:pharesidence/Utils/exports/exports.dart';
 
 class EventsScreen extends StatefulWidget {
   @override
@@ -69,7 +69,7 @@ class _EventsScreenState extends State<EventsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.AppSecondary,
+      // backgroundColor: AppColors.secondary,
       appBar: CustomAppBar(title: "Upcoming Events & News"),
       body: isLoading
           ? Center(child: PHALoader()) // Show loader while loading
@@ -235,7 +235,7 @@ class EventDetailScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.AppSecondary,
+      // backgroundColor: AppColors.secondary,
       appBar: CustomAppBar(),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 26, vertical: 0),

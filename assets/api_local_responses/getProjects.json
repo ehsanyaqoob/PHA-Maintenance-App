@@ -1,0 +1,23 @@
+{
+  "status": true,
+  "message": "success",
+  "data": {
+    "projects": [
+      {
+        "id": 555,
+        "cnic": "3520169791715",
+        "cell": "03324675454",
+        "full_name": "MR. NAFASAT RAZA",
+        "memberType": "owner",
+        "registration_no": "800-00907",
+        "project_id": 1,
+        "lane_no": "1",
+        "house_no": "1",
+        "category": "Cat-I",
+        "present_address": "HOUSE NO.15, ST NO.06, LANE-V, MOHALLA CALVARY GROUND LAHORE",
+        "status": "Under Construction",
+        "projectName": "Kurri Road"
+      }
+    ]
+  }
+}

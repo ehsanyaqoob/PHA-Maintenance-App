@@ -1,4 +1,4 @@
-import'package:pharesidence/exports/exports.dart';
+import'package:pharesidence/Utils/exports/exports.dart';
 class PHAProjectItem extends StatelessWidget {
   String title, image;
   PHAProjectItem({super.key, required this.title, required this.image});

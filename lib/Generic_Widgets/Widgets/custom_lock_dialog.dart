@@ -1,5 +1,5 @@
 
-import 'package:pharesidence/exports/exports.dart';
+import 'package:pharesidence/Utils/exports/exports.dart';
 
 class CustomSuccessLockDialog extends StatefulWidget {
   final String message;
@@ -57,7 +57,7 @@ class _CustomSuccessLockDialogState extends State<CustomSuccessLockDialog>
       child: Container(
         height: 400,
         decoration: BoxDecoration(
-          color: AppColors.AppSecondary,
+          color: AppColors.secondary,
           borderRadius: BorderRadius.only(
             topLeft: Radius.circular(60),
             topRight: Radius.circular(60),
@@ -75,12 +75,12 @@ class _CustomSuccessLockDialogState extends State<CustomSuccessLockDialog>
                 child: Container(
                   padding: EdgeInsets.all(20),
                   decoration: BoxDecoration(
-                    color: AppColors.appWhite,
+                    color: AppColors.white,
                     shape: BoxShape.circle,
                   ),
                   child: Icon(
                     Icons.lock,
-                    color: AppColors.AppPrimary,
+                    color: AppColors.primary,
                     size: 80,
                   ),
                 ),
@@ -99,7 +99,7 @@ class _CustomSuccessLockDialogState extends State<CustomSuccessLockDialog>
               // Circular Loader
               if (_showProgressIndicator)
                 CircularProgressIndicator(
-                  color: AppColors.AppPrimary,
+                  color: AppColors.primary,
                   strokeWidth: 6,
                 ),
             ],

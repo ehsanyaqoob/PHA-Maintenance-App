@@ -1,5 +1,5 @@
 
-import 'package:pharesidence/exports/exports.dart';
+import 'package:pharesidence/Utils/exports/exports.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String? title;
@@ -54,19 +54,20 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
           ? IconButton(
               icon: Icon(
                 Icons.arrow_back_ios_rounded,
-                color: AppColors.appBlack,
+                color: AppColors.blackGray,
               ),
               onPressed: onLeadingPressed ?? () => Navigator.pop(context),
             )
           : null,
-      backgroundColor: backgroundColor ?? AppColors.AppSecondary,
+      // backgroundColor: backgroundColor ?? AppColors.secondary,
       elevation: elevation ?? 0.0,
       title: title != null
           ? Text(
               title!,
               style: titleStyle ??
-                  GoogleFonts.poppins(
-                    color: titleColor ?? AppColors.appBlack,
+                  TextStyle(
+                    fontFamily: AppFonts.poppins,
+                    color: titleColor ?? AppColors.blackGray,
                     fontWeight: FontWeight.bold,
                     fontSize: 18.sp,
                   ),

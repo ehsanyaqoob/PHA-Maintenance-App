@@ -1,5 +1,5 @@
-import 'package:pharesidence/Generic_Widgets/Widgets/pha_text.dart';
-import 'package:pharesidence/exports/exports.dart';
+
+import 'package:pharesidence/Utils/exports/exports.dart';
 class PHARadioButton extends StatefulWidget {
   final List<String> items;
   final String selectedValue;
@@ -41,14 +41,14 @@ class _PHARadioButtonState extends State<PHARadioButton> {
             height: 45,
             decoration: BoxDecoration(
               border: widget.items.first == item ?  Border(
-                  top: BorderSide(color: AppColors.fieldFontColor, width: 1),
-                  left: BorderSide(color: AppColors.fieldFontColor, width: 1),
-                  bottom: BorderSide(color: AppColors.fieldFontColor, width: 1),
-                  right: BorderSide(color: AppColors.fieldFontColor, width: 1)
+                  top: BorderSide(color: AppColors.lightGray_1, width: 1),
+                  left: BorderSide(color: AppColors.lightGray_1, width: 1),
+                  bottom: BorderSide(color: AppColors.lightGray_1, width: 1),
+                  right: BorderSide(color: AppColors.lightGray_1, width: 1)
               ) : Border(
-                  top: BorderSide(color: AppColors.fieldFontColor, width: 1),
-                  bottom: BorderSide(color: AppColors.fieldFontColor, width: 1),
-                  right: BorderSide(color: AppColors.fieldFontColor, width: 1)
+                  top: BorderSide(color: AppColors.lightGray_1, width: 1),
+                  bottom: BorderSide(color: AppColors.lightGray_1, width: 1),
+                  right: BorderSide(color: AppColors.lightGray_1, width: 1)
               ),
               
               borderRadius: BorderRadius.only(
@@ -79,7 +79,7 @@ class _PHARadioButtonState extends State<PHARadioButton> {
            SizedBox(width: 4,),
                 PHAText(
                   text: item,
-                  color: AppColors.appBlack,
+                  color: AppColors.blackGray,
                   fontSize: 12.sp,
                   fontWeight: FontWeight.w600,
                 )

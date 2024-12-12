@@ -1,10 +1,6 @@
 // Base URL
 const String baseUrl = 'http://175.107.14.182:8080/api';
 
-
-// const String baseUrl = 'http://20.46.49.230/api';
-// const String baseUrl = 'http://20.46.49.230:8000/api';
-
 // Projects URL
 const String getProjectsByCnicUrl = '$baseUrl/getProjectsByCnic';
 const String GetPsid = '$baseUrl/getpsid';

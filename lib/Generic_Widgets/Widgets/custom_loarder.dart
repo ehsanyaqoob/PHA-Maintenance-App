@@ -1,6 +1,5 @@
-import 'package:pharesidence/exports/exports.dart';
+import 'package:pharesidence/Utils/exports/exports.dart';
 import 'package:get/get.dart';
-import 'package:flutter/material.dart';
 
 class PHALoader extends StatelessWidget {
   const PHALoader({super.key});

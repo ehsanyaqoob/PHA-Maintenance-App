@@ -1,5 +1,5 @@
 import 'package:pharesidence/Generic_Widgets/Widgets/pha_text.dart';
-import 'package:pharesidence/exports/exports.dart';
+import 'package:pharesidence/Utils/exports/exports.dart';
 
 class PHAButton extends StatelessWidget {
   const PHAButton({
@@ -32,7 +32,7 @@ class PHAButton extends StatelessWidget {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(40.h/2),
             border: Border.all(
-              color: borderColor ?? AppColors.AppPrimary,
+              color: borderColor ?? AppColors.primary,
             ),
             color: fillColor
                 ? onTap == null
@@ -43,7 +43,7 @@ class PHAButton extends StatelessWidget {
             boxShadow: shadow
                 ? [
                     BoxShadow(
-                      color: AppColors.AppSecondary.withOpacity(0.85),
+                      color: AppColors.secondary.withOpacity(0.85),
                       spreadRadius: 10,
                       blurRadius: 10,
                       offset: Offset(4, 4),
@@ -55,7 +55,7 @@ class PHAButton extends StatelessWidget {
             child: PHAText(
               text: title,
               textAlign: TextAlign.center,
-              color: fillColor ? AppColors.appWhite : AppColors.AppPrimary,
+              color: fillColor ? AppColors.white : AppColors.primary,
               fontWeight: FontWeight.w600,
               fontSize: 16.sp,
             ),

@@ -2,8 +2,8 @@
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:pharesidence/Generic_Widgets/Widgets/pha_text_formfield.dart';
-import 'package:pharesidence/exports/exports.dart';
-import 'package:pharesidence/Shared/Controllers.dart/profile_avatar.dart';
+import 'package:pharesidence/Utils/exports/exports.dart';
+import 'package:pharesidence/Controllers/profile_avatar.dart';
 
 
 
@@ -24,12 +24,12 @@ void showWhatsAppLikeBottomSheet({
           height: 5,
           margin: EdgeInsets.only(bottom: 20),
           decoration: BoxDecoration(
-            color: AppColors.AppPrimary,
+            color: AppColors.primary,
             borderRadius: BorderRadius.circular(10),
           ),
         ),
         ListTile(
-          leading: Icon(Icons.camera_alt, color: AppColors.AppPrimary, size: 22,),
+          leading: Icon(Icons.camera_alt, color: AppColors.primary, size: 22,),
           title:
               PHAText(text: 'Camera', fontSize: 18, ),
           onTap: () {
@@ -38,7 +38,7 @@ void showWhatsAppLikeBottomSheet({
           },
         ),
         ListTile(
-          leading: Icon(Icons.photo_library, color: AppColors.AppPrimary, size: 22,),
+          leading: Icon(Icons.photo_library, color: AppColors.primary, size: 22,),
           title:
               PHAText(text: 'Gallery', fontSize: 18, ),
           onTap: () {
@@ -47,12 +47,12 @@ void showWhatsAppLikeBottomSheet({
           },
         ),
         if (showDeleteOption) ...[
-          Divider(color: AppColors.AppPrimary),
+          Divider(color: AppColors.primary),
           ListTile(
-            leading: Icon(Icons.delete, color: AppColors.AppPrimary),
+            leading: Icon(Icons.delete, color: AppColors.primary),
             title: Text(
               'Delete',
-              style: TextStyle(fontSize: 18, color: AppColors.AppPrimary),
+              style: TextStyle(fontSize: 18, color: AppColors.primary),
             ),
             onTap: () {
               onDeleteTap();
@@ -77,7 +77,7 @@ void showCustomBottomSheet({
       content: content,
       footer: footer,
     ),
-    backgroundColor: AppColors.AppSecondary,
+    backgroundColor: AppColors.white,
   );
 }
 
@@ -97,19 +97,19 @@ void showAddMoneyOptions({
             height: 5,
             margin: EdgeInsets.only(bottom: 20),
             decoration: BoxDecoration(
-              color: AppColors.AppPrimary,
+              color: AppColors.primary,
               borderRadius: BorderRadius.circular(10),
             ),
           ),
           ListTile(
             leading: Icon(
               Icons.account_balance_wallet,
-              color: AppColors.AppPrimary,
+              color: AppColors.primary,
             ),
             title: PHAText(
               text: 'Add Money',
               fontSize: 18,
-              color: AppColors.appWhite,
+              color: AppColors.white,
             ),
             onTap: () {
               onAddMoneyTap();
@@ -138,14 +138,14 @@ void showSendMoneyOptions({
           height: 5,
           margin: EdgeInsets.only(bottom: 20),
           decoration: BoxDecoration(
-            color: AppColors.AppPrimary,
+            color: AppColors.primary,
             borderRadius: BorderRadius.circular(10),
           ),
         ),
         ListTile(
-          leading: Icon(Icons.send, color: AppColors.AppPrimary),
+          leading: Icon(Icons.send, color: AppColors.primary),
           title: PHAText(
-              text: 'Send Money', fontSize: 18, color: AppColors.appWhite),
+              text: 'Send Money', fontSize: 18, color: AppColors.white),
           onTap: () {
             onSendMoneyTap();
             Get.back();
@@ -169,14 +169,14 @@ void showTransactionOptions({
           height: 5,
           margin: EdgeInsets.only(bottom: 20),
           decoration: BoxDecoration(
-            color: AppColors.AppPrimary,
+            color: AppColors.primary,
             borderRadius: BorderRadius.circular(10),
           ),
         ),
         ListTile(
-          leading: Icon(Icons.receipt, color: AppColors.AppPrimary),
+          leading: Icon(Icons.receipt, color: AppColors.primary),
           title: PHAText(
-              text: 'Transactions', fontSize: 18, color: AppColors.appWhite),
+              text: 'Transactions', fontSize: 18, color: AppColors.white),
           onTap: () {
             onTransactionTap();
             Get.back();
@@ -199,16 +199,16 @@ void showCheckBalanceOptions({
           height: 5,
           margin: EdgeInsets.only(bottom: 20),
           decoration: BoxDecoration(
-            color: AppColors.AppPrimary,
+            color: AppColors.primary,
             borderRadius: BorderRadius.circular(10),
           ),
         ),
         ListTile(
-          leading: Icon(Icons.account_balance, color: AppColors.AppPrimary),
+          leading: Icon(Icons.account_balance, color: AppColors.primary),
           title: PHAText(
             text: 'Check Balance',
             fontSize: 18,
-            color: AppColors.appWhite,
+            color: AppColors.white,
           ),
           onTap: () {
             onCheckBalanceTap();
@@ -233,16 +233,16 @@ void showTransferFundsOptions({
           height: 5,
           margin: EdgeInsets.only(bottom: 20),
           decoration: BoxDecoration(
-            color: AppColors.AppPrimary,
+            color: AppColors.primary,
             borderRadius: BorderRadius.circular(10),
           ),
         ),
         ListTile(
-          leading: Icon(Icons.sync_alt, color: AppColors.AppPrimary),
+          leading: Icon(Icons.sync_alt, color: AppColors.primary),
           title: PHAText(
             text: 'Transfer Funds',
             fontSize: 18,
-            color: AppColors.appWhite,
+            color: AppColors.white,
           ),
           onTap: () {
             onTransferFundsTap();
@@ -267,16 +267,16 @@ void showViewStatementsOptions({
           height: 5,
           margin: EdgeInsets.only(bottom: 20),
           decoration: BoxDecoration(
-            color: AppColors.AppPrimary,
+            color: AppColors.primary,
             borderRadius: BorderRadius.circular(10),
           ),
         ),
         ListTile(
-          leading: Icon(Icons.description, color: AppColors.AppPrimary),
+          leading: Icon(Icons.description, color: AppColors.primary),
           title: PHAText(
             text: 'View Statements',
             fontSize: 18,
-            color: AppColors.appWhite,
+            color: AppColors.white,
           ),
           onTap: () {
             onViewStatementsTap();
@@ -301,16 +301,16 @@ void showElectricityPaymentOptions({
           height: 5,
           margin: EdgeInsets.only(bottom: 20),
           decoration: BoxDecoration(
-            color: AppColors.AppPrimary,
+            color: AppColors.primary,
             borderRadius: BorderRadius.circular(10),
           ),
         ),
         ListTile(
-          leading: Icon(Icons.lightbulb_outline, color: AppColors.AppPrimary),
+          leading: Icon(Icons.lightbulb_outline, color: AppColors.primary),
           title: PHAText(
             text: 'Pay Electricity Bill',
             fontSize: 18,
-            color: AppColors.appWhite,
+            color: AppColors.white,
           ),
           onTap: () {
             onPayTap();
@@ -335,16 +335,16 @@ void showWaterPaymentOptions({
           height: 5,
           margin: EdgeInsets.only(bottom: 20),
           decoration: BoxDecoration(
-            color: AppColors.AppPrimary,
+            color: AppColors.primary,
             borderRadius: BorderRadius.circular(10),
           ),
         ),
         ListTile(
-          leading: Icon(Icons.water_damage_outlined, color: AppColors.AppPrimary),
+          leading: Icon(Icons.water_damage_outlined, color: AppColors.primary),
           title: PHAText(
             text: 'Pay Water Bill',
             fontSize: 18,
-            color: AppColors.appWhite,
+            color: AppColors.white,
           ),
           onTap: () {
             onPayTap();
@@ -369,16 +369,16 @@ void showMobileRechargeOptions({
           height: 5,
           margin: EdgeInsets.only(bottom: 20),
           decoration: BoxDecoration(
-            color: AppColors.AppPrimary,
+            color: AppColors.primary,
             borderRadius: BorderRadius.circular(10),
           ),
         ),
         ListTile(
-          leading: Icon(Icons.phone_android, color: AppColors.AppPrimary),
+          leading: Icon(Icons.phone_android, color: AppColors.primary),
           title: PHAText(
             text: 'Mobile Recharge',
             fontSize: 18,
-            color: AppColors.appWhite,
+            color: AppColors.white,
           ),
           onTap: () {
             onRechargeTap();

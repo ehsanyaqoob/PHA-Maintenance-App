@@ -1,0 +1,35 @@
+{
+    "status": true,
+    "message": "success",
+    "data": {
+        "id": 581,
+        "member_id": 555,
+        "registration_no": "800-00907",
+        "project_id": 1,
+        "lane_no": "1",
+        "house_no": "1",
+        "category": "Cat-I",
+        "present_address": "HOUSE NO.15, ST NO.06, LANE-V, MOHALLA CALVARY GROUND LAHORE",
+        "status": "Under Construction",
+        "member": {
+            "id": 555,
+            "cnic": "3520169791715",
+            "cell": "03324675454",
+            "full_name": "MR. NAFASAT RAZA",
+            "memberType": "owner"
+        },
+        "member_bill": [
+            {
+                "id": 2921,
+                "membership_id": 581,
+                "payment_method": null,
+                "category": "Cat-I",
+                "issued_date": "2024-11-01",
+                "due_date": "2024-11-11",
+                "total_amount": "5000.00",
+                "bill_status": "Unpaid",
+                "pdflink": "http://175.107.14.182:8080/storage/Invoice_MR._NAFASAT_RAZA_800-00907_20241124_182708.pdf"
+            }
+        ]
+    }
+}

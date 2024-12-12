@@ -1,0 +1,23 @@
+{
+    "status": true,
+    "message": "Success",
+    "data": {
+        "id": 581,
+        "registration_no": "800-00907",
+        "project_id": 1,
+        "full_name": "MR. NAFASAT RAZA",
+        "cnic": "3520169791715",
+        "lane_no": "1",
+        "house_no": "1",
+        "category": "Cat-I",
+        "present_address": "HOUSE NO.15, ST NO.06, LANE-V, MOHALLA CALVARY GROUND LAHORE",
+        "cell": "03324675454",
+        "status": "Under Construction",
+        "projectName": "Kurri Road",
+        "issue_date": "2024-10-28",
+        "due_date": "2024-11-07",
+        "amount": "5000.00",
+        "late_fee": "500.00",
+        "total_amount_due": 5500
+    }
+}

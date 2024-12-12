@@ -1,4 +1,4 @@
-import 'package:pharesidence/exports/exports.dart';
+import 'package:pharesidence/Utils/exports/exports.dart';
 
 
 class CustomSuccessDialog extends StatefulWidget {
@@ -48,7 +48,7 @@ class _CustomSuccessDialogState extends State<CustomSuccessDialog>
       child: Container(
         height: 400,
         decoration: BoxDecoration(
-          color: AppColors.AppSecondary,
+          color: AppColors.secondary,
           borderRadius: BorderRadius.only(
             topLeft: Radius.circular(60),
             topRight: Radius.circular(60),
@@ -65,12 +65,12 @@ class _CustomSuccessDialogState extends State<CustomSuccessDialog>
                 child: Container(
                   padding: EdgeInsets.all(20),
                   decoration: BoxDecoration(
-                    color: AppColors.appWhite,
+                    color: AppColors.white,
                     shape: BoxShape.circle,
                   ),
                   child: Icon(
                     Icons.check_circle,
-                    color: AppColors.AppPrimary,
+                    color: AppColors.primary,
                     size: 80,
                   ),
                 ),
@@ -80,7 +80,7 @@ class _CustomSuccessDialogState extends State<CustomSuccessDialog>
                 widget.message,
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                  color: AppColors.appWhite,
+                  color: AppColors.white,
                   fontSize: 24,
                   fontWeight: FontWeight.bold,
                 ),
