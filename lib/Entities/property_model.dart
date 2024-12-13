@@ -1,4 +1,6 @@
 //Modify
+import 'package:pharesidence/Entities/member_bill_model.dart';
+
 class PropertyModel {
   List<Property>? projects;
 
@@ -36,6 +38,7 @@ class Property {
   String? presentAddress;
   String? status;
   String? projectName;
+  List<MemberBill>? memberBill;
 
   Property(
       {this.id,
@@ -50,7 +53,8 @@ class Property {
         this.category,
         this.presentAddress,
         this.status,
-        this.projectName});
+        this.projectName,
+        this.memberBill});
 
   Property.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -66,6 +70,12 @@ class Property {
     presentAddress = json['present_address'];
     status = json['status'];
     projectName = json['projectName'];
+    if (json['member_bill'] != null) {
+      memberBill = <MemberBill>[];
+      json['member_bill'].forEach((v) {
+        memberBill!.add(new MemberBill.fromJson(v));
+      });
+    }
   }
 
   Map<String, dynamic> toJson() {
@@ -83,6 +93,9 @@ class Property {
     data['present_address'] = this.presentAddress;
     data['status'] = this.status;
     data['projectName'] = this.projectName;
+    if (this.memberBill != null) {
+      data['member_bill'] = this.memberBill!.map((v) => v.toJson()).toList();
+    }
     return data;
   }
 }

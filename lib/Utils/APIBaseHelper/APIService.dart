@@ -11,6 +11,7 @@ class EndPoints{
   static var getProjectByCNIC = '/getProjectsByCnicNew';
   static var getAdditionalInfoByCNIC = '/getAddtionalInfoByCnicNew';
   static var getPSID = '/getpsidnew';
+  static var getHistory = '/p_history';
 }
 
 class ApiService {
