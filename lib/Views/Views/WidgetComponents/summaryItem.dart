@@ -11,7 +11,7 @@ class SummaryItem extends StatelessWidget {
       child: GestureDetector(
         onTap: model.onTap, // Assign the onTap callback here
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 4),
+          padding: const EdgeInsets.symmetric(horizontal: 2),
           child: Column(
             children: [
               Stack(
@@ -46,10 +46,11 @@ class SummaryItem extends StatelessWidget {
               ),
               SizedBox(height: 8),
               Text(
-                model.title,
+                '${model.title}',
+                maxLines: 1,
                 style: TextStyle(
                   fontSize: 14,
-                  fontWeight: FontWeight.w600,
+                  fontWeight: FontWeight.w700,
                   color: Colors.black,
                 ),
               ),

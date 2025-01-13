@@ -63,7 +63,7 @@ class HomeController extends GetxController{
           onTap: () {}),
       HomeModel(
           image: 'assets/png/icon_apartments.svg',
-          title: 'Under Construction',
+          title: 'Progressing',
           count: '${propertyController.listOfProperties.value.where((e) => e.status == 'Under Construction').length}',
           onTap: () {}),
     ];
