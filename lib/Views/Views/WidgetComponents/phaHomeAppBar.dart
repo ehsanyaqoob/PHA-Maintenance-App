@@ -15,7 +15,7 @@ class PHAHomeAppBar extends StatelessWidget {
             GestureDetector(
               onTap: () {
                 // Navigate to Profile view, passing apiData
-                Get.to(ProfileView());
+               // Get.to(ProfileView());
               },
               child: CircleAvatar(
                 radius: 22.r,

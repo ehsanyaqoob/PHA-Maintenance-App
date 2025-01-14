@@ -2,7 +2,7 @@ import 'package:http/http.dart' as http;
 import 'package:pharesidence/Utils/exports/exports.dart';
 
 class Config{
-  static String pro_base_url = 'http://175.107.14.182:8080/';
+  static String pro_base_url = 'http://175.107.14.182:8080/maintenance/api';
 }
 
 class EndPoints{
@@ -14,7 +14,7 @@ class EndPoints{
 }
 
 class ApiService {
-  final String baseUrl = '${Config.pro_base_url}api';
+  final String baseUrl = '${Config.pro_base_url}';
 
   Future<ApiResponse<T>> get<T>(String endpoint, bool authorization, T Function(dynamic) fromJson) async {
     if (!await InternetConnectionChecker().hasConnection) {
