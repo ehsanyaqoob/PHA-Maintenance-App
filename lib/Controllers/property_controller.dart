@@ -113,7 +113,7 @@ class PropertyController extends GetxController {
     try {
       Map<String, dynamic> param = {
         "registration_no": membershipNo,
-        "amount": fullAmountController.text
+        "amount": fullAmountController.text.replaceAll(',', '')
       };
       ApiResponse<PSIDModel> response =
           await api.post(EndPoints.getPSID, param, true, (json) {
@@ -157,7 +157,7 @@ class PropertyController extends GetxController {
 
   generatePayFastLink() async {
     final _url = Uri.parse(
-        'http://175.107.14.182:8080/api/initiate-payment?&registration_no=${membershipNumber.value}&trans_amount=${fullAmountController.text}');
+        'http://175.107.14.182:8080/maintenance/api/initiate-payment?&registration_no=${membershipNumber.value}&trans_amount=${fullAmountController.text}');
     try {
       // Use launchUrl with error handling
       if (!await launchUrl(_url)) {

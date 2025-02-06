@@ -125,7 +125,7 @@ class _AdditionalDetailViewState extends State<AdditionalDetailView> {
                           AdditionalInfoItem(
                               title: 'Maintenance Charges',
                               description:
-                                  controller.additionalInfo.value.amount ?? ''),
+                                  controller.additionalInfo.value.amount?.formatAsNumber() ?? ''),
                           AdditionalInfoItem(
                               title: 'Late Fee',
                               description:
