@@ -184,10 +184,10 @@ class _AdditionalDetailViewState extends State<AdditionalDetailView> {
                           Get.snackbar('Error', 'Partial payment is required', colorText: AppColors.white,
                               backgroundColor: AppColors.red.withOpacity(0.8));
                           return;
-                        } else if (int.parse(controller
+                        } else if (double.parse(controller
                                 .fullAmountController.text
                                 .replaceAll(',', '')) >
-                            int.parse(controller
+                            double.parse(controller
                                     .additionalInfo.value.totalAmountDue
                                     ?.replaceAll(',', '') ??
                                 '0')) {
