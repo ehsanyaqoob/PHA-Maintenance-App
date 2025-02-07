@@ -13,7 +13,7 @@ import 'package:pharesidence/Views/Views/Profile_view/Edit_Profile/profile_sec_v
 import '../../../Generic_Widgets/Widgets/custom_loarder.dart';
 import '../../../Shared/Prefrences/shared_pref.dart';
 import '../../getStartedView.dart';
-import 'Account/PayeeManagementView.dart';
+import '../../historyView.dart';
 import 'Complaint/complaint_view.dart';
 import 'Settings/settings_view.dart';
 
@@ -206,9 +206,7 @@ class _ProfileViewState extends State<ProfileView> {
                     ),
                   ),
                   GestureDetector(
-                    onTap: () {
-                       Get.to(PayeeManagementView());
-                    },
+                    onTap: (){},
                     child: Container(
                       height: 100.h,
                       width: 150.w,

@@ -11,10 +11,11 @@ class EndPoints{
   static var getProjectByCNIC = '/getProjectsByCnicNew';
   static var getAdditionalInfoByCNIC = '/getAddtionalInfoByCnicNew';
   static var getPSID = '/getpsidnew';
+  static var getHistory = '/p_history';
 }
 
 class ApiService {
-  final String baseUrl = '${Config.pro_base_url}';
+final String baseUrl = Config.pro_base_url;
 
   Future<ApiResponse<T>> get<T>(String endpoint, bool authorization, T Function(dynamic) fromJson) async {
     if (!await InternetConnectionChecker().hasConnection) {

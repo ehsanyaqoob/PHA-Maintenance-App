@@ -1,6 +1,7 @@
 import 'package:pharesidence/Utils/exports/exports.dart';
 import 'package:get/get.dart';
 import 'package:pharesidence/Views/Views/Home/Additional_inof_view/additional_info.dart';
+import 'package:pharesidence/Views/historyView.dart';
 
 class PropertyItem extends StatelessWidget {
   Property property;
@@ -48,13 +49,14 @@ class PropertyItem extends StatelessWidget {
                 children: [
                   Expanded(
                     child: CustomButtonWithIcon(
-                      text: 'See Details',
+                      text: 'Bill History',
                       icon: Icons.details,
                       backgroundColor: AppColors.white,
                       textColor: AppColors.secondary,
                       fontSize: 14.sp,
-                      onTap: () =>
-                          Get.to(PropertyDetailView(property: property)),
+                      onTap: () => Get.to(HistoryView(membershipID: property.registrationNo ?? '')),
+                      // onTap: () =>
+                      //     Get.to(PropertyDetailView(property: property)),
                     ),
                   ),
                   SizedBox(width: 12),

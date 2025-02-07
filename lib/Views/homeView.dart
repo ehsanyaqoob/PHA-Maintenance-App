@@ -28,7 +28,7 @@ class _HomeViewState extends State<HomeView> {
             Positioned(
               child: Padding(
                 padding: const EdgeInsets.symmetric(
-                  horizontal: 18,
+                  horizontal: 12,
                 ),
                 child: ListView(
                   children: [

@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:pharesidence/Entities/member_bill_model.dart';
 import 'package:pharesidence/Utils/exports/exports.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:path_provider/path_provider.dart';
@@ -10,6 +11,7 @@ class PropertyController extends GetxController {
   var isBusy = false.obs;
   Rx<SignInModel> user = SignInModel().obs;
   var listOfProperties = <Property>[].obs;
+  var listOfHistory = <MemberBill>[].obs;
   Rx<AdditionalInfoModel> additionalInfo = AdditionalInfoModel().obs;
   Rx<PSIDModel> psidInfo = PSIDModel().obs;
   var membershipNumber = ''.obs;
@@ -119,6 +121,30 @@ class PropertyController extends GetxController {
       });
       if (response.success) {
         psidInfo.value = response.data!;
+      } else {
+        Fluttertoast.showToast(msg: response.message);
+      }
+    } catch (e) {
+      Fluttertoast.showToast(msg: '$e');
+    } finally {
+      isBusy.value = false;
+    }
+  }
+
+  fetchHistory({required String membershipNo}) async {
+    isBusy.value = true;
+    try {
+      Map<String, dynamic> param = {
+        "registration_no": membershipNo,
+        "amount": fullAmountController.text
+      };
+      ApiResponse<Property> response =
+      await api.post(EndPoints.getHistory, param, true, (json) {
+        return Property.fromJson(json);
+      });
+      if (response.success) {
+        listOfHistory.value = response.data?.memberBill ?? [];
+        listOfHistory.refresh();
       } else {
         Fluttertoast.showToast(msg: response.message);
       }
