@@ -13,6 +13,7 @@ class CustomButtonWithIcon extends StatelessWidget {
   final double fontSize;
   final double iconSize;
   final VoidCallback? onTap;
+  final FontWeight fontWeight;
 
   const CustomButtonWithIcon({
     Key? key,
@@ -27,6 +28,8 @@ class CustomButtonWithIcon extends StatelessWidget {
     this.fontSize = 14.0,
     this.iconSize = 18.0,
     this.onTap,
+    this.fontWeight = FontWeight.w400
+
   }) : super(key: key);
 
   @override
@@ -40,21 +43,25 @@ class CustomButtonWithIcon extends StatelessWidget {
           color: backgroundColor,
           borderRadius: BorderRadius.circular(borderRadius),
         ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            PHAText(
-              text: text,
-              fontSize: fontSize,
-              color: textColor,
-            ),
-            SizedBox(width: 6),
-            Icon(
-              icon,
-              size: iconSize,
-              color: iconColor,
-            ),
-          ],
+        child: Center(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              PHAText(
+                text: text,
+                textAlign: TextAlign.center,
+                fontSize: fontSize,
+                color: textColor,
+                fontWeight: fontWeight,
+              ),
+              // SizedBox(width: 6),
+              // Icon(
+              //   icon,
+              //   size: iconSize,
+              //   color: iconColor,
+              // ),
+            ],
+          ),
         ),
       ),
     );

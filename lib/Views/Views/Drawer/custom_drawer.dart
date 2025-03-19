@@ -1,44 +1,62 @@
 import 'package:get/get.dart';
 import 'package:pharesidence/Generic_Widgets/Widgets/custom_loarder.dart';
 import 'package:pharesidence/Generic_Widgets/Widgets/pha_text.dart';
-import 'package:pharesidence/Shared/Prefrences/shared_pref.dart';
 import 'package:pharesidence/Utils/exports/exports.dart';
 import 'package:pharesidence/Views/getStartedView.dart';
-
-import '../../drawer/notifications.dart';
-import '../../drawer/privacy_policy.dart';
 import '../../drawer/rateus.dart';
-import '../../drawer/terms_conditions.dart';
+
 
 class SideDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: MediaQuery.of(context).size.width * 0.8,
+      width: MediaQuery.of(context).size.width * 0.7,
       child: Drawer(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            DrawerHeader(
-              child: Row(
+            // DrawerHeader(
+            //   child: Row(
+            //     children: [
+            //       SvgPicture.asset(
+            //         AppAssets.appLogo,
+            //         width: 60.w,
+            //         height: 60.h,
+            //       ),
+            //       SizedBox(width: 8),
+            //       PHAText(
+            //         text: 'PHAF MAINTENANCE \n SERVICES',
+            //         fontSize: 16.sp,
+            //         fontWeight: FontWeight.bold,
+            //         color: AppColors.blackGray,
+            //       ),
+            //     ],
+            //   ),
+            // ),
+            Container(
+              height: 250,
+              child: Column(
                 children: [
+                  Spacer(),
                   SvgPicture.asset(
                     AppAssets.appLogo,
-                    width: 60.w,
-                    height: 60.h,
+                    width: 100.w,
+                    height: 100.h,
                   ),
-                  SizedBox(width: 8),
+                  SizedBox(height: 8),
                   PHAText(
-                    text: 'PHAF MAINTENANCE \n SERVICES',
+                    text: 'PHA Maintenance App',
                     fontSize: 16.sp,
                     fontWeight: FontWeight.bold,
                     color: AppColors.blackGray,
                   ),
+                  Spacer(),
+                  Divider()
                 ],
               ),
             ),
             ListTile(
-              leading: Icon(Icons.star, color: AppColors.primary, size: 30),
+              leading: Icon(Icons.star, size: 30),
               title: PHAText(text: 'Rate Us', fontSize: 16.sp),
               onTap: () {
                Get.to(RateUsView()); // Navigate to Rate Us View
@@ -46,25 +64,39 @@ class SideDrawer extends StatelessWidget {
             ),
             ListTile(
               leading:
-                  Icon(Icons.privacy_tip, color: AppColors.primary, size: 30),
+                  Icon(Icons.privacy_tip, size: 30),
               title: PHAText(text: 'Privacy Policy', fontSize: 16.sp),
-              onTap: () {
-                Get.to(PrivacyPolicyView()); // Navigate to Privacy Policy View
+              onTap: () async {
+                final _url = Uri.parse(
+                    'https://pha.gov.pk/downloads/Privacy%20Policy%20for%20Pakistan%20Housing%20Authority%20Foundation%20(PHA)%20App.pdf');
+                try {
+                  if (!await launchUrl(_url)) {
+                    throw Exception('Could not launch $_url');
+                  }
+                } catch (e) {
+                  Get.snackbar('Error', 'An error occurred: ${e.toString()}');
+                }
               },
             ),
             ListTile(
-              leading: Icon(Icons.article, color: AppColors.primary, size: 30),
+              leading: Icon(Icons.article, size: 30),
               title: PHAText(text: 'Terms & Conditions', fontSize: 16.sp),
-              onTap: () {
-                Get.to(
-                    TermsConditionsView()); // Navigate to Terms & Conditions View
+              onTap: () async {
+                final _url = Uri.parse(
+                    'https://pha.gov.pk/GenericFront.aspx?pageid=5&type=pdf');
+                try {
+                  if (!await launchUrl(_url)) {
+                    throw Exception('Could not launch $_url');
+                  }
+                } catch (e) {
+                  Get.snackbar('Error', 'An error occurred: ${e.toString()}');
+                }
               },
             ),
             ListTile(
               leading: Stack(
                 children: [
-                  Icon(Icons.notifications,
-                      color: AppColors.primary, size: 30),
+                  Icon(Icons.notifications, size: 30),
                   Positioned(
                     right: 0,
                     child: CircleAvatar(
@@ -84,7 +116,7 @@ class SideDrawer extends StatelessWidget {
               },
             ),
             ListTile(
-              leading: Icon(Icons.logout, color: AppColors.primary),
+              leading: Icon(Icons.logout),
               title: PHAText(text: 'Logout', fontSize: 16.sp),
               onTap: () async {
                       // Show the custom loader

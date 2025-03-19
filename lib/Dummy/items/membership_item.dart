@@ -17,8 +17,8 @@ class MembershipItem extends StatelessWidget {
       children: [
         PHAText(
           text: title.toUpperCase(),
-          fontSize: 13.sp,
-          fontWeight: FontWeight.w400,
+          fontSize: 14.sp,
+          fontWeight: FontWeight.w500,
           color: AppColors.lightGray_1,
         ),
         SizedBox(width: 12),
@@ -26,7 +26,7 @@ class MembershipItem extends StatelessWidget {
           text: value.toUpperCase(),
           fontSize: 15.sp,
           fontWeight: FontWeight.w700,
-          color: AppColors.primary,
+          color: AppColors.blackGray,
         ),
       ],
     );

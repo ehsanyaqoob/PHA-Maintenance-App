@@ -15,7 +15,7 @@ class AdditionalInfoItem extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          SizedBox(width: 8.w),
+          // SizedBox(width: 8.w),
           Expanded(
             child: PHAText(
                 text: title,
@@ -24,7 +24,7 @@ class AdditionalInfoItem extends StatelessWidget {
                 fontSize: 14.sp),
           ),
           Expanded(
-            flex: 2,
+            flex: 1,
             child: PHAText(
                 text: description,
                 color: AppColors.blackGray,

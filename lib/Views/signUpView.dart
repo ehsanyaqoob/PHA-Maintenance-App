@@ -34,6 +34,7 @@ class _SignUpViewState extends State<SignUpView> {
 
                       PHAText(
                         text: AppConstants.pleaseEnterYourDetails,
+                        textAlign: TextAlign.center,
                         fontSize: 14.sp,
                         fontWeight: FontWeight.w500,
                       ),

@@ -54,8 +54,8 @@ class PHATextFormField extends StatelessWidget {
             visible: title != '',
             child: PHAText(
                 text: title,
-                fontSize: 12.sp,
-                fontWeight: FontWeight.w400,
+                fontSize: 14.sp,
+                fontWeight: FontWeight.w600,
                 color: Colors.black),
           ),
           title != '' ? SizedBox(height: 4) : SizedBox(height: 0),

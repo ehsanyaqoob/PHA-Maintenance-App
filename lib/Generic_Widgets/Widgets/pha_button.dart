@@ -8,7 +8,7 @@ class PHAButton extends StatelessWidget {
     this.onTap,
     this.topMargin = 0.0,
     this.fillColor = true,
-    this.filledColor = const Color(0xff2E2D74),
+    this.filledColor = Colors.grey,
     this.borderColor,
     this.shadow = false,
   });
@@ -31,9 +31,9 @@ class PHAButton extends StatelessWidget {
           height: 40.h,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(40.h/2),
-            border: Border.all(
-              color: borderColor ?? AppColors.primary,
-            ),
+            // border: Border.all(
+            //   color: borderColor ?? AppColors.primary,
+            // ),
             color: fillColor
                 ? onTap == null
                     ? filledColor?.withOpacity(0.85) // Disabled state

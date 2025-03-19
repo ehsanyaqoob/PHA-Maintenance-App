@@ -32,22 +32,21 @@ class _HomeViewState extends State<HomeView> {
                 ),
                 child: ListView(
                   children: [
+
                     PHAHomeAppBar(),
 
                     SizedBox(height: 8.h),
 
                     Obx(() => InfoCardItem(
                         image: AppAssets.imgCNIC,
-                        title: AppConstants.typeYourCNIC,
-                        subTitle: controller
-                            .formatCNIC(controller.user.value.cnic ?? ''),
+                        title: AppConstants.enterYourCNIC,
+                        subTitle: controller.user.value.cnic?.formatCNIC() ?? '',
                         reverseColor: false)),
 
                     Obx(() => InfoCardItem(
                         image: AppAssets.imgContact,
-                        title: AppConstants.typeYourMobile,
-                        subTitle: controller.formatPhoneNumber(
-                            controller.user.value.mobileNo ?? ''),
+                        title: AppConstants.enterYourMobile,
+                        subTitle: controller.user.value.mobileNo?.formatPhoneNumber() ?? '',
                         reverseColor: true)),
 
                     SizedBox(height: 10.h),
@@ -83,6 +82,7 @@ class _HomeViewState extends State<HomeView> {
                           .map((model) => ServicesItem(model: model))
                           .toList(),
                     ),
+
                     SizedBox(height: 10.h),
                   ],
                 ),

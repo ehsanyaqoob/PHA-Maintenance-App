@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:pharesidence/Utils/exports/exports.dart';
+import 'package:pharesidence/Views/wizardView.dart';
 
 class SplashController extends GetxController {
   var showPhaText = false.obs;
@@ -39,9 +40,9 @@ class SplashController extends GetxController {
         Get.put(HomeController());
         Get.offAll(const HomeView());
       }else{
-        Get.offAll(const GetStartView());
+        Get.offAll(const WizardView());
       }
-      Get.offAll(isLogin ? const HomeView() : const GetStartView());
+      // Get.offAll(isLogin ? const HomeView() : const GetStartView());
     }catch(e){
       Fluttertoast.showToast(msg: '$e');
     }

@@ -34,7 +34,7 @@ class _HistoryViewState extends State<HistoryView> {
         child: Stack(
           children: [
             AppBackground(),
-            AppBackButton(title: 'Payment History'),
+            AppBackButton(title: 'Previous Bills'),
             Positioned(
               top: 0 + 35.h + 36,
               left: 12,
@@ -64,22 +64,31 @@ class _HistoryViewState extends State<HistoryView> {
                       ),
                       title: PHAText(
                         text: bill.issuedDate?.formatDate() ?? '',
-                        fontSize: 18, // Larger font size for better readability
-                        fontWeight: FontWeight.bold,
-                        color: AppColors.primary,
+                        fontSize: 16.sp, // Larger font size for better readability
+                        fontWeight: FontWeight.w600,
                       ),
-                      subtitle: PHAText(
-                        text: "Status: ${bill.billStatus}",
-                        fontSize: 14,
-                        color: bill.billStatus == "Paid"
-                            ? Colors.green.withOpacity(0.8)
-                            : Colors.red.withOpacity(0.8),
+                      subtitle: Row(
+                        children: [
+                          PHAText(
+                            text: "Status: ",
+                            fontSize: 12.sp,
+                            fontWeight: FontWeight.w400,
+                            color: AppColors.blackGray,
+                          ),
+                          PHAText(
+                            text: "${bill.billStatus}",
+                            fontSize: 12.sp,
+                            fontWeight: FontWeight.w600,
+                            color: bill.billStatus?.toLowerCase() == "paid"
+                                ? Color(0xFF02B101)
+                                : Color(0xFFD5210F),
+                          ),
+                        ],
                       ),
                       trailing: PHAText(
                         text: bill.totalAmount ?? '',
-                        fontSize: 18, // Larger font size for the amount
-                        fontWeight: FontWeight.bold,
-                        color: AppColors.primary,
+                        fontSize: 16.sp, // Larger font size for the amount
+                        fontWeight: FontWeight.w500,
                       ),
                     ),
                   );

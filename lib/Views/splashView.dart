@@ -12,20 +12,20 @@ class SplashView extends StatelessWidget {
     return Scaffold(
       body: Stack(
         children: [
-          Container(
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                colors: [
-                  AppColors.secondary,
-                  AppColors.secondary,
-                  AppColors.secondary,
-                  AppColors.primary,
-                ],
-              ),
-            ),
-          ),
+          // Container(
+          //   decoration: BoxDecoration(
+          //     gradient: LinearGradient(
+          //       begin: Alignment.topCenter,
+          //       end: Alignment.bottomCenter,
+          //       colors: [
+          //         AppColors.secondary,
+          //         AppColors.secondary,
+          //         AppColors.secondary,
+          //         AppColors.primary,
+          //       ],
+          //     ),
+          //   ),
+          // ),
 
           // Background
           AppBackground(),
@@ -65,7 +65,7 @@ class SplashView extends StatelessWidget {
                         text: AppConstants.phaMaintenanceService.toUpperCase(),
                         fontSize: 18.sp,
                         fontWeight: FontWeight.w700,
-                        color: AppColors.white,
+                        color: AppColors.blackGray,
                       ),
                     ),
                   )),
@@ -82,7 +82,7 @@ class SplashView extends StatelessWidget {
                         text: AppConstants.ministryOfHousingWork,
                         fontSize: 12.sp,
                         fontWeight: FontWeight.w400,
-                        color: AppColors.white,
+                        color: AppColors.lightGray_1,
                       ),
                     ),
                   )),
@@ -105,7 +105,7 @@ class SplashView extends StatelessWidget {
                             fontSize: 9.sp,
                             fontFamily: AppFonts.poppins,
                             fontWeight: FontWeight.w400,
-                            color: AppColors.white))
+                            color: AppColors.blackGray))
                   ],
                 ),
               ),

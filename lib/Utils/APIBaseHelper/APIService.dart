@@ -2,7 +2,8 @@ import 'package:http/http.dart' as http;
 import 'package:pharesidence/Utils/exports/exports.dart';
 
 class Config{
-  static String pro_base_url = 'http://175.107.14.182:8080/maintenance/api';
+  static String pro_base_url = 'http://101.50.87.138:8080/maintenance/api';
+  // static String pro_base_url = 'http://192.168.18.162:8002/api';
 }
 
 class EndPoints{

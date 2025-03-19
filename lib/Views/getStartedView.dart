@@ -43,20 +43,21 @@ class _GetStartViewState extends State<GetStartView> {
                 const Spacer(),
                 PHAButton(
                   title: AppConstants.signIn,
+                  filledColor: AppColors.primary,
                   onTap: () {
                     Get.to(SignInView());
                   },
                 ),
-                SizedBox(height: 10.h),
+                SizedBox(height: 12.h),
                 PHAText(
                   text: AppConstants.doNotHaveMembership,
-                  fontSize: 16.sp,
+                  fontSize: 12.sp,
                   textAlign: TextAlign.center,
                 ),
-                SizedBox(height: 10.h),
+                SizedBox(height: 12.h),
                 PHAButton(
                   title: AppConstants.signUp,
-                  filledColor: AppColors.primary,
+                  filledColor: AppColors.secondary,
                   onTap: () {
                     Get.to(SignUpView());
                   },

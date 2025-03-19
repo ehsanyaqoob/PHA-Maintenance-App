@@ -49,11 +49,12 @@ class PropertyItem extends StatelessWidget {
                 children: [
                   Expanded(
                     child: CustomButtonWithIcon(
-                      text: 'Bill History',
+                      text: 'Previous Bill / پچھلے بل',
                       icon: Icons.details,
                       backgroundColor: AppColors.white,
-                      textColor: AppColors.secondary,
-                      fontSize: 14.sp,
+                      textColor: AppColors.blackGray,
+                      fontSize: 13.sp,
+                      fontWeight: FontWeight.w700,
                       onTap: () => Get.to(HistoryView(membershipID: property.registrationNo ?? '')),
                       // onTap: () =>
                       //     Get.to(PropertyDetailView(property: property)),
@@ -62,12 +63,13 @@ class PropertyItem extends StatelessWidget {
                   SizedBox(width: 12),
                   Expanded(
                     child: CustomButtonWithIcon(
-                        text: 'Pay Bill',
+                        text: 'Pay Bill / بل ادا کریں',
                         icon: Icons.details,
                         backgroundColor: AppColors.white,
-                        textColor: AppColors.secondary,
-                        fontSize: 14.sp,
-                        onTap: () => Get.to(AdditionalDetailView(membershipID: property.registrationNo ?? ''))),
+                        textColor: AppColors.blackGray,
+                        fontSize: 13.sp,
+                        fontWeight: FontWeight.w700,
+                        onTap: () => Get.to(AdditionalDetailView(property: property))),
                   ),
                 ],
               ),

@@ -20,8 +20,6 @@ class PHAText extends Text {
   }) : super(
           text,
           textAlign: textAlign,
-          overflow: overflow ?? TextOverflow.ellipsis, // Default to ellipsis
-          maxLines: maxLines ?? 2, // Default to 2 lines
           style: TextStyle(
             color: color,
             fontFamily: font,

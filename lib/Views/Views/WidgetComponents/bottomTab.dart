@@ -24,7 +24,7 @@ class BottomTab extends StatelessWidget {
             padding: const EdgeInsets.all(12),
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              color: AppColors.secondary,
+              color: AppColors.primary,
             ),
             child: SvgPicture.asset(image),
           ),

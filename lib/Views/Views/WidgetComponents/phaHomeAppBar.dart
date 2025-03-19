@@ -38,7 +38,7 @@ class PHAHomeAppBar extends StatelessWidget {
                   PHAText(
                     text: controller.user.value.memberType == 'owner'
                         ? 'Owner'
-                        : 'Tenant',
+                        : 'Tenant / کرایہ دار',
                     fontWeight: FontWeight.w600,
                     fontSize: 14.sp,
                     color: AppColors.primary,

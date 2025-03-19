@@ -79,10 +79,10 @@ class _PropertyViewsState extends State<PropertyViews> {
                 )
             ),
 
-            Align(
-              alignment: Alignment.center,
-              child: Visibility(
-                  visible: controller.isBusy.value, child: PHALoader()))
+            // Align(
+            //   alignment: Alignment.center,
+            //   child: Visibility(
+            //       visible: controller.isBusy.value, child: PHALoader()))
           ],
         )),
       ),

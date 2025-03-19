@@ -78,16 +78,17 @@ class _SignInViewState extends State<SignInView> {
                             await controller.loginService();
                           },
                     topMargin: 12.sp,
-                    fillColor: true,
+                    filledColor: AppColors.primary,
                   ),
                   const SizedBox(height: 12),
                   PHAText(
                     text: AppConstants.doNotHaveMembership,
+                    textAlign: TextAlign.center,
                     fontSize: 13.sp,
                     fontWeight: FontWeight.w500,
                     color: Colors.black,
                   ),
-                  const SizedBox(width: 10),
+                  SizedBox(height: 14),
                   GestureDetector(
                     onTap: () => Get.to(SignUpView()),
                     child: PHAText(

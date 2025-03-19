@@ -2,8 +2,10 @@ export  'package:flutter/material.dart';
 export 'dart:async';
 export 'dart:convert';
 
-export 'package:pharesidence/Utils/Formatters/formatters.dart';
+export 'package:pharesidence/Extension/extension+String.dart';
 
+export 'package:pharesidence/Utils/Formatters/formatters.dart';
+export 'package:get/get.dart';
 //Entities
 export 'package:pharesidence/Entities/signin_model.dart';
 export 'package:pharesidence/Entities/property_model.dart';

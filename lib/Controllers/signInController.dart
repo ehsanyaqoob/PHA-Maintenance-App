@@ -33,6 +33,17 @@ class SignInController extends GetxController {
   }
 
   loginService() async {
+
+    String data = await DefaultAssetBundle.of(Get.context!).loadString("assets/api_local_responses/signIn.json");
+    final jsonResult = json.decode(data); //latest Dart
+    var login = SignInModel.fromJson(jsonResult);
+    await Storage.saveUser(user: login);
+    await Storage.saveAuthToken(token: login.token ?? '');
+    Get.put(HomeController());
+    Get.to(HomeView());
+    return;
+
+
     isBusy.value = true;
     try {
       Map<String, dynamic> param = {

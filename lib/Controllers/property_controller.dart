@@ -15,8 +15,9 @@ class PropertyController extends GetxController {
   Rx<AdditionalInfoModel> additionalInfo = AdditionalInfoModel().obs;
   Rx<PSIDModel> psidInfo = PSIDModel().obs;
   var membershipNumber = ''.obs;
-
+  Property? properties;
   var selectedPaymentOption = 'Pay full'.obs;
+  var paymentThrough = 'PSID (Bank, ATM or Online Banking)'.obs;
   var paidAmount = ''.obs;
   TextEditingController fullAmountController = TextEditingController();
 
@@ -42,12 +43,17 @@ class PropertyController extends GetxController {
   void setPaymentOption(String value) {
     selectedPaymentOption.value = value;
     if (value == 'Pay full') {
-      paidAmount.value = '${additionalInfo.value.totalAmountDue}';
+      paidAmount.value = '${properties?.totalAmountDue ?? 0}';
       fullAmountController.text = paidAmount.value;
     } else if (value == 'Pay Partial') {
       paidAmount.value = '';
       fullAmountController.text = '';
     }
+    update();
+  }
+
+  void setPaymentThrough(String value) {
+    paymentThrough.value = value;
     update();
   }
 
@@ -59,6 +65,16 @@ class PropertyController extends GetxController {
   }
 
   fetchProjects({required String cnicOrMembership}) async {
+
+    String data = await DefaultAssetBundle.of(Get.context!).loadString("assets/api_local_responses/getProjects.json");
+    final jsonResult = json.decode(data); //latest Dart
+    var response = PropertyModel.fromJson(jsonResult);
+    var projects = response.projects ?? [];
+    listOfProperties.value = [];
+    listOfProperties.value?.add(projects.last);
+    listOfProperties.refresh();
+    return;
+
     isBusy.value = true;
     try {
       Map<String, dynamic> param = {
@@ -82,11 +98,23 @@ class PropertyController extends GetxController {
     }
   }
 
-  fetchAdditionalInfo({required String membershipNo}) async {
-    membershipNumber.value = membershipNo;
+  fetchAdditionalInfo({required Property property}) async {
+
+    String data = await DefaultAssetBundle.of(Get.context!).loadString("assets/api_local_responses/getAdditionalInfoAPI.json");
+    final jsonResult = json.decode(data); //latest Dart
+    var response = AdditionalInfoModel.fromJson(jsonResult);
+    additionalInfo.value = response;
+    properties = property;
+    paidAmount.value = '${property.totalAmountDue}';
+    fullAmountController.text = paidAmount.value;
+    update();
+    return;
+
+
+    membershipNumber.value = property.registrationNo ?? '';
     isBusy.value = true;
     try {
-      Map<String, dynamic> param = {"registration_no": membershipNo};
+      Map<String, dynamic> param = {"registration_no": property.registrationNo};
       ApiResponse<AdditionalInfoModel> response = await api
           .post(EndPoints.getAdditionalInfoByCNIC, param, true, (json) {
         return AdditionalInfoModel.fromJson(json);
@@ -106,13 +134,21 @@ class PropertyController extends GetxController {
     }
   }
 
-  fetchPSID({required String membershipNo}) async {
+  fetchPSID({required Property property}) async {
+
+    String data = await DefaultAssetBundle.of(Get.context!).loadString("assets/api_local_responses/getPSIDAPI.json");
+    final jsonResult = json.decode(data); //latest Dart
+    var response = PSIDModel.fromJson(jsonResult);
+    psidInfo.value = response;
+    isBusy.value = false;
+    return;
+
     isBusy.value = true;
     var user = await Storage.getUserInfo();
     // var cnic  = await Storage.cnic;
     try {
       Map<String, dynamic> param = {
-        "registration_no": membershipNo,
+        "registration_no": property.registrationNo,
         "amount": fullAmountController.text.replaceAll(',', '')
       };
       ApiResponse<PSIDModel> response =
@@ -132,6 +168,14 @@ class PropertyController extends GetxController {
   }
 
   fetchHistory({required String membershipNo}) async {
+
+    String data = await DefaultAssetBundle.of(Get.context!).loadString("assets/api_local_responses/getHistoryApi.json");
+    final jsonResult = json.decode(data); //latest Dart
+    var response = Property.fromJson(jsonResult);
+    listOfHistory.value = response.memberBill ?? [];
+    listOfHistory.refresh();
+    return;
+
     isBusy.value = true;
     try {
       Map<String, dynamic> param = {
