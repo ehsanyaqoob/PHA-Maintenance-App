@@ -47,7 +47,7 @@ class _WizardViewState extends State<WizardView> {
                 SizedBox(height: 24),
 
                 PHAText(
-                  text: 'This wizard will guide you through process of calculating and paying your Installments for your property. You can pay this installment via  Internet banking , ATM, IBFT or 1link/ 1Bill Member Banks',
+                  text: 'This wizard will guide you through process of calculating and paying your maintenance charges against your property. You can pay maintenance charges via  Internet banking , ATM, IBFT or 1link/ 1Bill Member Banks',
                   fontSize: 14.sp,
                   fontWeight: FontWeight.w500,
                   textAlign: TextAlign.center,
@@ -76,8 +76,8 @@ class _WizardViewState extends State<WizardView> {
                         end: Alignment.topRight,
                         colors: [
                           AppColors.secondary,
-                          // AppColors.primary,
-                          Color(0xFF2E81A4)
+                          AppColors.primary,
+                          // Color(0xFF2E81A4)
                         ],
                       ),
                       borderRadius: BorderRadius.circular(40.h/2),

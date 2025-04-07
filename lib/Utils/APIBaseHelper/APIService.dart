@@ -2,13 +2,15 @@ import 'package:http/http.dart' as http;
 import 'package:pharesidence/Utils/exports/exports.dart';
 
 class Config{
+  // https://maintenance.npf.org.pk/api/login
+  // static String pro_base_url = 'https://maintenance.npf.org.pk/api';
   static String pro_base_url = 'http://101.50.87.138:8080/maintenance/api';
   // static String pro_base_url = 'http://192.168.18.162:8002/api';
 }
 
 class EndPoints{
-  static var login = '/auth/login';
-  static var signup = '/auth/sginup';
+  static var login = '/login';
+  static var signup = '/sginup';
   static var getProjectByCNIC = '/getProjectsByCnicNew';
   static var getAdditionalInfoByCNIC = '/getAddtionalInfoByCnicNew';
   static var getPSID = '/getpsidnew';

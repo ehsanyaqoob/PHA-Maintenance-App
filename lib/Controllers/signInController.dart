@@ -48,7 +48,8 @@ class SignInController extends GetxController {
     try {
       Map<String, dynamic> param = {
         "cnic": cnic.value.replaceAll('-', ''),
-        "cell": phone.value.replaceAll('-', ''),
+        // "cell": phone.value.replaceAll('-', ''),
+        "cell": '12345',
       };
       ApiResponse<SignInModel> login = await api.post(EndPoints.login, param, false, (json) {
         return SignInModel.fromJson(json);

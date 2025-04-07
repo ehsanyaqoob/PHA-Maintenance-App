@@ -46,7 +46,7 @@ class _HomeViewState extends State<HomeView> {
                     Obx(() => InfoCardItem(
                         image: AppAssets.imgContact,
                         title: AppConstants.enterYourMobile,
-                        subTitle: controller.user.value.mobileNo?.formatPhoneNumber() ?? '',
+                        subTitle: controller.user.value.mobileNo ?? '',
                         reverseColor: true)),
 
                     SizedBox(height: 10.h),
