@@ -7,9 +7,9 @@ class PropertyModel {
   PropertyModel({this.projects});
 
   PropertyModel.fromJson(Map<String, dynamic> json) {
-    if (json['projects'] != null) {
+    if (json['memberships'] != null) {
       projects = <Property>[];
-      json['projects'].forEach((v) {
+      json['memberships'].forEach((v) {
         projects!.add(new Property.fromJson(v));
       });
     }
@@ -18,7 +18,7 @@ class PropertyModel {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     if (this.projects != null) {
-      data['projects'] = this.projects!.map((v) => v.toJson()).toList();
+      data['memberships'] = this.projects!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -26,6 +26,7 @@ class PropertyModel {
 
 class Property {
   int? id;
+  int? memberId;
   String? registrationNo;
   int? projectId;
   String? fullName;
@@ -48,6 +49,7 @@ class Property {
 
   Property(
       {this.id,
+        this.memberId,
         this.registrationNo,
         this.projectId,
         this.fullName,
@@ -70,17 +72,18 @@ class Property {
 
   Property.fromJson(Map<String, dynamic> json) {
     id = json['id'];
+    memberId = json['member_id'];
     registrationNo = json['registration_no'];
     projectId = json['project_id'];
-    fullName = json['full_name'];
-    cnic = json['cnic'];
+    fullName = json['member_name'];
+    cnic = json['member_cnic'];
     laneNo = json['lane_no'];
     houseNo = json['house_no'];
     category = json['category'];
     presentAddress = json['present_address'];
     cell = json['cell'];
     status = json['status'];
-    projectName = json['projectName'];
+    projectName = json['project_name'];
     issueDate = json['issue_date'];
     dueDate = json['due_date'];
     amount = json['amount'];
@@ -99,6 +102,7 @@ class Property {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['id'] = this.id;
+    data['member_id'] = this.memberId;
     data['registration_no'] = this.registrationNo;
     data['project_id'] = this.projectId;
     data['full_name'] = this.fullName;
@@ -109,7 +113,7 @@ class Property {
     data['present_address'] = this.presentAddress;
     data['cell'] = this.cell;
     data['status'] = this.status;
-    data['projectName'] = this.projectName;
+    data['title'] = this.projectName;
     data['issue_date'] = this.issueDate;
     data['due_date'] = this.dueDate;
     data['amount'] = this.amount;

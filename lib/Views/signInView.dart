@@ -74,9 +74,7 @@ class _SignInViewState extends State<SignInView> {
                     title: AppConstants.signIn,
                     onTap: controller.isBusy.value
                         ? null
-                        : () async {
-                            await controller.loginService();
-                          },
+                        : () => controller.onLoginPress(),
                     topMargin: 12.sp,
                     filledColor: AppColors.primary,
                   ),

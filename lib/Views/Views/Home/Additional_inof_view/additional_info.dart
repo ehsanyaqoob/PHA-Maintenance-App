@@ -28,8 +28,8 @@ class _AdditionalDetailViewState extends State<AdditionalDetailView> {
         child: Stack(
           children: [
             AppBackground(),
-            AppBackButton(title: 'Property Details'),
-            Positioned(
+            AppBackButton(title: 'Pay Bill / بل کی ادائیگی'),
+            Obx(()=>Positioned(
               top: 0 + 35.h + 24,
               left: 26,
               right: 26,
@@ -40,7 +40,7 @@ class _AdditionalDetailViewState extends State<AdditionalDetailView> {
                   children: [
                     PHAText(
                         text:
-                            '${widget.property.projectName ?? ''}',
+                        '${widget.property.projectName ?? ''}',
                         color: AppColors.blackGray,
                         fontWeight: FontWeight.w600,
                         fontSize: 18.sp),
@@ -100,98 +100,118 @@ class _AdditionalDetailViewState extends State<AdditionalDetailView> {
                     Column(
                       children: [
                         AdditionalInfoItem(
-                            title: 'Membership',
+                            title: 'Membership#:',
                             description:
-                            widget.property.registrationNo ??
+                            controller.additionalInfo.value.registrationNo ??
                                 ''),
 
                         AdditionalInfoItem(
-                            title: 'Allottee Name',
+                            title: 'Allottee Name:',
                             description:
-                            widget.property.fullName ??
+                            controller.additionalInfo.value.fullName ??
                                 ''),
 
                         AdditionalInfoItem(
-                            title: 'CNIC',
+                            title: 'CNIC:',
                             description:
-                            widget.property.cnic ??
+                            controller.additionalInfo.value.cnic ??
                                 ''),
 
                         AdditionalInfoItem(
-                            title: 'Mobile#',
+                            title: 'Mobile#:',
                             description:
-                            widget.property.cell ?? ''),
+                            controller.additionalInfo.value.cell ?? ''),
+
+                        // AdditionalInfoItem(
+                        //     title: 'House No',
+                        //     description:
+                        //     controller.additionalInfo.value.houseNo ??
+                        //         ''),
+                        AdditionalInfoItem(
+                            title: 'Address:',
+                            description:
+                            widget.property.presentAddress ?? ''),
 
                         AdditionalInfoItem(
-                            title: 'House No',
+                            title: 'Issue Date:',
                             description:
-                            widget.property.houseNo ??
+                            controller.additionalInfo.value.issuedDate?.formatDate() ??
                                 ''),
                         AdditionalInfoItem(
-                            title: 'Lane No',
+                            title: 'Due Date:',
                             description:
-                            widget.property.laneNo ?? ''),
-                        AdditionalInfoItem(
-                            title: 'Category',
-                            description:
-                            widget.property.category ??
-                                ''),
+                            controller.additionalInfo.value.dueDate?.formatDate() ??
+                                '', textColor: Colors.red),
 
                         AdditionalInfoItem(
-                            title: 'Status',
+                            title: 'Current Month Charges:',
                             description:
-                            widget.property.status ?? ''),
+                            controller.additionalInfo.value.totalAmount?.formatAsNumber() ?? ''),
                         AdditionalInfoItem(
-                            title: 'Maintenance Charges',
+                            title: 'Surcharge(s):',
                             description:
-                            widget.property.amount?.formatAsNumber() ?? ''),
-                        AdditionalInfoItem(
-                            title: 'Late Fee',
-                            description:
-                            '${widget.property.lateFee ??
+                            '${controller.additionalInfo.value.lateFeeCharges ??
                                 '0'}'),
+
+
+
+                        // AdditionalInfoItem(
+                        //     title: 'Previous Remaining Bill',
+                        //     description:
+                        //     '${controller.additionalInfo.value.totalPreviousBill ??
+                        //     0}'.formatAsNumber()
+                        // ),
+                        //
+                        // AdditionalInfoItem(
+                        //     title: 'Previous Surcharge(s)',
+                        //     description:
+                        //     '${controller.additionalInfo.value.totalPreviousBillLateFee ??
+                        //         '0'}'.formatAsNumber()),
+
                         AdditionalInfoItem(
-                            title: 'Issue Date',
+                            title: 'Arears:',
                             description:
-                            widget.property.issueDate?.formatDate() ??
-                                ''),
+                            '${double.parse(controller.additionalInfo.value.arears ?? '0') - double.parse(controller.additionalInfo.value.totalAmount ?? '0')}'?.formatAsNumber() ??
+                                '0'
+                        ),
+
                         AdditionalInfoItem(
-                            title: 'Due Date',
+                            title: 'Partially Paid',
                             description:
-                            widget.property.dueDate?.formatDate() ??
-                                ''),
+                            '-${controller.additionalInfo.value.paidAmount?.formatAsNumber()}'
+                        ),
+
+
+
                         AdditionalInfoItem(
                             title: 'Total Amount Due',
-                            description: '${widget.property.totalAmountDue ?? ''}'),
+                            description: '${(double.parse(controller.additionalInfo.value.arears ?? '0') - double.parse(controller.additionalInfo.value.totalAmount ?? '0')) + double.parse(controller.additionalInfo.value.remainingAmount ?? '0') + double.parse(controller.additionalInfo.value.lateFeeCharges ?? '0') - double.parse(controller.additionalInfo.value.paidAmount ?? '0')}'.formatAsNumber(),textColor: Colors.red,),
                       ],
                     ),
-                    Obx(() {
-                      return Column(
-                        children: [
-                          SizedBox(height: 12.h),
-                          PHARadioInRow(
-                            items: ['Pay full', 'Pay Partial'],
-                            selectedValue:
-                                controller.selectedPaymentOption.value,
-                            onSelected: (value) {
-                              controller.setPaymentOption(value);
-                            },
-                          ),
-                          SizedBox(height: 20),
-                          PHATextFormField(
-                            hint: 'Enter paid amount',
-                            controller: controller.fullAmountController,
-                            inputType: TextInputType.number,
-                            readOnly: controller.selectedPaymentOption.value ==
-                                    'Pay full'
-                                ? true
-                                : false,
-                          ),
-                          SizedBox(height: 12.h),
-                        ],
-                      );
-                    }),
-
+                    Column(
+                      children: [
+                        SizedBox(height: 12.h),
+                        PHARadioInRow(
+                          items: ['Pay full', 'Pay Partial'],
+                          selectedValue:
+                          controller.selectedPaymentOption.value,
+                          onSelected: (value) {
+                            controller.setPaymentOption(value);
+                          },
+                        ),
+                        SizedBox(height: 20),
+                        PHATextFormField(
+                          hint: 'Enter paid amount',
+                          controller: controller.fullAmountController,
+                          inputType: TextInputType.number,
+                          readOnly: controller.selectedPaymentOption.value ==
+                              'Pay full'
+                              ? true
+                              : false,
+                        ),
+                        SizedBox(height: 12.h),
+                      ],
+                    ),
                     PHAText(
                       text: 'Payment Through',
                       fontSize: 16.sp,
@@ -203,7 +223,8 @@ class _AdditionalDetailViewState extends State<AdditionalDetailView> {
                         children: [
                           SizedBox(height: 4.h),
                           PHARadioInColumn(
-                            items: ['PSID (Bank, ATM or Online Banking)', 'Card (Master/Visa)'],
+                            // items: ['PSID (Bank, ATM or Internet/Mobile Banking)', 'Card (Master/Visa)'],
+                            items: ['PSID (Bank, ATM or Internet/Mobile Banking)'],
                             selectedValue:
                             controller.paymentThrough.value,
                             onSelected: (value) {
@@ -222,17 +243,16 @@ class _AdditionalDetailViewState extends State<AdditionalDetailView> {
                       filledColor: AppColors.primary,
                       onTap: () {
                         if (controller.fullAmountController.text
-                                .replaceAll(',', '') ==
+                            .replaceAll(',', '') ==
                             '') {
                           Get.snackbar('Error', 'Partial payment is required', colorText: AppColors.white,
                               backgroundColor: AppColors.red.withOpacity(0.8));
                           return;
                         } else if (double.parse(controller
-                                .fullAmountController.text
-                                .replaceAll(',', '')) >
-                            double.parse(controller
-                                    .properties?.totalAmountDue
-                                    ?.replaceAll(',', '') ??
+                            .fullAmountController.text
+                            .replaceAll(',', '')) >
+                            double.parse('${controller.additionalInfo.value.grandTotal}'
+                                ?.replaceAll(',', '') ??
                                 '0')) {
                           Get.snackbar('Error',
                               'Partial amount less or equal to paid amount', colorText: AppColors.white,
@@ -240,14 +260,14 @@ class _AdditionalDetailViewState extends State<AdditionalDetailView> {
                           return;
                         }
                         Get.to(GenerateBillPreviewView(
-                            property: widget.property));
+                            property: controller.additionalInfo.value, amount: controller.fullAmountController.text,));
                       },
                     ),
                     SizedBox(height: 24.h),
                   ],
                 ),
               ),
-            ),
+            )),
             // Align(
             //   alignment: Alignment.center,
             //   child: Obx(() => Visibility(

@@ -2,19 +2,17 @@ class SignInModel {
   String? cnic;
   String? name;
   String? mobileNo;
-  String? category;
   String? memberType;
   String? token;
 
-  SignInModel({this.cnic, this.name, this.mobileNo, this.category, this.token});
+  SignInModel({this.cnic, this.name, this.mobileNo, this.token});
 
   SignInModel.fromJson(Map<String, dynamic> json) {
     cnic = json['cnic'];
     name = json['name'];
     mobileNo = json['mobile_no'];
-    category = json['category'];
     memberType = json['memberType'];
-    token = json['token'];
+    token = json['api_token'];
   }
 
   Map<String, dynamic> toJson() {
@@ -22,9 +20,8 @@ class SignInModel {
     data['cnic'] = this.cnic;
     data['name'] = this.name;
     data['mobile_no'] = this.mobileNo;
-    data['category'] = this.category;
     data['memberType'] = this.memberType;
-    data['token'] = this.token;
+    data['api_token'] = this.token;
     return data;
   }
 }

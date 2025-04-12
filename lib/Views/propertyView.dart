@@ -24,7 +24,7 @@ class _PropertyViewsState extends State<PropertyViews> {
         child: Obx(() => Stack(
           children: [
             AppBackground(),
-            AppBackButton(title: 'Property Dashboard'),
+            AppBackButton(title: 'Properties Details'),
             Positioned(
               top: 35.h + 24,
               left: 0,

@@ -1,81 +1,84 @@
 //Modify
 class AdditionalInfoModel {
-  int? id;
-  String? registrationNo;
-  int? projectId;
   String? fullName;
   String? cnic;
-  String? laneNo;
-  String? houseNo;
-  String? category;
-  String? presentAddress;
   String? cell;
-  String? status;
+  String? registrationNo;
+  String? houseNo;
+  int? membershipId;
   String? projectName;
-  String? issueDate;
+  String? issuedDate;
   String? dueDate;
-  String? amount;
-  String? lateFee;
-  String? totalAmountDue;
+  String? totalAmount;
+  String? paidAmount;
+  String? remainingAmount;
+  String? lateFeeCharges;
+  int? grandTotal;
+  int? unpaidBillsCount;
+  int? totalPreviousBill;
+  int? totalPreviousBillLateFee;
+  String? arears;
 
   AdditionalInfoModel(
-      {this.id,
-        this.registrationNo,
-        this.projectId,
-        this.fullName,
+      {this.fullName,
         this.cnic,
-        this.laneNo,
-        this.houseNo,
-        this.category,
-        this.presentAddress,
         this.cell,
-        this.status,
+        this.registrationNo,
+        this.houseNo,
+        this.membershipId,
         this.projectName,
-        this.issueDate,
+        this.issuedDate,
         this.dueDate,
-        this.amount,
-        this.lateFee,
-        this.totalAmountDue});
+        this.totalAmount,
+        this.paidAmount,
+        this.remainingAmount,
+        this.lateFeeCharges,
+        this.grandTotal,
+        this.unpaidBillsCount,
+        this.totalPreviousBill,
+        this.totalPreviousBillLateFee, this.arears});
 
   AdditionalInfoModel.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    registrationNo = json['registration_no'];
-    projectId = json['project_id'];
     fullName = json['full_name'];
     cnic = json['cnic'];
-    laneNo = json['lane_no'];
-    houseNo = json['house_no'];
-    category = json['category'];
-    presentAddress = json['present_address'];
     cell = json['cell'];
-    status = json['status'];
-    projectName = json['projectName'];
-    issueDate = json['issue_date'];
+    registrationNo = json['registration_no'];
+    houseNo = json['house_no'];
+    membershipId = json['membership_id'];
+    projectName = json['project_name'];
+    issuedDate = json['issued_date'];
     dueDate = json['due_date'];
-    amount = json['amount'];
-    lateFee = json['late_fee'];
-    totalAmountDue = json['total_amount_due'].toString();
+    totalAmount = json['total_amount'];
+    paidAmount = json['paid_amount'];
+    remainingAmount = json['remaining_amount'];
+    lateFeeCharges = json['late_fee_charges'];
+    grandTotal = json['grand_total'];
+    unpaidBillsCount = json['unpaid_bills_count'];
+    totalPreviousBill = json['total_previous_bill'];
+    totalPreviousBillLateFee = json['total_previous_bill_late_fee'];
+    arears = json['arears'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['registration_no'] = this.registrationNo;
-    data['project_id'] = this.projectId;
     data['full_name'] = this.fullName;
     data['cnic'] = this.cnic;
-    data['lane_no'] = this.laneNo;
-    data['house_no'] = this.houseNo;
-    data['category'] = this.category;
-    data['present_address'] = this.presentAddress;
     data['cell'] = this.cell;
-    data['status'] = this.status;
-    data['projectName'] = this.projectName;
-    data['issue_date'] = this.issueDate;
+    data['registration_no'] = this.registrationNo;
+    data['house_no'] = this.houseNo;
+    data['membership_id'] = this.membershipId;
+    data['project_name'] = this.projectName;
+    data['issued_date'] = this.issuedDate;
     data['due_date'] = this.dueDate;
-    data['amount'] = this.amount;
-    data['late_fee'] = this.lateFee;
-    data['total_amount_due'] = this.totalAmountDue;
+    data['total_amount'] = this.totalAmount;
+    data['paid_amount'] = this.paidAmount;
+    data['remaining_amount'] = this.remainingAmount;
+    data['late_fee_charges'] = this.lateFeeCharges;
+    data['grand_total'] = this.grandTotal;
+    data['total_previous_bill'] = this.totalPreviousBill;
+    data['total_previous_bill_late_fee'] = this.totalPreviousBillLateFee;
+    data['unpaid_bills_count'] = this.unpaidBillsCount;
+    data['arears'] = this.arears;
     return data;
   }
 }

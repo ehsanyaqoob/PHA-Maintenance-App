@@ -62,18 +62,18 @@ class _HomeViewState extends State<HomeView> {
 
                     SizedBox(height: 10.h),
 
-                    PHAText(
-                        text: AppConstants.propertySummary,
-                        fontSize: 18.sp,
-                        fontWeight: FontWeight.w700),
-
-                    SizedBox(height: 10.h),
-
-                    Obx(() => Row(
-                      children: controller.listOfPropertySummary
-                          .map((model) => SummaryItem(model: model))
-                          .toList(),
-                    )),
+                    // PHAText(
+                    //     text: AppConstants.propertySummary,
+                    //     fontSize: 18.sp,
+                    //     fontWeight: FontWeight.w700),
+                    //
+                    // SizedBox(height: 10.h),
+                    //
+                    // Obx(() => Row(
+                    //   children: controller.listOfPropertySummary
+                    //       .map((model) => SummaryItem(model: model))
+                    //       .toList(),
+                    // )),
 
                     SizedBox(height: 10.h),
 

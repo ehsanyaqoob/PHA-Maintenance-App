@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:pharesidence/Entities/history_model.dart';
 import 'package:pharesidence/Entities/member_bill_model.dart';
 import 'package:pharesidence/Utils/exports/exports.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -11,13 +12,13 @@ class PropertyController extends GetxController {
   var isBusy = false.obs;
   Rx<SignInModel> user = SignInModel().obs;
   var listOfProperties = <Property>[].obs;
-  var listOfHistory = <MemberBill>[].obs;
+  var listOfHistory = <History>[].obs;
   Rx<AdditionalInfoModel> additionalInfo = AdditionalInfoModel().obs;
   Rx<PSIDModel> psidInfo = PSIDModel().obs;
   var membershipNumber = ''.obs;
   Property? properties;
   var selectedPaymentOption = 'Pay full'.obs;
-  var paymentThrough = 'PSID (Bank, ATM or Online Banking)'.obs;
+  var paymentThrough = 'PSID (Bank, ATM or Internet/Mobile Banking)'.obs;
   var paidAmount = ''.obs;
   TextEditingController fullAmountController = TextEditingController();
 
@@ -43,7 +44,7 @@ class PropertyController extends GetxController {
   void setPaymentOption(String value) {
     selectedPaymentOption.value = value;
     if (value == 'Pay full') {
-      paidAmount.value = '${properties?.totalAmountDue ?? 0}';
+      paidAmount.value = '${(double.parse(additionalInfo.value.arears ?? '0') - double.parse(additionalInfo.value.totalAmount ?? '0')) + double.parse(additionalInfo.value.remainingAmount ?? '0') + double.parse(additionalInfo.value.lateFeeCharges ?? '0') - double.parse(additionalInfo.value.paidAmount ?? '0')}';
       fullAmountController.text = paidAmount.value;
     } else if (value == 'Pay Partial') {
       paidAmount.value = '';
@@ -66,23 +67,28 @@ class PropertyController extends GetxController {
 
   fetchProjects({required String cnicOrMembership}) async {
 
-    String data = await DefaultAssetBundle.of(Get.context!).loadString("assets/api_local_responses/getProjects.json");
-    final jsonResult = json.decode(data); //latest Dart
-    var response = PropertyModel.fromJson(jsonResult);
-    var projects = response.projects ?? [];
-    listOfProperties.value = [];
-    listOfProperties.value?.add(projects.last);
-    listOfProperties.refresh();
-    return;
+    // String data = await DefaultAssetBundle.of(Get.context!).loadString("assets/api_local_responses/getProjects.json");
+    // final jsonResult = json.decode(data); //latest Dart
+    // var response = PropertyModel.fromJson(jsonResult);
+    // var projects = response.projects ?? [];
+    // listOfProperties.value = [];
+    // listOfProperties.value?.add(projects.last);
+    // listOfProperties.refresh();
+    // return;
 
     isBusy.value = true;
     try {
+      // Map<String, dynamic> param = {
+      //   "cnic": cnicOrMembership,
+      //   "memberType": user.value.memberType ?? 'owner'
+      // };
+
       Map<String, dynamic> param = {
-        "cnic": cnicOrMembership,
-        "memberType": user.value.memberType ?? 'owner'
+        'token': await Storage.authToken
       };
+
       ApiResponse<PropertyModel> response =
-          await api.post(EndPoints.getProjectByCNIC, param, true, (json) {
+          await api.post(EndPoints.getMemberships, param, false, (json) {
         return PropertyModel.fromJson(json);
       });
       if (response.success) {
@@ -100,29 +106,35 @@ class PropertyController extends GetxController {
 
   fetchAdditionalInfo({required Property property}) async {
 
-    String data = await DefaultAssetBundle.of(Get.context!).loadString("assets/api_local_responses/getAdditionalInfoAPI.json");
-    final jsonResult = json.decode(data); //latest Dart
-    var response = AdditionalInfoModel.fromJson(jsonResult);
-    additionalInfo.value = response;
-    properties = property;
-    paidAmount.value = '${property.totalAmountDue}';
-    fullAmountController.text = paidAmount.value;
-    update();
-    return;
+    // String data = await DefaultAssetBundle.of(Get.context!).loadString("assets/api_local_responses/getAdditionalInfoAPI.json");
+    // final jsonResult = json.decode(data); //latest Dart
+    // var response = AdditionalInfoModel.fromJson(jsonResult);
+    // additionalInfo.value = response;
+    // properties = property;
+    // paidAmount.value = '${property.totalAmountDue}';
+    // fullAmountController.text = paidAmount.value;
+    // update();
+    // return;
 
 
     membershipNumber.value = property.registrationNo ?? '';
     isBusy.value = true;
     try {
-      Map<String, dynamic> param = {"registration_no": property.registrationNo};
+      // Map<String, dynamic> param = {"registration_no": property.registrationNo};
+
+      Map<String, dynamic> param = {
+        'token': await Storage.authToken,
+        "member_id": property.memberId
+      };
+
       ApiResponse<AdditionalInfoModel> response = await api
-          .post(EndPoints.getAdditionalInfoByCNIC, param, true, (json) {
+          .post(EndPoints.generateBill, param, false, (json) {
         return AdditionalInfoModel.fromJson(json);
       });
       if (response.success) {
         additionalInfo.value = response.data!;
-        paidAmount.value = '${additionalInfo.value.totalAmountDue}';
-        fullAmountController.text = paidAmount.value;
+        paidAmount.value = '${additionalInfo.value.grandTotal}';
+        fullAmountController.text = '${(double.parse(additionalInfo.value.arears ?? '0') - double.parse(additionalInfo.value.totalAmount ?? '0')) + double.parse(additionalInfo.value.remainingAmount ?? '0') + double.parse(additionalInfo.value.lateFeeCharges ?? '0') - double.parse(additionalInfo.value.paidAmount ?? '0')}';
         update();
       } else {
         Fluttertoast.showToast(msg: response.message);
@@ -134,25 +146,32 @@ class PropertyController extends GetxController {
     }
   }
 
-  fetchPSID({required Property property}) async {
+  fetchPSID({required AdditionalInfoModel property}) async {
 
-    String data = await DefaultAssetBundle.of(Get.context!).loadString("assets/api_local_responses/getPSIDAPI.json");
-    final jsonResult = json.decode(data); //latest Dart
-    var response = PSIDModel.fromJson(jsonResult);
-    psidInfo.value = response;
-    isBusy.value = false;
-    return;
+    // String data = await DefaultAssetBundle.of(Get.context!).loadString("assets/api_local_responses/getPSIDAPI.json");
+    // final jsonResult = json.decode(data); //latest Dart
+    // var response = PSIDModel.fromJson(jsonResult);
+    // psidInfo.value = response;
+    // isBusy.value = false;
+    // return;
 
     isBusy.value = true;
     var user = await Storage.getUserInfo();
     // var cnic  = await Storage.cnic;
     try {
+      // Map<String, dynamic> param = {
+      //   "registration_no": property.registrationNo,
+      //   "amount": fullAmountController.text.replaceAll(',', '')
+      // };
+
       Map<String, dynamic> param = {
+        'token': await Storage.authToken,
         "registration_no": property.registrationNo,
         "amount": fullAmountController.text.replaceAll(',', '')
       };
+
       ApiResponse<PSIDModel> response =
-          await api.post(EndPoints.getPSID, param, true, (json) {
+          await api.post(EndPoints.getPSID, param, false, (json) {
         return PSIDModel.fromJson(json);
       });
       if (response.success) {
@@ -169,28 +188,28 @@ class PropertyController extends GetxController {
 
   fetchHistory({required String membershipNo}) async {
 
-    String data = await DefaultAssetBundle.of(Get.context!).loadString("assets/api_local_responses/getHistoryApi.json");
-    final jsonResult = json.decode(data); //latest Dart
-    var response = Property.fromJson(jsonResult);
-    listOfHistory.value = response.memberBill ?? [];
-    listOfHistory.refresh();
-    return;
+    // String data = await DefaultAssetBundle.of(Get.context!).loadString("assets/api_local_responses/getHistoryApi.json");
+    // final jsonResult = json.decode(data); //latest Dart
+    // var response = Property.fromJson(jsonResult);
+    // listOfHistory.value = response.memberBill ?? [];
+    // listOfHistory.refresh();
+    // return;
 
     isBusy.value = true;
     try {
       Map<String, dynamic> param = {
-        "registration_no": membershipNo,
-        "amount": fullAmountController.text
+        'token': await Storage.authToken,
+        "registration_no": membershipNo
       };
-      ApiResponse<Property> response =
-      await api.post(EndPoints.getHistory, param, true, (json) {
-        return Property.fromJson(json);
+      ApiResponse<HistoryModel> response =
+      await api.post(EndPoints.getHistory, param, false, (json) {
+        return HistoryModel.fromJson(json);
       });
       if (response.success) {
-        listOfHistory.value = response.data?.memberBill ?? [];
+        listOfHistory.value = response.data?.properties ?? [];
         listOfHistory.refresh();
       } else {
-        Fluttertoast.showToast(msg: response.message);
+        Fluttertoast.showToast(msg: response.message ?? '');
       }
     } catch (e) {
       Fluttertoast.showToast(msg: '$e');
@@ -215,7 +234,9 @@ class PropertyController extends GetxController {
   void _openPaymentPage() async {}
 
   downloadPDF() async {
-    String url = psidInfo.value.pdflink ?? '';
+
+    https://pha.npf.org.pk/Invoice_COL_®_RASHID_AKHTAR_SATTI_71174_20250409_160054.pdf"
+    String url = psidInfo.value.pdflink?.replaceAll('https://pha.npf.org.pk/', 'https://pha.npf.org.pk/public/') ?? '';
     try {
       // Request storage permissions
       final permissionStatus = await Permission.storage.request();

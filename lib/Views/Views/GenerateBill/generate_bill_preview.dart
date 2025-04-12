@@ -4,8 +4,9 @@ import 'package:pharesidence/Utils/exports/exports.dart';
 import 'package:pharesidence/Views/Payemnts/payment_tab.dart';
 
 class GenerateBillPreviewView extends StatefulWidget {
-  Property property;
-  GenerateBillPreviewView({Key? key, required this.property}) : super(key: key);
+  AdditionalInfoModel property;
+  String amount;
+  GenerateBillPreviewView({Key? key, required this.property, required this.amount}) : super(key: key);
   @override
   State<GenerateBillPreviewView> createState() =>
       _GenerateBillPreviewViewState();
@@ -32,9 +33,10 @@ class _GenerateBillPreviewViewState extends State<GenerateBillPreviewView> {
             child: Stack(
               children: [
 
+
                 AppBackground(),
 
-                AppBackButton(title: 'Generated Bill'),
+                AppBackButton(title: 'Congratulations'),
 
                 Positioned(
                   top: 0 + 35.h + 24,
@@ -49,76 +51,196 @@ class _GenerateBillPreviewViewState extends State<GenerateBillPreviewView> {
                       Obx(() => Container(
                         width: MediaQuery.of(context).size.width,
                         decoration: BoxDecoration(
-                            color: Color(0xFFcdfef0).withOpacity(0.8),
-                            borderRadius: BorderRadius.circular(20)
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(20),
+                          boxShadow: [
+                            BoxShadow(
+                              color: AppColors.lightGray_1.withOpacity(0.85),
+                              spreadRadius: 0,
+                              blurRadius: 5,
+                              offset: Offset(0, 1),
+                            ),
+                          ],
                         ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(16.0),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              PHAText(
-                                textAlign: TextAlign.center,
-                                text: 'Payment Slip ID (PSID)',
-                                fontWeight: FontWeight.bold,
-                                color: AppColors.primary,
-                                fontSize: 14.sp,
+                        child: Column(
+                          children: [
+                            Container(
+                              decoration: BoxDecoration(
+                                color: Color(0xFFcdfef0).withOpacity(0.8),
+                                borderRadius: BorderRadius.only(
+                                    topLeft: Radius.circular(20),
+                                    topRight: Radius.circular(20)
+                                ),
                               ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+                                child: Row(
+                                  children: [
+                                    Column(
+                                      mainAxisAlignment: MainAxisAlignment.start,
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        PHAText(
+                                          textAlign: TextAlign.center,
+                                          text: 'Payment Slip ID (PSID)',
+                                          fontWeight: FontWeight.bold,
+                                          color: AppColors.primary,
+                                          fontSize: 14.sp,
+                                        ),
+
+                                        SizedBox(height: 2.h),
+
+                                        PHAText(
+                                          textAlign: TextAlign.center,
+                                          text: '${controller.psidInfo.value.psid ?? ''}',
+                                          fontWeight: FontWeight.bold,
+                                          color: AppColors.primary,
+                                          fontSize: 14.sp,
+                                        ),
+                                      ],
+                                    ),
+
+                                    Spacer(),
+
+                                    GestureDetector(
+                                      onTap: (){
+                                        Clipboard.setData(
+                                            ClipboardData(text: controller.psidInfo.value.psid ?? ''));
+                                        ScaffoldMessenger.of(context).showSnackBar(
+                                          SnackBar(
+                                            content: PHAText(
+                                                fontSize: 16,
+                                                color: AppColors.white,
+                                                text: 'PSID has been copied'),
+                                            behavior: SnackBarBehavior.floating,
+                                            backgroundColor: AppColors.lightGray_1,
+                                          ),
+                                        );
+                                      },
+                                      child: Container(
+                                        height: 45,
+                                        decoration: BoxDecoration(
+                                            color: Colors.white,
+                                            borderRadius:  BorderRadius.circular(45/2)
+                                        ),
+                                        child: Padding(
+                                          padding: const EdgeInsets.symmetric(horizontal: 8),
+                                          child: Row(
+                                            children: [
+
+                                              Icon(Icons.copy, size: 12.h),
+
+                                              SizedBox(width: 2.w),
+
+                                              PHAText(
+                                                // textAlign: TextAlign.center,
+                                                text: 'Copy',
+                                                fontWeight: FontWeight.bold,
+                                                color: AppColors.blackGray,
+                                                fontSize: 10.sp,
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+
+                                    SizedBox(width: 4.w),
+
+                                    GestureDetector(
+                                      onTap: (){
+                                        controller.downloadPDF();
+                                      },
+                                      child: Container(
+                                        height: 45,
+                                        decoration: BoxDecoration(
+                                            color: Colors.white,
+                                            borderRadius:  BorderRadius.circular(45/2)
+                                        ),
+                                        child: Padding(
+                                          padding: const EdgeInsets.symmetric(horizontal: 8),
+                                          child: Row(
+                                            children: [
+
+                                              Icon(Icons.download, size: 10.h),
+
+                                              SizedBox(width: 2.w),
+
+                                              PHAText(
+                                                // textAlign: TextAlign.center,
+                                                text: 'PDF',
+                                                fontWeight: FontWeight.bold,
+                                                color: AppColors.blackGray,
+                                                fontSize: 10.sp,
+                                              ),
+
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+
+                                  ],
+                                ),
+                              ),
+                            ),
+
+                            Container(
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.only(
+                                    bottomRight: Radius.circular(20),
+                                    bottomLeft: Radius.circular(20)
+                                ),
+                              ),
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Column(
+                                  children: [
+                                    AdditionalInfoItem(title: 'Name', description: widget.property.fullName ?? ''),
+
+                                    AdditionalInfoItem(title: 'Due Date', description: widget.property.dueDate?.formatDate() ?? ''),
+
+                                    AdditionalInfoItem(title: 'Payable Amount', description: widget.amount.formatAsNumber()),
+                                  ],
+                                ),
+                              ),
+                            ),
+
+                            Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 8),
+                              child: Row(
                                 children: [
+                                  Spacer(),
                                   PHAText(
                                     textAlign: TextAlign.center,
-                                    text: '${controller.psidInfo.value.psid ?? ''}',
-                                    fontWeight: FontWeight.bold,
-                                    color: AppColors.primary,
-                                    fontSize: 16.sp,
-                                  ),
-                                  IconButton(
-                                    icon: Icon(Icons.copy),
-                                    onPressed: () {
-                                      Clipboard.setData(
-                                          ClipboardData(text: controller.psidInfo.value.psid ?? ''));
-
-                                      // Show Snackbar
-                                      ScaffoldMessenger.of(context).showSnackBar(
-                                        SnackBar(
-                                          content: PHAText(
-                                              fontSize: 16,
-                                              color: AppColors.secondary,
-                                              text: 'PSID has been copied'),
-                                          behavior: SnackBarBehavior.floating,
-                                          margin: EdgeInsets.only(
-                                            bottom: 100.0,
-                                            left: 16.0,
-                                            right: 16.0,
-                                          ),
-                                          backgroundColor: AppColors.primary,
-                                        ),
-                                      );
-                                    },
-                                    tooltip: 'Copy PSID',
+                                    text: 'Transaction charges apply.',
+                                    color: AppColors.lightGray_1,
+                                    fontSize: 12.sp,
                                   ),
                                 ],
-                              )
-                            ],
-                          ),
+                              ),
+                            ),
+
+                          ],
                         ),
                       )),
 
-                      SizedBox(height: 12.h),
+
+
+                      SizedBox(height: 16.h),
 
                       PHAText(
-                        text: 'Your PSID has been generated successfully. You can copy and use it to make a payment without visiting a branch through Internet Banking, ATMs, Mobile Banking (JazzCash, Easypaisa, etc.), or OTC (Over-the-Counter) at any branch of scheduled banks in Pakistan. You will receive a confirmation SMS once the payment is made.',
+                        text: 'PSID has been successfully generated. You can use it to make payments through internet banking, ATMs, mobile banking (like JazzCash, Easypaisa etc.) under 1 Link / 1 Bill invoice, without visiting the branch. After payment you will receive a confirmation SMS.',
                         fontSize: 14.sp,
                         fontWeight: FontWeight.w500,
                         textAlign: TextAlign.justify,
                       ),
 
-                      SizedBox(height: 12.h),
+                      SizedBox(height: 8.h),
 
                       PHAText(
-                        text: 'آپ کا پی ایس آئی ڈی کامیابی کے ساتھ تیار ہو گیا ہے۔ آپ پاکستان میں شیڈول بینکوں کی کسی بھی برانچ میں انٹرنیٹ بینکنگ، اے ٹی ایم، موبائل بینکنگ (جاز کیش، ایزی پیسہ، وغیرہ) یا OTC (اوور دی کاؤنٹر) کے ذریعے برانچ کا دورہ کیے بغیر ادائیگی کرنے کے لیے اسے کاپی کر کے استعمال کر سکتے ہیں۔ ادائیگی کے بعد آپ کو ایک تصدیقی ایس ایم ایس موصول ہوگا۔',
+                        text: ' پی ایس آئی ڈی کامیابی کے ساتھ تیار ہو گیا ہے۔ آپ برانچ میں گئے بغیر 1 لنک / 1 بل انوائس کے تحت انٹرنیٹ بینکنگ، اے ٹی ایم، موبائل بینکنگ (جیسے جاز کیش، ایزی پیسہ وغیرہ) کے ذریعے ادائیگی کرنے کے لیے اسے استعمال کر سکتے ہیں۔ ادائیگی کے بعد آپ کو ایک تصدیقی ایس ایم ایس موصول ہوگا۔',
                         fontSize: 14.sp,
                         fontWeight: FontWeight.w500,
                         textAlign: TextAlign.justify,
@@ -142,15 +264,15 @@ class _GenerateBillPreviewViewState extends State<GenerateBillPreviewView> {
                           //   color: Colors.black,
                           // ),
                           // SizedBox(height: 14),
+                          // PHAButton(
+                          //   title: 'Download Bank Slip',
+                          //   filledColor: AppColors.secondary,
+                          //   onTap: () => controller.downloadPDF,
+                          // ),
+                          // SizedBox(height: 20),
                           PHAButton(
-                            title: 'Download Bank Slip',
-                            filledColor: AppColors.secondary,
-                            onTap: () => controller.downloadPDF,
-                          ),
-                          SizedBox(height: 20),
-                          PHAButton(
-                            title: 'Cancel / منسوخ کریں',
-                            filledColor: AppColors.lightGray_1,
+                            title: 'Done',
+                            filledColor: AppColors.primary,
                             onTap: () => Get.close(3),
                           ),
                         ],

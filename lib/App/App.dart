@@ -15,6 +15,7 @@ class AppView extends StatelessWidget {
       builder: (_, child) {
         return GetMaterialApp(
           debugShowCheckedModeBanner: false,
+          color: Colors.transparent,
           theme: ThemeData(
             primaryColor: AppColors.primary,
             scaffoldBackgroundColor: AppColors.white, //Scaffold Background Color

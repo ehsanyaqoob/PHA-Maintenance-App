@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 import 'package:pharesidence/Generic_Widgets/Widgets/custom_loarder.dart';
 import 'package:pharesidence/Generic_Widgets/Widgets/pha_text.dart';
 import 'package:pharesidence/Utils/exports/exports.dart';
+import 'package:pharesidence/Views/Views/payment_status.dart';
 import 'package:pharesidence/Views/getStartedView.dart';
 import '../../drawer/rateus.dart';
 
@@ -57,9 +58,9 @@ class SideDrawer extends StatelessWidget {
             ),
             ListTile(
               leading: Icon(Icons.star, size: 30),
-              title: PHAText(text: 'Rate Us', fontSize: 16.sp),
+              title: PHAText(text: 'Payment Status', fontSize: 16.sp),
               onTap: () {
-               Get.to(RateUsView()); // Navigate to Rate Us View
+               Get.to(PaymentVerification()); // Navigate to Rate Us View
               },
             ),
             ListTile(

@@ -5,7 +5,7 @@ class AppConstants {
   static String phaMaintenanceService = 'PHAF Maintenance Services';
   static String ministryOfHousingWork = 'Ministry of Housing and Works';
   static String pleaseWait = 'Please wait, loading... \n  ...براہ کرم انتظار کریں، لوڈ ہو رہا ہے';
-  static String doNotHaveMembership = "Don't have a membership? \n رکنیت نہیں ہے؟";
+  static String doNotHaveMembership = "Don't have an account? \n اکاؤنٹ نہیں ہے؟";
   static String newsEvents = 'News/Events';
   static String projects = 'Projects';
   static String contactUs = 'Contact';

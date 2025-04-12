@@ -1,5 +1,6 @@
 import 'package:pharesidence/Utils/exports/exports.dart';
 import 'package:get/get.dart';
+import 'package:pharesidence/Views/Views/payment_status.dart';
 import 'package:pharesidence/Views/propertyView.dart';
 
 class HomeController extends GetxController{
@@ -16,6 +17,10 @@ class HomeController extends GetxController{
         onTap: () {
           Get.to(PropertyViews());
         }),
+    HomeModel(
+        image: 'assets/svg/icon_services.svg',
+        title: 'Payment Status \n ادائیگی کی معلومات',
+        onTap: () => Get.to(PaymentVerification())),
     HomeModel(
         image: 'assets/svg/icon_services.svg',
         title: 'Services \ خدمات',
@@ -49,17 +54,17 @@ class HomeController extends GetxController{
     listOfPropertySummary.value = [
       HomeModel(
           image: 'assets/png/icon_gray_structure.svg',
-          title: 'Grey Structure',
+          title: 'Grey Structure\n',
           count: '${propertyController.listOfProperties.value.where((e) => e.status == 'Grey Structure').length}',
           onTap: () {}),
       HomeModel(
           image: 'assets/png/icon_apartments.svg',
-          title: 'Finished',
+          title: 'Finished\n',
           count: '${propertyController.listOfProperties.value.where((e) => e.status == 'Finished').length}',
           onTap: () {}),
       HomeModel(
           image: 'assets/png/icon_commercial.svg',
-          title: 'Progressing',
+          title: 'Under Construction',
           count: '${propertyController.listOfProperties.value.where((e) => e.status == 'Under Construction').length}',
           onTap: () {}),
     ];
