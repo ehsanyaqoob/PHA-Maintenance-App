@@ -81,92 +81,108 @@ class _HistoryViewState extends State<HistoryView> {
                         var lateFee = double.parse(bill.lateFeeCharges ?? '0');
                         var totalAmount = double.parse(bill.totalAmount ?? '0') + double.parse(bill.lateFeeCharges ?? '0') + double.parse(bill.arears ?? '0');
 
+
                         return Card(
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(16), // Slightly more rounded corners
                           ),
                           elevation: 6, // Increased elevation for a more pronounced shadow
                           color: Colors.white, // Set the card color to white for better contrast
-                          child: ExpansionTile(
-                            // showTrailingIcon: false,
-                            title: Column(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
+                          child: Theme(
+                            data: ThemeData().copyWith(dividerColor: Colors.transparent),
+                            child: ExpansionTile(
+                              // showTrailingIcon: false,
+                              title: Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
 
-                                Row(
-                                  children: [
+                                  Row(
+                                    children: [
 
-                                    Expanded(
-                                      flex: 2,
-                                      child: ListTile(
-                                          visualDensity: VisualDensity.compact,
-                                          // leading: CircleAvatar(
-                                          //   radius: 20,
-                                          //   backgroundColor: AppColors.primary.withOpacity(0.2),
-                                          //   child: Icon(
-                                          //     bill.billStatus == "Paid" ? Icons.check_circle : Icons.error,
-                                          //     color: bill.billStatus == "Paid" ? Colors.green : Colors.red,
-                                          //   ),
-                                          // ),
-                                          title: PHAText(
-                                            text: bill.issuedDate?.formatDate() ?? '',
-                                            fontSize: 16.sp, // Larger font size for better readability
-                                            fontWeight: FontWeight.w600,
-                                          ),
-                                          subtitle: Row(
-                                            children: [
-                                              // PHAText(
-                                              //   text: "Status: ",
-                                              //   fontSize: 12.sp,
-                                              //   fontWeight: FontWeight.w400,
-                                              //   color: AppColors.blackGray,
-                                              // ),
-                                              PHAText(
-                                                text: "${bill.billStatus}",
-                                                fontSize: 12.sp,
-                                                fontWeight: FontWeight.w600,
-                                                color: bill.billStatus?.toLowerCase() == "paid"
-                                                    ? Color(0xFF02B101)
-                                                    : Color(0xFFD5210F),
-                                              ),
-                                            ],
-                                          )
+                                      Expanded(
+                                        flex: 2,
+                                        child: ListTile(
+                                            visualDensity: VisualDensity.compact,
+                                            // leading: CircleAvatar(
+                                            //   radius: 20,
+                                            //   backgroundColor: AppColors.primary.withOpacity(0.2),
+                                            //   child: Icon(
+                                            //     bill.billStatus == "Paid" ? Icons.check_circle : Icons.error,
+                                            //     color: bill.billStatus == "Paid" ? Colors.green : Colors.red,
+                                            //   ),
+                                            // ),
+                                            title: PHAText(
+                                              text: bill.issuedDate?.formatDate() ?? '',
+                                              fontSize: 16.sp, // Larger font size for better readability
+                                              fontWeight: FontWeight.w600,
+                                            ),
+                                            subtitle: Row(
+                                              children: [
+                                                // PHAText(
+                                                //   text: "Status: ",
+                                                //   fontSize: 12.sp,
+                                                //   fontWeight: FontWeight.w400,
+                                                //   color: AppColors.blackGray,
+                                                // ),
+                                                PHAText(
+                                                  text: "${bill.billStatus}",
+                                                  fontSize: 12.sp,
+                                                  fontWeight: FontWeight.w600,
+                                                  color: bill.billStatus?.toLowerCase() == "paid"
+                                                      ? Color(0xFF02B101)
+                                                      : Color(0xFFD5210F),
+                                                ),
+                                              ],
+                                            )
+                                        ),
                                       ),
-                                    ),
-                                    Expanded(
-                                        flex: 1,
-                                        child: PHAText(
-                                          text: '${totalAmount}',
-                                          fontSize: 14.sp,
-                                          fontWeight: FontWeight.w700,
-                                          color: totalAmount > 0 ? AppColors.blackGray : AppColors.red,
-                                        )),
+                                      Expanded(
+                                          flex: 1,
+                                          child: PHAText(
+                                            text: '${totalAmount}',
+                                            fontSize: 14.sp,
+                                            fontWeight: FontWeight.w700,
+                                            color: totalAmount > 0 ? AppColors.blackGray : AppColors.red,
+                                          )),
 
-                                    VerticalDivider(color: AppColors.lightGray_1, width: 1),
+                                      VerticalDivider(color: AppColors.lightGray_1, width: 1),
 
-                                    Expanded(
-                                        flex: 1,
-                                        child: PHAText(
-                                          text: '${bill.paidAmount ?? 0}',
-                                          textAlign: TextAlign.center,
-                                          fontSize: 14.sp,
-                                          fontWeight: FontWeight.w700,
-                                          color: double.parse(bill.paidAmount ?? '0') > 0 ? AppColors.blackGray : AppColors.red,
-                                        )),
+                                      Expanded(
+                                          flex: 1,
+                                          child: PHAText(
+                                            text: '${bill.paidAmount ?? 0}',
+                                            textAlign: TextAlign.center,
+                                            fontSize: 14.sp,
+                                            fontWeight: FontWeight.w700,
+                                            color: double.parse(bill.paidAmount ?? '0') > 0 ? AppColors.blackGray : AppColors.red,
+                                          )),
 
-                                  ],
-                                ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                              children: [
+                                Container(
+                                  child: Column(
+                                    children: [
+                                      Divider(height: 1, color: Colors.grey,),
+                                      Padding(
+                                        padding: const EdgeInsets.symmetric(vertical: 12),
+                                        child: Row(
+                                          children: [
+                                            HistoryItem(title: 'Due Amount', value: '${bill.totalAmount}'),
+
+                                            HistoryItem(title: 'Late Fee ', value: '${bill.lateFeeCharges}'),
+
+                                            HistoryItem(title: 'Arears', value: '${bill.arears}'),
+                                          ],
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                )
                               ],
                             ),
-                            children: [
-                              Container(
-                                child: Column(
-                                  children: [
-
-                                  ],
-                                ),
-                              )
-                            ],
                           ),
                         );
 
@@ -246,25 +262,27 @@ class HistoryItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 4),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          PHAText(
-            text: title.toUpperCase(),
-            fontSize: 12.sp,
-            fontWeight: FontWeight.w500,
-            color: AppColors.blackGray,
-          ),
-          SizedBox(height: 2.h),
-          PHAText(
-            text: value.toUpperCase(),
-            fontSize: 14.sp,
-            fontWeight: FontWeight.w700,
-            color: double.parse(value) > 0 ? AppColors.blackGray : AppColors.red,
-          ),
-        ],
+    return Expanded(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 4),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            PHAText(
+              text: title.toUpperCase(),
+              fontSize: 12.sp,
+              fontWeight: FontWeight.w500,
+              color: AppColors.blackGray,
+            ),
+            SizedBox(height: 2.h),
+            PHAText(
+              text: value.toUpperCase(),
+              fontSize: 14.sp,
+              fontWeight: FontWeight.w700,
+              color: double.parse(value) > 0 ? AppColors.blackGray : AppColors.red,
+            ),
+          ],
+        ),
       ),
     );
   }

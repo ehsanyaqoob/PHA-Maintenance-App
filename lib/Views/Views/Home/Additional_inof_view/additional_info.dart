@@ -171,7 +171,7 @@ class _AdditionalDetailViewState extends State<AdditionalDetailView> {
                         AdditionalInfoItem(
                             title: 'Arears:',
                             description:
-                            '${double.parse(controller.additionalInfo.value.arears ?? '0') - double.parse(controller.additionalInfo.value.totalAmount ?? '0')}'?.formatAsNumber() ??
+                            '${double.parse(controller.additionalInfo.value.arears ?? '0')}'?.formatAsNumber() ??
                                 '0'
                         ),
 
@@ -185,85 +185,102 @@ class _AdditionalDetailViewState extends State<AdditionalDetailView> {
 
                         AdditionalInfoItem(
                             title: 'Total Amount Due',
-                            description: '${(double.parse(controller.additionalInfo.value.arears ?? '0') - double.parse(controller.additionalInfo.value.totalAmount ?? '0')) + double.parse(controller.additionalInfo.value.remainingAmount ?? '0') + double.parse(controller.additionalInfo.value.lateFeeCharges ?? '0') - double.parse(controller.additionalInfo.value.paidAmount ?? '0')}'.formatAsNumber(),textColor: Colors.red,),
+                            description: '${double.parse(controller.additionalInfo.value.arears ?? '0') + double.parse(controller.additionalInfo.value.remainingAmount ?? '0')}'.formatAsNumber(),textColor: Colors.red,),
                       ],
                     ),
-                    Column(
+
+                    double.parse('${double.parse(controller.additionalInfo.value.arears ?? '0') + double.parse(controller.additionalInfo.value.remainingAmount ?? '0')}'
+                        ?.replaceAll(',', '') ??
+                        '0') > 0 ? Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
+                        Column(
+                          children: [
+                            SizedBox(height: 12.h),
+                            PHARadioInRow(
+                              items: ['Pay full', 'Pay Partial'],
+                              selectedValue:
+                              controller.selectedPaymentOption.value,
+                              onSelected: (value) {
+                                controller.setPaymentOption(value);
+                              },
+                            ),
+                            SizedBox(height: 20),
+                            PHATextFormField(
+                              hint: 'Enter paid amount',
+                              controller: controller.fullAmountController,
+                              inputType: TextInputType.number,
+                              readOnly: controller.selectedPaymentOption.value ==
+                                  'Pay full'
+                                  ? true
+                                  : false,
+                            ),
+                            SizedBox(height: 12.h),
+                          ],
+                        ),
+                        PHAText(
+                          text: 'Payment Through',
+                          fontSize: 16.sp,
+                          fontWeight: FontWeight.w600,
+                        ),
+
+                        Obx(() {
+                          return Column(
+                            children: [
+                              SizedBox(height: 4.h),
+                              PHARadioInColumn(
+                                // items: ['PSID (Bank, ATM or Internet/Mobile Banking)', 'Card (Master/Visa)'],
+                                items: ['PSID (Bank, ATM or Internet/Mobile Banking)'],
+                                selectedValue:
+                                controller.paymentThrough.value,
+                                onSelected: (value) {
+                                  controller.setPaymentThrough(value);
+                                },
+                              ),
+                            ],
+                          );
+                        }),
+
                         SizedBox(height: 12.h),
-                        PHARadioInRow(
-                          items: ['Pay full', 'Pay Partial'],
-                          selectedValue:
-                          controller.selectedPaymentOption.value,
-                          onSelected: (value) {
-                            controller.setPaymentOption(value);
+
+
+                        PHAButton(
+                          title: 'Proceed / آگے بڑھیں',
+                          filledColor: AppColors.primary,
+                          onTap: () {
+                            if (controller.fullAmountController.text
+                                .replaceAll(',', '') ==
+                                '') {
+                              Get.snackbar('Error', 'Partial payment is required', colorText: AppColors.white,
+                                  backgroundColor: AppColors.red.withOpacity(0.8));
+                              return;
+                            } else if (double.parse(controller
+                                .fullAmountController.text
+                                .replaceAll(',', '')) >
+                                double.parse('${double.parse(controller.additionalInfo.value.arears ?? '0') + double.parse(controller.additionalInfo.value.remainingAmount ?? '0')}'
+                                    ?.replaceAll(',', '') ??
+                                    '0')) {
+                              Get.snackbar('Error',
+                                  'Partial amount less or equal to paid amount', colorText: AppColors.white,
+                                  backgroundColor: AppColors.red.withOpacity(0.8));
+                              return;
+                            }
+                            Get.to(GenerateBillPreviewView(
+                              property: controller.additionalInfo.value, amount: controller.fullAmountController.text,));
                           },
                         ),
-                        SizedBox(height: 20),
-                        PHATextFormField(
-                          hint: 'Enter paid amount',
-                          controller: controller.fullAmountController,
-                          inputType: TextInputType.number,
-                          readOnly: controller.selectedPaymentOption.value ==
-                              'Pay full'
-                              ? true
-                              : false,
-                        ),
-                        SizedBox(height: 12.h),
+                        SizedBox(height: 24.h),
                       ],
+                    ) : Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 24),
+                      child: PHAText(
+                        text: 'PAID',
+                        textAlign: TextAlign.center,
+                        fontSize: 24.sp,
+                        color: AppColors.primary,
+                        fontWeight: FontWeight.w800,
+                      ),
                     ),
-                    PHAText(
-                      text: 'Payment Through',
-                      fontSize: 16.sp,
-                      fontWeight: FontWeight.w600,
-                    ),
-
-                    Obx(() {
-                      return Column(
-                        children: [
-                          SizedBox(height: 4.h),
-                          PHARadioInColumn(
-                            // items: ['PSID (Bank, ATM or Internet/Mobile Banking)', 'Card (Master/Visa)'],
-                            items: ['PSID (Bank, ATM or Internet/Mobile Banking)'],
-                            selectedValue:
-                            controller.paymentThrough.value,
-                            onSelected: (value) {
-                              controller.setPaymentThrough(value);
-                            },
-                          ),
-                        ],
-                      );
-                    }),
-
-                    SizedBox(height: 12.h),
-
-
-                    PHAButton(
-                      title: 'Proceed / آگے بڑھیں',
-                      filledColor: AppColors.primary,
-                      onTap: () {
-                        if (controller.fullAmountController.text
-                            .replaceAll(',', '') ==
-                            '') {
-                          Get.snackbar('Error', 'Partial payment is required', colorText: AppColors.white,
-                              backgroundColor: AppColors.red.withOpacity(0.8));
-                          return;
-                        } else if (double.parse(controller
-                            .fullAmountController.text
-                            .replaceAll(',', '')) >
-                            double.parse('${controller.additionalInfo.value.grandTotal}'
-                                ?.replaceAll(',', '') ??
-                                '0')) {
-                          Get.snackbar('Error',
-                              'Partial amount less or equal to paid amount', colorText: AppColors.white,
-                              backgroundColor: AppColors.red.withOpacity(0.8));
-                          return;
-                        }
-                        Get.to(GenerateBillPreviewView(
-                            property: controller.additionalInfo.value, amount: controller.fullAmountController.text,));
-                      },
-                    ),
-                    SizedBox(height: 24.h),
                   ],
                 ),
               ),

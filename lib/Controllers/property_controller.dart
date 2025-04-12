@@ -44,7 +44,7 @@ class PropertyController extends GetxController {
   void setPaymentOption(String value) {
     selectedPaymentOption.value = value;
     if (value == 'Pay full') {
-      paidAmount.value = '${(double.parse(additionalInfo.value.arears ?? '0') - double.parse(additionalInfo.value.totalAmount ?? '0')) + double.parse(additionalInfo.value.remainingAmount ?? '0') + double.parse(additionalInfo.value.lateFeeCharges ?? '0') - double.parse(additionalInfo.value.paidAmount ?? '0')}';
+      paidAmount.value = '${double.parse(additionalInfo.value.arears ?? '0') + double.parse(additionalInfo.value.remainingAmount ?? '0')}';
       fullAmountController.text = paidAmount.value;
     } else if (value == 'Pay Partial') {
       paidAmount.value = '';
@@ -134,7 +134,7 @@ class PropertyController extends GetxController {
       if (response.success) {
         additionalInfo.value = response.data!;
         paidAmount.value = '${additionalInfo.value.grandTotal}';
-        fullAmountController.text = '${(double.parse(additionalInfo.value.arears ?? '0') - double.parse(additionalInfo.value.totalAmount ?? '0')) + double.parse(additionalInfo.value.remainingAmount ?? '0') + double.parse(additionalInfo.value.lateFeeCharges ?? '0') - double.parse(additionalInfo.value.paidAmount ?? '0')}';
+        fullAmountController.text = '${double.parse(additionalInfo.value.arears ?? '0') + double.parse(additionalInfo.value.remainingAmount ?? '0')}';
         update();
       } else {
         Fluttertoast.showToast(msg: response.message);
@@ -198,7 +198,7 @@ class PropertyController extends GetxController {
     isBusy.value = true;
     try {
       Map<String, dynamic> param = {
-        'token': await Storage.authToken,
+        // 'token': await Storage.authToken,
         "registration_no": membershipNo
       };
       ApiResponse<HistoryModel> response =
@@ -207,6 +207,7 @@ class PropertyController extends GetxController {
       });
       if (response.success) {
         listOfHistory.value = response.data?.properties ?? [];
+        // listOfHistory.value.removeLast();
         listOfHistory.refresh();
       } else {
         Fluttertoast.showToast(msg: response.message ?? '');
