@@ -2,7 +2,7 @@ import 'package:http/http.dart' as http;
 import 'package:pharesidence/Utils/exports/exports.dart';
 
 class Config{
-  static String pro_base_url = 'https://pha.npf.org.pk/api';
+  static String pro_base_url = 'https://maintenance.pha.gov.pk/api';
   // https://maintenance.npf.org.pk/api/login
   // static String pro_base_url = 'https://maintenance.npf.org.pk/api';
   // static String pro_base_url = 'http://101.50.87.138:8080/maintenance/api';
