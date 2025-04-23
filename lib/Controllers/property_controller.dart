@@ -207,7 +207,7 @@ class PropertyController extends GetxController {
       });
       if (response.success) {
         listOfHistory.value = response.data?.properties ?? [];
-        listOfHistory.value.removeLast();
+        // listOfHistory.value.removeLast();
         listOfHistory.refresh();
       } else {
         Fluttertoast.showToast(msg: response.message ?? '');

@@ -169,6 +169,11 @@ class _AdditionalDetailViewState extends State<AdditionalDetailView> {
                             //         '0'}'.formatAsNumber()),
 
                             AdditionalInfoItem(
+                              title: 'Property Address',
+                              description: 'House No. ${controller.additionalInfo.value.houseNo}, Lane# 11, ${controller.additionalInfo.value.projectName}',
+                            ),
+
+                            AdditionalInfoItem(
                                 title: 'Arears:',
                                 description:
                                     '${double.parse(controller.additionalInfo.value.arears ?? '0')}'

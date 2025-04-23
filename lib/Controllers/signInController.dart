@@ -29,6 +29,8 @@ class SignInController extends GetxController {
   onLoginPress() {
     if (validateFields) {
       loginService();
+    }else{
+      Fluttertoast.showToast(msg: 'All fields required');
     }
   }
 

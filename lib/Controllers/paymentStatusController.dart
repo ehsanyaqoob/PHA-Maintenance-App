@@ -39,7 +39,6 @@ class PaymentStatusController extends GetxController {
       var model =  PaymentStatusModel.fromJson(data);
       isBusy.value = false;
       if(model.status == true){
-
         paymentStatus.value = model.data?.status ?? 'Unpaid';
         Get.dialog(
             barrierDismissible: true,
